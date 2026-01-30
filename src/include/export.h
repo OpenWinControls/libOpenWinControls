@@ -17,19 +17,12 @@
  */
 #pragma once
 
-#ifndef OWC_STATIC
-
 #ifdef _WIN32
 #ifdef OWC_LIBRARY
 #define OWC_EXPORT __declspec(dllexport)
 #else
 #define OWC_EXPORT __declspec(dllimport)
 #endif
-
 #else
 #define OWC_EXPORT __attribute__((visibility("default")))
-#endif
-
-#else
-#define OWC_EXPORT
 #endif
