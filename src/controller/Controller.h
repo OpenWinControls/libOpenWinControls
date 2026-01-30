@@ -19,6 +19,7 @@
 
 #include <functional>
 #include <source_location>
+#include <cstdint>
 
 #include "../extern/hidapi/hidapi/hidapi.h"
 #include "../include/export.h"
