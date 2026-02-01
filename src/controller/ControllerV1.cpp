@@ -23,6 +23,12 @@
 #include "ControllerV1.h"
 #include "../Utils.h"
 
+#ifdef _WIN32
+#define HID_SEND_REPORT hid_send_output_report
+#else
+#define HID_SEND_REPORT hid_send_feature_report
+#endif
+
 namespace OWC {
     ControllerV1::ControllerV1(const int controllerFeatures) {
         dpadUp_offt = 0;
@@ -109,7 +115,7 @@ namespace OWC {
         prepareRespBuffer();
         logSendPacketBytes(sendBuf, sendPacketLen);
 
-        if (hid_send_feature_report(gamepad, sendBuf, sendPacketLen) < 0) {
+        if (HID_SEND_REPORT(gamepad, sendBuf, sendPacketLen) < 0) {
             if (logFn)
                 logFn(std::format("failed to send report: {}", wstrToString(hid_error(gamepad))));
 
@@ -130,7 +136,7 @@ namespace OWC {
     bool ControllerV1::sendWriteRequest() const {
         logSendPacketBytes(sendBuf, sendPacketLen);
 
-        if (hid_send_feature_report(gamepad, sendBuf, sendPacketLen) < 0) {
+        if (HID_SEND_REPORT(gamepad, sendBuf, sendPacketLen) < 0) {
             if (logFn)
                 logFn(std::format("failed to send report: {}", wstrToString(hid_error(gamepad))));
 
