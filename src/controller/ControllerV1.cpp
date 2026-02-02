@@ -117,14 +117,14 @@ namespace OWC {
 
         if (HID_SEND_REPORT(gamepad, sendBuf, sendPacketLen) < 0) {
             if (logFn)
-                logFn(std::format("failed to send report: {}", wstrToString(hid_error(gamepad))));
+                logFn(std::format(L"failed to send report: {}", hid_error(gamepad)));
 
             return false;
         }
 
         if (hid_get_input_report(gamepad, respBuf, respPacketLen) < 0) {
             if (logFn)
-                logFn(std::format("failed to get report: {}", wstrToString(hid_error(gamepad))));
+                logFn(std::format(L"failed to get report: {}", hid_error(gamepad)));
 
             return false;
         }
@@ -138,7 +138,7 @@ namespace OWC {
 
         if (HID_SEND_REPORT(gamepad, sendBuf, sendPacketLen) < 0) {
             if (logFn)
-                logFn(std::format("failed to send report: {}", wstrToString(hid_error(gamepad))));
+                logFn(std::format(L"failed to send report: {}", hid_error(gamepad)));
 
             return false;
         }
@@ -188,7 +188,7 @@ namespace OWC {
     bool ControllerV1::readConfig() {
         if (!initCommunication(Mode::Read)) {
             if (logFn)
-                logFn("failed to read version");
+                logFn(L"failed to read version");
 
             return false;
         }
@@ -198,7 +198,7 @@ namespace OWC {
         prepareSendPacket(Mode::Read, CMD::ReadWrite);
         if (!sendReadRequest()) {
             if (logFn)
-                logFn("failed to read config");
+                logFn(L"failed to read config");
 
             return false;
         }
@@ -208,7 +208,7 @@ namespace OWC {
         prepareSendPacket(Mode::Read, CMD::ReadWrite, 1);
         if (!sendReadRequest()) {
             if (logFn)
-                logFn("failed to read config");
+                logFn(L"failed to read config");
 
             return false;
         }
@@ -218,7 +218,7 @@ namespace OWC {
 
         if (!isConfigValid(calcConfigChecksum(configBuf), Mode::Read)) {
             if (logFn)
-                logFn("config memory checksum does not match");
+                logFn(L"config memory checksum does not match");
 
             return false;
         }
@@ -228,13 +228,13 @@ namespace OWC {
 
     bool ControllerV1::writeConfig() const {
         if (logFn)
-            logFn(std::format("config buffer to write:\n{}", bufferToString(configBuf, configBufLen)));
+            logFn(std::format(L"config buffer to write:\n{}", bufferToString(configBuf, configBufLen)));
 
         prepareSendPacket(Mode::Write, CMD::Check);
 
         if (!initCommunication(Mode::Write)) {
             if (logFn)
-                logFn("failed to write config");
+                logFn(L"failed to write config");
 
             return false;
         }
@@ -250,7 +250,7 @@ namespace OWC {
 
         if (!isConfigValid(calcConfigChecksum(configBuf), Mode::Write)) {
             if (logFn)
-                logFn("config memory checksum does not match");
+                logFn(L"config memory checksum does not match");
 
             return false;
         }
@@ -258,7 +258,7 @@ namespace OWC {
         prepareSendPacket(Mode::Write, CMD::Commit);
         if (!sendWriteRequest()) {
             if (logFn)
-                logFn("failed to commit config to controller");
+                logFn(L"failed to commit config to controller");
 
             return false;
         }
@@ -271,7 +271,7 @@ namespace OWC {
 
         if (!sendReadRequest()) {
             if (logFn)
-                logFn("failed to send checksum request");
+                logFn(L"failed to send checksum request");
 
             return false;
         }

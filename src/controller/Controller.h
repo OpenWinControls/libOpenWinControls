@@ -73,7 +73,7 @@ namespace OWC {
         int leftAnalogBoundary_offt;
         int rightAnalogCenter_offt;
         int rightAnalogBoundary_offt;
-        std::function<void(const std::string &)> logFn;
+        std::function<void(const std::wstring &)> logFn;
         int features = 0;
         hid_device *gamepad = nullptr;
         uint8_t *configBuf = nullptr;
@@ -96,7 +96,7 @@ namespace OWC {
         [[nodiscard]] virtual bool readConfig() = 0;
         [[nodiscard]] virtual bool writeConfig() const = 0;
 
-        void enableLogging(const std::function<void(const std::string &)> &logCB) { logFn = logCB; }
+        void enableLogging(const std::function<void(const std::wstring &)> &logCB) { logFn = logCB; }
 
         [[nodiscard]] bool init();
         [[nodiscard]] bool hasFeature(int feature) const;

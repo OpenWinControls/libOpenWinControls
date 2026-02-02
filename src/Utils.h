@@ -20,8 +20,8 @@
 #include <cstdint>
 
 namespace OWC {
-    [[nodiscard]] std::string bufferToString(const uint8_t *buf, int sz);
-    [[nodiscard]] std::string wstrToString(const wchar_t *wstr);
+    [[nodiscard]] std::wstring bufferToString(const uint8_t *buf, int sz);
+    [[nodiscard]] std::wstring strTowstr(const char *str);
     [[nodiscard]] uint16_t rumbleStrToRumbleMode(std::string mode);
     [[nodiscard]] std::string rumbleModeToString(uint16_t mode);
     [[nodiscard]] uint8_t ledModeStrToLedMode(std::string mode);

@@ -34,7 +34,7 @@ namespace OWC {
     bool Controller::init() {
         if (hid_init() != 0) {
             if (logFn)
-                logFn(std::format("failed to init hidapi: {}", wstrToString(hid_error(nullptr))));
+                logFn(std::format(L"failed to init hidapi: {}", hid_error(nullptr)));
 
             return false;
         }
@@ -43,7 +43,7 @@ namespace OWC {
 
         if (devInfo == nullptr) {
             if (logFn)
-                logFn(std::format("failed to enum hid devices: {}", wstrToString(hid_error(nullptr))));
+                logFn(std::format(L"failed to enum hid devices: {}", hid_error(nullptr)));
 
             return false;
         }
@@ -53,14 +53,14 @@ namespace OWC {
                 continue;
 
             if (logFn)
-                logFn(std::format("found gamepad: {} [{:x}:{:x}]", dev->path, getVID(), getPID()));
+                logFn(std::format(L"found gamepad: {} [{:x}:{:x}]", strTowstr(dev->path), getVID(), getPID()));
 
             gamepad = hid_open_path(dev->path);
             break;
         }
 
         if (gamepad == nullptr && logFn)
-            logFn(std::format("failed to open hid device: {}", wstrToString(hid_error(nullptr))));
+            logFn(std::format(L"failed to open hid device: {}", hid_error(nullptr)));
 
         hid_free_enumeration(devInfo);
         return (gamepad != nullptr);
@@ -68,12 +68,12 @@ namespace OWC {
 
     void Controller::logSendPacketBytes(const uint8_t *buf, const int sz, const std::source_location loc) const {
         if (logFn)
-            logFn(std::format("{}:{}\nsend packet bytes:\n{}", loc.function_name(), loc.line(), bufferToString(buf, sz)));
+            logFn(std::format(L"{}:{}\nsend packet bytes:\n{}", strTowstr(loc.function_name()), loc.line(), bufferToString(buf, sz)));
     }
 
     void Controller::logRespPacketBytes(const uint8_t *buf, const int sz, const std::source_location loc) const {
         if (logFn)
-            logFn(std::format("{}:{}\nresponse packet bytes:\n{}", loc.function_name(), loc.line(), bufferToString(buf, sz)));
+            logFn(std::format(L"{}:{}\nresponse packet bytes:\n{}", strTowstr(loc.function_name()), loc.line(), bufferToString(buf, sz)));
     }
 
     bool Controller::setButtonKey(const int offt, const std::string &key) const {

@@ -23,21 +23,24 @@
 #include "include/HIDUsageIDMap.h"
 
 namespace OWC {
-    std::string bufferToString(const uint8_t *buf, const int sz) {
-        std::ostringstream oss;
+    std::wstring bufferToString(const uint8_t *buf, const int sz) {
+        std::wostringstream oss;
 
         for (int i=0; i<sz; ++i)
-            oss << std::hex << std::setfill('0') << std::setw(2) << static_cast<int>(buf[i]);
+            oss << std::hex << std::setfill(L'0') << std::setw(2) << static_cast<int>(buf[i]);
 
         return oss.str();
     }
 
-    std::string wstrToString(const wchar_t *wstr) {
-        std::string ret;
+    std::wstring strTowstr(const char *str) {
+        std::mbstate_t state = std::mbstate_t();
+        const std::size_t len = 1 + std::mbsrtowcs(nullptr, &str, 0, &state);
+        std::unique_ptr<wchar_t[]> ret = std::make_unique<wchar_t[]>(len);
 
-        ret.resize(std::wcslen(wstr) + 1);
-        std::wcstombs(ret.data(), wstr, ret.length() - 1);
-        return ret;
+        std::memset(ret.get(), 0, sizeof(wchar_t) * len);
+        std::mbsrtowcs(ret.get(), &str, len - 1, &state);
+
+        return std::wstring(ret.get());
     }
 
     uint16_t rumbleStrToRumbleMode(std::string mode) {
