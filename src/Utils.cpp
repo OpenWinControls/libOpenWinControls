@@ -18,6 +18,7 @@
 #include <sstream>
 #include <iomanip>
 #include <algorithm>
+#include <memory>
 
 #include "Utils.h"
 #include "include/HIDUsageIDMap.h"
@@ -37,7 +38,7 @@ namespace OWC {
         const std::size_t len = 1 + std::mbsrtowcs(nullptr, &str, 0, &state);
         std::unique_ptr<wchar_t[]> ret = std::make_unique<wchar_t[]>(len);
 
-        std::memset(ret.get(), 0, sizeof(wchar_t) * len);
+        std::wmemset(ret.get(), 0, len);
         std::mbsrtowcs(ret.get(), &str, len - 1, &state);
 
         return std::wstring(ret.get());
