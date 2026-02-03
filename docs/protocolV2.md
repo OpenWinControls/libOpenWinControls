@@ -47,7 +47,7 @@ Custom key codes:
 
 ## Status interrupt
 
-Endpoint 0x81 IN
+Endpoint 0x81 IN, sent by the controller every 1 second
 
 <table>
     <tr>
