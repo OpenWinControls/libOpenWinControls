@@ -59,6 +59,7 @@ Endpoint 0x81 IN
         <th>5</th>
         <th>6</th>
         <th>7</th>
+        <th>8-63</th>
     </tr>
     <tr>
         <td>ID</td>
@@ -69,6 +70,7 @@ Endpoint 0x81 IN
         <td></td>
         <td>version major</td>
         <td>version minor</td>
+        <td></td>
     </tr>
     <tr>
         <td>01</td>
@@ -79,5 +81,6 @@ Endpoint 0x81 IN
         <td>00</td>
         <td>xx</td>
         <td>xx</td>
+        <td>00</td>
     </tr>
 </table>
