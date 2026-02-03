@@ -193,37 +193,32 @@ namespace OWC {
         {0xec, "MOUSE_MIDDLE"},
         {0xed, "MOUSE_FAST"},
 
-        /* from official app, not reading 2 bytes?
+        /* can only be set for gamepad mode
         {0x8000, "DPAD_UP"},
         {0x8001, "DPAD_DOWN"},
         {0x8002, "DPAD_LEFT"},
         {0x8003, "DPAD_RIGHT"},
-
+        {0x8004, "START"},
+        {0x8005, "SELECT"},
+        {0x8006, "MENU"},
         {0x8007, "BTN_A"},
         {0x8008, "BTN_B"},
         {0x8009, "BTN_X"},
         {0x800a, "BTN_Y"},
-
-        {0x8011, "LSTICK_UP"},
-        {0x8012, "LSTICK_DOWN"},
-        {0x8013, "LSTICK_LEFT"},
-        {0x8014, "LSTICK_RIGHT"},
-
-        {0x800f, "L3"},
-        {0x8010, "R3"},
-
-        {0x8004, "START"},
-        {0x8005, "SELECT"},
-        {0x8006, "MENU"},
-
         {0x800b, "L1"},
         {0x800c, "R1"},
         {0x800d, "L2"},
         {0x800e, "R2"},
-
+        {0x800f, "L3"},
+        {0x8010, "R3"},
+        {0x8011, "LSTICK_UP"},
+        {0x8012, "LSTICK_DOWN"},
+        {0x8013, "LSTICK_LEFT"},
+        {0x8014, "LSTICK_RIGHT"},
         {0x8015, "RSTICK_UP"},
         {0x8016, "RSTICK_DOWN"},
         {0x8017, "RSTICK_LEFT"},
-        {0x8018, "RSTICK_RIGHT"}*/
+        {0x8018, "RSTICK_RIGHT"}
+        */
     };
 }
