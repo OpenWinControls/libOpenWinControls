@@ -211,7 +211,7 @@ Send
         <td>Mode ^ 0xf</td>
         <td>Cmd ^ 0xf</td>
         <td></td>
-        <td>index</td>
+        <td>page index</td>
         <td></td>
     </tr>
     <tr>
@@ -410,7 +410,7 @@ Send
         <td>Mode ^ 0xf</td>
         <td>Cmd ^ 0xf</td>
         <td></td>
-        <td>index</td>
+        <td>page index</td>
         <td></td>
     </tr>
     <tr>
