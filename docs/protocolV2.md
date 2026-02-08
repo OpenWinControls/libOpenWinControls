@@ -114,3 +114,220 @@ Endpoint 0x81 IN, sent by the controller every 1 second
         <td>00</td>
     </tr>
 </table>
+
+---
+
+> NOTE:
+> 
+> The following sections may be inaccurate
+
+## Init communication
+
+Send
+
+<table>
+    <tr>
+        <th>0</th>
+        <th>1</th>
+        <th>2-63</th>
+    </tr>
+    <tr>
+        <td>ID</td>
+        <td>Unk</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>01</td>
+        <td>21</td>
+        <td>00</td>
+    </tr>
+</table>
+
+Response
+
+<table>
+    <tr>
+        <th>0</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+        <th>5</th>
+        <th>6</th>
+        <th>7</th>
+        <th>8</th>
+        <th>9-63</th>
+    </tr>
+    <tr>
+        <td>ID</td>
+        <td>Unk</td>
+        <td>Unk</td>
+        <td></td>
+        <td>Unk</td>
+        <td></td>
+        <td colspan="2">checksum</td>
+        <td>ready state</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>01</td>
+        <td>21</td>
+        <td>02</td>
+        <td>00</td>
+        <td>xx</td>
+        <td>00</td>
+        <td>xx</td>
+        <td>xx</td>
+        <td>xx</td>
+        <td>00</td>
+    </tr>
+</table>
+
+Checksum is the sum of all bytes after it.
+
+Send
+
+<table>
+    <tr>
+        <th>0</th>
+        <th>1</th>
+        <th>2-63</th>
+    </tr>
+    <tr>
+        <td>ID</td>
+        <td>Unk</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>01</td>
+        <td>2b</td>
+        <td>00</td>
+    </tr>
+</table>
+
+Response
+
+<table>
+    <tr>
+        <th>0</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+        <th>5</th>
+        <th>6</th>
+        <th>7</th>
+        <th>8</th>
+        <th>9-63</th>
+    </tr>
+    <tr>
+        <td>ID</td>
+        <td>Unk</td>
+        <td>Unk</td>
+        <td></td>
+        <td>Unk</td>
+        <td></td>
+        <td colspan="2">checksum</td>
+        <td>ready state</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>01</td>
+        <td>2b</td>
+        <td>02</td>
+        <td>00</td>
+        <td>xx</td>
+        <td>00</td>
+        <td>xx</td>
+        <td>xx</td>
+        <td>xx</td>
+        <td>00</td>
+    </tr>
+</table>
+
+Checksum is the sum of all bytes after it.
+
+Successful initialization requires both calls to return **0xaa** in byte **8**.
+
+## Get firmware versions
+
+**unconfirmed, no firmware update available to compare, prefer status interrupt.**
+
+Send
+
+<table>
+    <tr>
+        <th>0</th>
+        <th>1</th>
+        <th>2-63</th>
+    </tr>
+    <tr>
+        <td>ID</td>
+        <td>Unk</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>01</td>
+        <td>41</td>
+        <td>00</td>
+    </tr>
+</table>
+
+Response
+
+<table>
+    <tr>
+        <th>0</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+        <th>5</th>
+        <th>6</th>
+        <th>7</th>
+        <th>8</th>
+        <th>9</th>
+        <th>10</th>
+        <th>11</th>
+        <th>12</th>
+        <th>13</th>
+        <th>14-63</th>
+    </tr>
+    <tr>
+        <td>ID</td>
+        <td>Unk</td>
+        <td>Unk</td>
+        <td></td>
+        <td>Unk</td>
+        <td>Unk</td>
+        <td colspan="2">checksum</td>
+        <td></td>
+        <td></td>
+        <td>gamepad version minor</td>
+        <td>gamepad version major</td>
+        <td>keyboard version minor</td>
+        <td>keyboard version major</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>01</td>
+        <td>41</td>
+        <td>10</td>
+        <td>00</td>
+        <td>xx</td>
+        <td>xx</td>
+        <td>xx</td>
+        <td>xx</td>
+        <td>00</td>
+        <td>00</td>
+        <td>xx</td>
+        <td>xx</td>
+        <td>xx</td>
+        <td>xx</td>
+        <td>00</td>
+    </tr>
+</table>
+
+checksum is the sum of all bytes after it.
+
+Gamepad version is the xbox360 part of the controller, keyboard is the keyboard/mouse part.
