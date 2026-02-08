@@ -108,12 +108,12 @@ Send
     </tr>
     <tr>
         <td>ID</td>
-        <td>Const</td>
-        <td>Mode</td>
-        <td>Cmd</td>
-        <td>Const ^ 0xff</td>
-        <td>Mode ^ 0xf</td>
-        <td>Cmd ^ 0xf</td>
+        <td>const</td>
+        <td>mode</td>
+        <td>cmd</td>
+        <td>const ^ 0xff</td>
+        <td>mode ^ 0xf</td>
+        <td>cmd ^ 0xf</td>
         <td></td>
     </tr>
     <tr>
@@ -147,12 +147,12 @@ Response
     </tr>
     <tr>
         <td>ID</td>
-        <td>Const</td>
-        <td>Mode</td>
-        <td>Cmd</td>
-        <td>Const ^ 0xff</td>
-        <td>Mode ^ 0xff</td>
-        <td>Cmd ^ 0xff</td>
+        <td>const</td>
+        <td>mode</td>
+        <td>cmd</td>
+        <td>const ^ 0xff</td>
+        <td>mode ^ 0xff</td>
+        <td>cmd ^ 0xff</td>
         <td></td>
         <td>ready state</td>
         <td>gamepad version minor</td>
@@ -204,12 +204,12 @@ Send
     </tr>
     <tr>
         <td>ID</td>
-        <td>Const</td>
-        <td>Mode</td>
-        <td>Cmd</td>
-        <td>Const ^ 0xff</td>
-        <td>Mode ^ 0xf</td>
-        <td>Cmd ^ 0xf</td>
+        <td>const</td>
+        <td>mode</td>
+        <td>cmd</td>
+        <td>const ^ 0xff</td>
+        <td>mode ^ 0xf</td>
+        <td>cmd ^ 0xf</td>
         <td></td>
         <td>page index</td>
         <td></td>
@@ -403,12 +403,12 @@ Send
     </tr>
     <tr>
         <td>ID</td>
-        <td>Const</td>
-        <td>Mode</td>
-        <td>Cmd</td>
-        <td>Const ^ 0xff</td>
-        <td>Mode ^ 0xf</td>
-        <td>Cmd ^ 0xf</td>
+        <td>const</td>
+        <td>mode</td>
+        <td>cmd</td>
+        <td>const ^ 0xff</td>
+        <td>mode ^ 0xf</td>
+        <td>cmd ^ 0xf</td>
         <td></td>
         <td>page index</td>
         <td></td>
@@ -539,12 +539,12 @@ Send
     </tr>
     <tr>
         <td>ID</td>
-        <td>Const</td>
-        <td>Mode</td>
-        <td>Cmd</td>
-        <td>Const ^ 0xff</td>
-        <td>Mode ^ 0xf</td>
-        <td>Cmd ^ 0xf</td>
+        <td>const</td>
+        <td>mode</td>
+        <td>cmd</td>
+        <td>const ^ 0xff</td>
+        <td>mode ^ 0xf</td>
+        <td>cmd ^ 0xf</td>
         <td></td>
     </tr>
     <tr>
@@ -581,12 +581,12 @@ Response
     </tr>
     <tr>
         <td>ID</td>
-        <td>Const</td>
-        <td>Mode</td>
-        <td>Cmd</td>
-        <td>Const ^ 0xff</td>
-        <td>Mode ^ 0xff</td>
-        <td>Cmd ^ 0xff</td>
+        <td>const</td>
+        <td>mode</td>
+        <td>cmd</td>
+        <td>const ^ 0xff</td>
+        <td>mode ^ 0xff</td>
+        <td>cmd ^ 0xff</td>
         <td></td>
         <td>ready state</td>
         <td>gamepad version minor</td>
@@ -637,12 +637,12 @@ Send
     </tr>
     <tr>
         <td>ID</td>
-        <td>Const</td>
-        <td>Mode</td>
-        <td>Cmd</td>
-        <td>Const ^ 0xff</td>
-        <td>Mode ^ 0xf</td>
-        <td>Cmd ^ 0xf</td>
+        <td>const</td>
+        <td>mode</td>
+        <td>cmd</td>
+        <td>const ^ 0xff</td>
+        <td>mode ^ 0xf</td>
+        <td>cmd ^ 0xf</td>
         <td></td>
     </tr>
     <tr>
@@ -676,19 +676,19 @@ Response
     </tr>
     <tr>
         <td>ID</td>
-        <td>Const</td>
-        <td>Mode</td>
-        <td>Cmd</td>
-        <td>Const ^ 0xff</td>
-        <td>Mode ^ 0xff</td>
-        <td>Cmd ^ 0xff</td>
+        <td>const</td>
+        <td>mode</td>
+        <td>cmd</td>
+        <td>const ^ 0xff</td>
+        <td>mode ^ 0xff</td>
+        <td>cmd ^ 0xff</td>
         <td></td>
         <td>ready state</td>
         <td>gamepad version minor</td>
         <td>gamepad version major</td>
         <td>keyboard version minor</td>
         <td>keyboard version major</td>
-        <td>other bytes</td>
+        <td>unk</td>
     </tr>
     <tr>
         <td>01</td>
@@ -699,7 +699,7 @@ Response
         <td>0d</td>
         <td>0f</td>
         <td>00</td>
-        <td>aa</td>
+        <td>xx</td>
         <td>xx</td>
         <td>xx</td>
         <td>xx</td>
@@ -708,7 +708,7 @@ Response
     </tr>
 </table>
 
-You must send/read until byte **8** is **0xaa**, usually after the first init request.
+Initialization is successful if byte **8** contains **0xaa**.
 
 ## Write config
 
@@ -750,12 +750,12 @@ Send
     </tr>
     <tr>
         <td>ID</td>
-        <td>Const</td>
-        <td>Mode</td>
-        <td>Cmd</td>
-        <td>Const ^ 0xff</td>
-        <td>Mode ^ 0xf</td>
-        <td>Cmd ^ 0xf</td>
+        <td>const</td>
+        <td>mode</td>
+        <td>cmd</td>
+        <td>const ^ 0xff</td>
+        <td>mode ^ 0xf</td>
+        <td>cmd ^ 0xf</td>
         <td></td>
         <td>index</td>
         <td></td>
@@ -832,12 +832,12 @@ Send
     </tr>
     <tr>
         <td>ID</td>
-        <td>Const</td>
-        <td>Mode</td>
-        <td>Cmd</td>
-        <td>Const ^ 0xff</td>
-        <td>Mode ^ 0xf</td>
-        <td>Cmd ^ 0xf</td>
+        <td>const</td>
+        <td>mode</td>
+        <td>cmd</td>
+        <td>const ^ 0xff</td>
+        <td>mode ^ 0xf</td>
+        <td>cmd ^ 0xf</td>
         <td></td>
         <td>index</td>
         <td></td>
@@ -908,12 +908,12 @@ Send
     </tr>
     <tr>
         <td>ID</td>
-        <td>Const</td>
-        <td>Mode</td>
-        <td>Cmd</td>
-        <td>Const ^ 0xff</td>
-        <td>Mode ^ 0xf</td>
-        <td>Cmd ^ 0xf</td>
+        <td>const</td>
+        <td>mode</td>
+        <td>cmd</td>
+        <td>const ^ 0xff</td>
+        <td>mode ^ 0xf</td>
+        <td>cmd ^ 0xf</td>
         <td></td>
         <td>index</td>
         <td></td>
@@ -979,12 +979,12 @@ Send
     </tr>
     <tr>
         <td>ID</td>
-        <td>Const</td>
-        <td>Mode</td>
-        <td>Cmd</td>
-        <td>Const ^ 0xff</td>
-        <td>Mode ^ 0xf</td>
-        <td>Cmd ^ 0xf</td>
+        <td>const</td>
+        <td>mode</td>
+        <td>cmd</td>
+        <td>const ^ 0xff</td>
+        <td>mode ^ 0xf</td>
+        <td>cmd ^ 0xf</td>
         <td></td>
         <td>index</td>
         <td></td>
@@ -1054,12 +1054,12 @@ Send
     </tr>
     <tr>
         <td>ID</td>
-        <td>Const</td>
-        <td>Mode</td>
-        <td>Cmd</td>
-        <td>Const ^ 0xff</td>
-        <td>Mode ^ 0xf</td>
-        <td>Cmd ^ 0xf</td>
+        <td>const</td>
+        <td>mode</td>
+        <td>cmd</td>
+        <td>const ^ 0xff</td>
+        <td>mode ^ 0xf</td>
+        <td>cmd ^ 0xf</td>
         <td></td>
         <td>index</td>
         <td></td>
@@ -1134,12 +1134,12 @@ Send
     </tr>
     <tr>
         <td>ID</td>
-        <td>Const</td>
-        <td>Mode</td>
-        <td>Cmd</td>
-        <td>Const ^ 0xff</td>
-        <td>Mode ^ 0xf</td>
-        <td>Cmd ^ 0xf</td>
+        <td>const</td>
+        <td>mode</td>
+        <td>cmd</td>
+        <td>const ^ 0xff</td>
+        <td>mode ^ 0xf</td>
+        <td>cmd ^ 0xf</td>
         <td></td>
         <td>index</td>
         <td></td>
@@ -1200,12 +1200,12 @@ Send
     </tr>
     <tr>
         <td>ID</td>
-        <td>Const</td>
-        <td>Mode</td>
-        <td>Cmd</td>
-        <td>Const ^ 0xff</td>
-        <td>Mode ^ 0xf</td>
-        <td>Cmd ^ 0xf</td>
+        <td>const</td>
+        <td>mode</td>
+        <td>cmd</td>
+        <td>const ^ 0xff</td>
+        <td>mode ^ 0xf</td>
+        <td>cmd ^ 0xf</td>
         <td></td>
         <td>index</td>
         <td></td>
@@ -1242,12 +1242,12 @@ Send
     </tr>
     <tr>
         <td>ID</td>
-        <td>Const</td>
-        <td>Mode</td>
-        <td>Cmd</td>
-        <td>Const ^ 0xff</td>
-        <td>Mode ^ 0xf</td>
-        <td>Cmd ^ 0xf</td>
+        <td>const</td>
+        <td>mode</td>
+        <td>cmd</td>
+        <td>const ^ 0xff</td>
+        <td>mode ^ 0xf</td>
+        <td>cmd ^ 0xf</td>
         <td></td>
         <td>index</td>
         <td></td>
@@ -1283,12 +1283,12 @@ Send
     </tr>
     <tr>
         <td>ID</td>
-        <td>Const</td>
-        <td>Mode</td>
-        <td>Cmd</td>
-        <td>Const ^ 0xff</td>
-        <td>Mode ^ 0xf</td>
-        <td>Cmd ^ 0xf</td>
+        <td>const</td>
+        <td>mode</td>
+        <td>cmd</td>
+        <td>const ^ 0xff</td>
+        <td>mode ^ 0xf</td>
+        <td>cmd ^ 0xf</td>
         <td></td>
     </tr>
     <tr>
@@ -1325,12 +1325,12 @@ Response
     </tr>
     <tr>
         <td>ID</td>
-        <td>Const</td>
-        <td>Mode</td>
-        <td>Cmd</td>
-        <td>Const ^ 0xff</td>
-        <td>Mode ^ 0xff</td>
-        <td>Cmd ^ 0xff</td>
+        <td>const</td>
+        <td>mode</td>
+        <td>cmd</td>
+        <td>const ^ 0xff</td>
+        <td>mode ^ 0xff</td>
+        <td>cmd ^ 0xff</td>
         <td></td>
         <td>ready state</td>
         <td>gamepad version minor</td>
@@ -1339,7 +1339,7 @@ Response
         <td>keyboard version major</td>
         <td></td>
         <td colspan="2">checksum</td>
-        <td>other bytes</td>
+        <td>unk</td>
     </tr>
     <tr>
         <td>01</td>
@@ -1381,12 +1381,12 @@ Send
     </tr>
     <tr>
         <td>ID</td>
-        <td>Const</td>
-        <td>Mode</td>
-        <td>Cmd</td>
-        <td>Const ^ 0xff</td>
-        <td>Mode ^ 0xf</td>
-        <td>Cmd ^ 0xf</td>
+        <td>const</td>
+        <td>mode</td>
+        <td>cmd</td>
+        <td>const ^ 0xff</td>
+        <td>mode ^ 0xf</td>
+        <td>cmd ^ 0xf</td>
         <td></td>
     </tr>
     <tr>
