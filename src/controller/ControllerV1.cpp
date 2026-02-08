@@ -17,8 +17,6 @@
  */
 #include <format>
 #include <cstring>
-#include <thread>
-#include <chrono>
 
 #include "ControllerV1.h"
 #include "../Utils.h"
@@ -95,20 +93,9 @@ namespace OWC {
 
     // this call also puts version numbers into resp buffer
     bool ControllerV1::initCommunication(const Mode mode) const {
-        using namespace std::chrono_literals;
-
         prepareSendPacket(mode, CMD::Check);
-        if (!sendReadRequest())
-            return false;
 
-        while (respBuf[8] != 0xaa) { // ready state
-            std::this_thread::sleep_for(500ms);
-
-            if (!sendReadRequest())
-                return false;
-        }
-
-        return true;
+        return sendReadRequest() && (respBuf[8] == 0xaa);
     }
 
     bool ControllerV1::sendReadRequest() const {
