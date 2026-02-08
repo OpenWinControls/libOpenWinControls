@@ -170,7 +170,7 @@ Response
         <td>0e</td>
         <td>0f</td>
         <td>00</td>
-        <td>aa</td>
+        <td>xx</td>
         <td>xx</td>
         <td>xx</td>
         <td>xx</td>
@@ -179,7 +179,7 @@ Response
     </tr>
 </table>
 
-You must send/read until byte **8** is **0xaa**, usually after the first init request.
+Repeat until byte **8** is **0xaa** (ready).
 
 Gamepad version is the xbox360 part of the controller, keyboard is the keyboard/mouse part.
 
