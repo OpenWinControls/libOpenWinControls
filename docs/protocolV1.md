@@ -108,10 +108,10 @@ Send
     </tr>
     <tr>
         <td>ID</td>
-        <td>Unk</td>
+        <td>Const</td>
         <td>Mode</td>
         <td>Cmd</td>
-        <td>Unk ^ 0xff</td>
+        <td>Const ^ 0xff</td>
         <td>Mode ^ 0xf</td>
         <td>Cmd ^ 0xf</td>
         <td></td>
@@ -147,10 +147,10 @@ Response
     </tr>
     <tr>
         <td>ID</td>
-        <td>Unk</td>
+        <td>Const</td>
         <td>Mode</td>
         <td>Cmd</td>
-        <td>Unk ^ 0xff</td>
+        <td>Const ^ 0xff</td>
         <td>Mode ^ 0xff</td>
         <td>Cmd ^ 0xff</td>
         <td></td>
@@ -204,10 +204,10 @@ Send
     </tr>
     <tr>
         <td>ID</td>
-        <td>Unk</td>
+        <td>Const</td>
         <td>Mode</td>
         <td>Cmd</td>
-        <td>Unk ^ 0xff</td>
+        <td>Const ^ 0xff</td>
         <td>Mode ^ 0xf</td>
         <td>Cmd ^ 0xf</td>
         <td></td>
@@ -403,10 +403,10 @@ Send
     </tr>
     <tr>
         <td>ID</td>
-        <td>Unk</td>
+        <td>Const</td>
         <td>Mode</td>
         <td>Cmd</td>
-        <td>Unk ^ 0xff</td>
+        <td>Const ^ 0xff</td>
         <td>Mode ^ 0xf</td>
         <td>Cmd ^ 0xf</td>
         <td></td>
@@ -539,10 +539,10 @@ Send
     </tr>
     <tr>
         <td>ID</td>
-        <td>Unk</td>
+        <td>Const</td>
         <td>Mode</td>
         <td>Cmd</td>
-        <td>Unk ^ 0xff</td>
+        <td>Const ^ 0xff</td>
         <td>Mode ^ 0xf</td>
         <td>Cmd ^ 0xf</td>
         <td></td>
@@ -581,10 +581,10 @@ Response
     </tr>
     <tr>
         <td>ID</td>
-        <td>Unk</td>
+        <td>Const</td>
         <td>Mode</td>
         <td>Cmd</td>
-        <td>Unk ^ 0xff</td>
+        <td>Const ^ 0xff</td>
         <td>Mode ^ 0xff</td>
         <td>Cmd ^ 0xff</td>
         <td></td>
@@ -637,10 +637,10 @@ Send
     </tr>
     <tr>
         <td>ID</td>
-        <td>Unk</td>
+        <td>Const</td>
         <td>Mode</td>
         <td>Cmd</td>
-        <td>Unk ^ 0xff</td>
+        <td>Const ^ 0xff</td>
         <td>Mode ^ 0xf</td>
         <td>Cmd ^ 0xf</td>
         <td></td>
@@ -676,10 +676,10 @@ Response
     </tr>
     <tr>
         <td>ID</td>
-        <td>Unk</td>
+        <td>Const</td>
         <td>Mode</td>
         <td>Cmd</td>
-        <td>Unk ^ 0xff</td>
+        <td>Const ^ 0xff</td>
         <td>Mode ^ 0xff</td>
         <td>Cmd ^ 0xff</td>
         <td></td>
@@ -750,10 +750,10 @@ Send
     </tr>
     <tr>
         <td>ID</td>
-        <td>Unk</td>
+        <td>Const</td>
         <td>Mode</td>
         <td>Cmd</td>
-        <td>Unk ^ 0xff</td>
+        <td>Const ^ 0xff</td>
         <td>Mode ^ 0xf</td>
         <td>Cmd ^ 0xf</td>
         <td></td>
@@ -832,10 +832,10 @@ Send
     </tr>
     <tr>
         <td>ID</td>
-        <td>Unk</td>
+        <td>Const</td>
         <td>Mode</td>
         <td>Cmd</td>
-        <td>Unk ^ 0xff</td>
+        <td>Const ^ 0xff</td>
         <td>Mode ^ 0xf</td>
         <td>Cmd ^ 0xf</td>
         <td></td>
@@ -908,10 +908,10 @@ Send
     </tr>
     <tr>
         <td>ID</td>
-        <td>Unk</td>
+        <td>Const</td>
         <td>Mode</td>
         <td>Cmd</td>
-        <td>Unk ^ 0xff</td>
+        <td>Const ^ 0xff</td>
         <td>Mode ^ 0xf</td>
         <td>Cmd ^ 0xf</td>
         <td></td>
@@ -979,10 +979,10 @@ Send
     </tr>
     <tr>
         <td>ID</td>
-        <td>Unk</td>
+        <td>Const</td>
         <td>Mode</td>
         <td>Cmd</td>
-        <td>Unk ^ 0xff</td>
+        <td>Const ^ 0xff</td>
         <td>Mode ^ 0xf</td>
         <td>Cmd ^ 0xf</td>
         <td></td>
@@ -1054,10 +1054,10 @@ Send
     </tr>
     <tr>
         <td>ID</td>
-        <td>Unk</td>
+        <td>Const</td>
         <td>Mode</td>
         <td>Cmd</td>
-        <td>Unk ^ 0xff</td>
+        <td>Const ^ 0xff</td>
         <td>Mode ^ 0xf</td>
         <td>Cmd ^ 0xf</td>
         <td></td>
@@ -1134,10 +1134,10 @@ Send
     </tr>
     <tr>
         <td>ID</td>
-        <td>Unk</td>
+        <td>Const</td>
         <td>Mode</td>
         <td>Cmd</td>
-        <td>Unk ^ 0xff</td>
+        <td>Const ^ 0xff</td>
         <td>Mode ^ 0xf</td>
         <td>Cmd ^ 0xf</td>
         <td></td>
@@ -1200,10 +1200,10 @@ Send
     </tr>
     <tr>
         <td>ID</td>
-        <td>Unk</td>
+        <td>Const</td>
         <td>Mode</td>
         <td>Cmd</td>
-        <td>Unk ^ 0xff</td>
+        <td>Const ^ 0xff</td>
         <td>Mode ^ 0xf</td>
         <td>Cmd ^ 0xf</td>
         <td></td>
@@ -1242,10 +1242,10 @@ Send
     </tr>
     <tr>
         <td>ID</td>
-        <td>Unk</td>
+        <td>Const</td>
         <td>Mode</td>
         <td>Cmd</td>
-        <td>Unk ^ 0xff</td>
+        <td>Const ^ 0xff</td>
         <td>Mode ^ 0xf</td>
         <td>Cmd ^ 0xf</td>
         <td></td>
@@ -1283,10 +1283,10 @@ Send
     </tr>
     <tr>
         <td>ID</td>
-        <td>Unk</td>
+        <td>Const</td>
         <td>Mode</td>
         <td>Cmd</td>
-        <td>Unk ^ 0xff</td>
+        <td>Const ^ 0xff</td>
         <td>Mode ^ 0xf</td>
         <td>Cmd ^ 0xf</td>
         <td></td>
@@ -1325,10 +1325,10 @@ Response
     </tr>
     <tr>
         <td>ID</td>
-        <td>Unk</td>
+        <td>Const</td>
         <td>Mode</td>
         <td>Cmd</td>
-        <td>Unk ^ 0xff</td>
+        <td>Const ^ 0xff</td>
         <td>Mode ^ 0xff</td>
         <td>Cmd ^ 0xff</td>
         <td></td>
@@ -1381,10 +1381,10 @@ Send
     </tr>
     <tr>
         <td>ID</td>
-        <td>Unk</td>
+        <td>Const</td>
         <td>Mode</td>
         <td>Cmd</td>
-        <td>Unk ^ 0xff</td>
+        <td>Const ^ 0xff</td>
         <td>Mode ^ 0xf</td>
         <td>Cmd ^ 0xf</td>
         <td></td>
