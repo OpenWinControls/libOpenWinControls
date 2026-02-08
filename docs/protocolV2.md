@@ -115,11 +115,16 @@ Endpoint 0x81 IN, sent by the controller every 1 second
     </tr>
 </table>
 
----
+
+# Packets
 
 > NOTE:
 > 
 > The following sections may be inaccurate
+
+Rejected commands return **0xe2** in byte **8**.
+
+Unless stated otherwise, checksum is the sum of all bytes after it.
 
 ## Init communication
 
@@ -133,7 +138,7 @@ Send
     </tr>
     <tr>
         <td>ID</td>
-        <td>Unk</td>
+        <td>unk</td>
         <td></td>
     </tr>
     <tr>
@@ -160,10 +165,10 @@ Response
     </tr>
     <tr>
         <td>ID</td>
-        <td>Unk</td>
-        <td>Unk</td>
+        <td>unk</td>
+        <td>unk</td>
         <td></td>
-        <td>Unk</td>
+        <td>unk</td>
         <td></td>
         <td colspan="2">checksum</td>
         <td>ready state</td>
@@ -182,8 +187,6 @@ Response
         <td>00</td>
     </tr>
 </table>
-
-Checksum is the sum of all bytes after it.
 
 Send
 
@@ -195,7 +198,7 @@ Send
     </tr>
     <tr>
         <td>ID</td>
-        <td>Unk</td>
+        <td>unk</td>
         <td></td>
     </tr>
     <tr>
@@ -222,10 +225,10 @@ Response
     </tr>
     <tr>
         <td>ID</td>
-        <td>Unk</td>
-        <td>Unk</td>
+        <td>unk</td>
+        <td>unk</td>
         <td></td>
-        <td>Unk</td>
+        <td>unk</td>
         <td></td>
         <td colspan="2">checksum</td>
         <td>ready state</td>
@@ -244,14 +247,12 @@ Response
         <td>00</td>
     </tr>
 </table>
-
-Checksum is the sum of all bytes after it.
 
 Successful initialization requires both calls to return **0xaa** in byte **8**.
 
 ## Get firmware versions
 
-**unconfirmed, no firmware update available to compare, prefer status interrupt.**
+**unconfirmed, no firmware update to compare, prefer status interrupt.**
 
 Send
 
@@ -263,7 +264,7 @@ Send
     </tr>
     <tr>
         <td>ID</td>
-        <td>Unk</td>
+        <td>unk</td>
         <td></td>
     </tr>
     <tr>
@@ -295,11 +296,11 @@ Response
     </tr>
     <tr>
         <td>ID</td>
-        <td>Unk</td>
-        <td>Unk</td>
+        <td>unk</td>
+        <td>unk</td>
         <td></td>
-        <td>Unk</td>
-        <td>Unk</td>
+        <td>unk</td>
+        <td>unk</td>
         <td colspan="2">checksum</td>
         <td></td>
         <td></td>
@@ -327,7 +328,5 @@ Response
         <td>00</td>
     </tr>
 </table>
-
-checksum is the sum of all bytes after it.
 
 Gamepad version is the xbox360 part of the controller, keyboard is the keyboard/mouse part.
