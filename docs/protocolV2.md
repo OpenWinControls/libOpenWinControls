@@ -73,11 +73,27 @@ Custom key codes for gamepad mode:
 0x8016 - right stick down
 0x8017 - right stick left
 0x8018 - right stick right
+0x8019 - ???
+0x801a - ???
+0x801b - ???
+0x801c - ???
+0x801d - ???
+0x801e - ???
+0x801f - ???
+0x8020 - ???
 ```
 
-## Status interrupt
+## Configuration
 
-Endpoint 0x81 IN, sent by the controller every 1 second
+Configuration total size is 1024 bytes.
+
+The controller hardware supports up to 4 back buttons, GPD devices have 2 back buttons, thus button 3 and 4 sections can be ignored, even if not empty (default settings).
+
+The back button number **does not name a physical position on device**.
+
+# Status interrupt
+
+Endpoint 0x81 IN, sent by the controller every 1 second.
 
 <table>
     <tr>
