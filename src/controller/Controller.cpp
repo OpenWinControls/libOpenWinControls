@@ -241,7 +241,7 @@ namespace OWC {
     }
 
     void Controller::setRumble(const std::string &mode) const {
-        configu16[rumbleMode_offt] = rumbleStrToRumbleMode(mode);
+        configBuf[rumbleMode_offt] = rumbleStrToRumbleMode(mode);
     }
 
     void Controller::setLAnalogCenter(const int center) const {
@@ -425,7 +425,7 @@ namespace OWC {
     }
 
     std::string Controller::getRumbleMode() const {
-        return rumbleModeToString(configu16[rumbleMode_offt]);
+        return rumbleModeToString(configBuf[rumbleMode_offt]);
     }
 
     int Controller::getLAnalogCenter() const {

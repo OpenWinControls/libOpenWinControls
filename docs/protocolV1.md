@@ -464,7 +464,8 @@ Response
     </tr>
     <tr>
         <td colspan="2">right back button slot 4</td>
-        <td colspan="2">rumble mode</td>
+        <td>rumble mode</td>
+        <td></td>
         <td>win4 led mode</td>
         <td>win4 led color (R)</td>
         <td>win4 led color (G)</td>
@@ -488,6 +489,7 @@ Response
         <td>xx</td>
         <td>xx</td>
         <td>xx</td>
+        <td>00</td>
         <td>xx</td>
         <td>xx</td>
         <td>xx</td>
