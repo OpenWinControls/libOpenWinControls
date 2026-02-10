@@ -104,14 +104,14 @@ namespace OWC {
 
         if (HID_SEND_REPORT(gamepad, sendBuf, sendPacketLen) < 0) {
             if (logFn)
-                logFn(std::format(L"failed to send report: {}", hid_error(gamepad)));
+                writeLog(hid_error(gamepad));
 
             return false;
         }
 
         if (hid_get_input_report(gamepad, respBuf, respPacketLen) < 0) {
             if (logFn)
-                logFn(std::format(L"failed to get report: {}", hid_error(gamepad)));
+                writeLog(hid_error(gamepad));
 
             return false;
         }
@@ -125,7 +125,7 @@ namespace OWC {
 
         if (HID_SEND_REPORT(gamepad, sendBuf, sendPacketLen) < 0) {
             if (logFn)
-                logFn(std::format(L"failed to send report: {}", hid_error(gamepad)));
+                writeLog(hid_error(gamepad));
 
             return false;
         }
@@ -215,7 +215,7 @@ namespace OWC {
 
     bool ControllerV1::writeConfig() const {
         if (logFn)
-            logFn(std::format(L"config buffer to write:\n{}", bufferToString(configBuf, configBufLen)));
+            writeLog(bufferToString(configBuf, configBufLen));
 
         prepareSendPacket(Mode::Write, CMD::Check);
 
