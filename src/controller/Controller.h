@@ -83,8 +83,7 @@ namespace OWC {
         [[nodiscard]] virtual int getVID() const = 0;
         [[nodiscard]] virtual int getPID() const = 0;
 
-        void logSendPacketBytes(const uint8_t *buf, int sz, std::source_location loc = std::source_location::current()) const;
-        void logRespPacketBytes(const uint8_t *buf, int sz, std::source_location loc = std::source_location::current()) const;
+        void writeLog(const std::wstring &msg, std::source_location loc = std::source_location::current()) const;
         [[nodiscard]] bool setButtonKey(int offt, const std::string &key) const;
         void setBackButtonDelay(int offt, int delay) const;
         void setAnalogDeadzone(int offt, int value) const;

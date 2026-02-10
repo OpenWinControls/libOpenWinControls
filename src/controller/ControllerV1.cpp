@@ -100,7 +100,7 @@ namespace OWC {
 
     bool ControllerV1::sendReadRequest() const {
         prepareRespBuffer();
-        logSendPacketBytes(sendBuf, sendPacketLen);
+        writeLog(bufferToString(sendBuf, sendPacketLen));
 
         if (HID_SEND_REPORT(gamepad, sendBuf, sendPacketLen) < 0) {
             if (logFn)
@@ -116,12 +116,12 @@ namespace OWC {
             return false;
         }
 
-        logRespPacketBytes(respBuf, respPacketLen);
+        writeLog(bufferToString(respBuf, respPacketLen));
         return true;
     }
 
     bool ControllerV1::sendWriteRequest() const {
-        logSendPacketBytes(sendBuf, sendPacketLen);
+        writeLog(bufferToString(sendBuf, sendPacketLen));
 
         if (HID_SEND_REPORT(gamepad, sendBuf, sendPacketLen) < 0) {
             if (logFn)

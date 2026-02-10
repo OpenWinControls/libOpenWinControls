@@ -31,10 +31,14 @@ namespace OWC {
         delete[] configBuf;
     }
 
+    void Controller::writeLog(const std::wstring &msg, const std::source_location loc) const {
+        logFn(std::format(L"{}:{}\n{}", strTowstr(loc.function_name()), loc.line(), msg));
+    }
+
     bool Controller::init() {
         if (hid_init() != 0) {
             if (logFn)
-                logFn(std::format(L"failed to init hidapi: {}", hid_error(nullptr)));
+                writeLog(hid_error(nullptr));
 
             return false;
         }
@@ -43,7 +47,7 @@ namespace OWC {
 
         if (devInfo == nullptr) {
             if (logFn)
-                logFn(std::format(L"failed to enum hid devices: {}", hid_error(nullptr)));
+                writeLog(hid_error(nullptr));
 
             return false;
         }
@@ -60,20 +64,10 @@ namespace OWC {
         }
 
         if (gamepad == nullptr && logFn)
-            logFn(std::format(L"failed to open hid device: {}", hid_error(nullptr)));
+            writeLog(hid_error(nullptr));
 
         hid_free_enumeration(devInfo);
         return (gamepad != nullptr);
-    }
-
-    void Controller::logSendPacketBytes(const uint8_t *buf, const int sz, const std::source_location loc) const {
-        if (logFn)
-            logFn(std::format(L"{}:{}\nsend packet bytes:\n{}", strTowstr(loc.function_name()), loc.line(), bufferToString(buf, sz)));
-    }
-
-    void Controller::logRespPacketBytes(const uint8_t *buf, const int sz, const std::source_location loc) const {
-        if (logFn)
-            logFn(std::format(L"{}:{}\nresponse packet bytes:\n{}", strTowstr(loc.function_name()), loc.line(), bufferToString(buf, sz)));
     }
 
     bool Controller::setButtonKey(const int offt, const std::string &key) const {
