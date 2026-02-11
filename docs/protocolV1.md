@@ -515,7 +515,6 @@ Response
         <td>xx</td>
         <td>xx</td>
         <td>xx</td>
-        <td>xx</td>
         <td>00</td>
     </tr>
 </table>
