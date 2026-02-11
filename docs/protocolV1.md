@@ -1144,14 +1144,14 @@ Send
         <td></td>
         <td>index</td>
         <td></td>
-        <td colspan="2">left back button slot 1 delay</td>
-        <td colspan="2">left back button slot 2 delay</td>
-        <td colspan="2">left back button slot 3 delay</td>
-        <td colspan="2">left back button slot 4 delay</td>
-        <td colspan="2">right back button slot 1 delay</td>
-        <td colspan="2">right back button slot 2 delay</td>
-        <td colspan="2">right back button slot 3 delay</td>
-        <td colspan="2">right back button slot 4 delay</td>
+        <td colspan="2">left back button slot 1 start time</td>
+        <td colspan="2">left back button slot 2 start time</td>
+        <td colspan="2">left back button slot 3 start time</td>
+        <td colspan="2">left back button slot 4 start time</td>
+        <td colspan="2">right back button slot 1 start time</td>
+        <td colspan="2">right back button slot 2 start time</td>
+        <td colspan="2">right back button slot 3 start time</td>
+        <td colspan="2">right back button slot 4 start time</td>
         <td></td>
     </tr>
     <tr>
