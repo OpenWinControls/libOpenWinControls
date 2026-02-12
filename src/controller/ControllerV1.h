@@ -22,20 +22,20 @@
 namespace OWC {
     class OWC_EXPORT ControllerV1 final: public Controller {
     private:
-        enum struct Mode: uint8_t {
+        enum struct Mode: int {
             Read = 1,
-            Write
+            Write = 2
         };
 
-        enum struct CMD: uint8_t {
-            Check = 0,
+        enum struct CMD: int {
+            Init = 0,
             ReadWrite = 1,
             Checksum = 2,
             Commit = 3
         };
 
-        static constexpr int sendPacketLen = 33;
-        static constexpr int respPacketLen = 65;
+        static constexpr int sendPacketLen = 32 + 1;
+        static constexpr int respPacketLen = 64 + 1;
         static constexpr int configBufLen = respPacketLen * 2;
         std::pair<int, int> xVersion;
         std::pair<int, int> kVersion;
@@ -45,7 +45,7 @@ namespace OWC {
         [[nodiscard]] bool initCommunication(Mode mode) const;
         [[nodiscard]] bool sendReadRequest() const;
         [[nodiscard]] bool sendWriteRequest() const;
-        void prepareSendPacket(Mode mode, CMD cmd, uint8_t fragment = 0) const;
+        void prepareSendPacket(Mode mode, CMD cmd, uint8_t page = 0) const;
         void prepareRespBuffer() const;
         [[nodiscard]] int calcConfigChecksum(const uint8_t *buf) const;
         [[nodiscard]] bool isConfigValid(int configChecksum, Mode mode) const;

@@ -93,7 +93,7 @@ namespace OWC {
 
     // this call also puts version numbers into resp buffer
     bool ControllerV1::initCommunication(const Mode mode) const {
-        prepareSendPacket(mode, CMD::Check);
+        prepareSendPacket(mode, CMD::Init);
 
         return sendReadRequest() && (respBuf[8] == 0xaa);
     }
@@ -133,15 +133,15 @@ namespace OWC {
         return true;
     }
 
-    void ControllerV1::prepareSendPacket(const Mode mode, const CMD cmd, const uint8_t fragment) const {
+    void ControllerV1::prepareSendPacket(const Mode mode, const CMD cmd, const uint8_t page) const {
         const uint8_t umode = static_cast<uint8_t>(mode);
         const uint8_t ucmd = static_cast<uint8_t>(cmd);
 
         std::memset(sendBuf, 0, sendPacketLen);
 
         sendBuf[0] = 1; // report id
-        sendBuf[1] = 0xa5; // unk
-        sendBuf[3] = 0x5a; // unk inverted
+        sendBuf[1] = 0xa5; // const
+        sendBuf[3] = 0x5a; // const inverted
 
         // set mode and cmd, packed to the same byte
         sendBuf[2] |= umode << 4;
@@ -149,7 +149,7 @@ namespace OWC {
         sendBuf[4] |= (umode ^ 0xf) << 4; // mode inverted
         sendBuf[4] |= ucmd ^ 0xf; // cmd inverted
 
-        sendBuf[6] = fragment;
+        sendBuf[6] = page;
     }
 
     void ControllerV1::prepareRespBuffer() const {
@@ -175,7 +175,7 @@ namespace OWC {
     bool ControllerV1::readConfig() {
         if (!initCommunication(Mode::Read)) {
             if (logFn)
-                logFn(L"failed to read version");
+                writeLog(L"failed to read version");
 
             return false;
         }
@@ -185,7 +185,7 @@ namespace OWC {
         prepareSendPacket(Mode::Read, CMD::ReadWrite);
         if (!sendReadRequest()) {
             if (logFn)
-                logFn(L"failed to read config");
+                writeLog(L"failed to read config");
 
             return false;
         }
@@ -195,7 +195,7 @@ namespace OWC {
         prepareSendPacket(Mode::Read, CMD::ReadWrite, 1);
         if (!sendReadRequest()) {
             if (logFn)
-                logFn(L"failed to read config");
+                writeLog(L"failed to read config");
 
             return false;
         }
@@ -205,7 +205,7 @@ namespace OWC {
 
         if (!isConfigValid(calcConfigChecksum(configBuf), Mode::Read)) {
             if (logFn)
-                logFn(L"config memory checksum does not match");
+                writeLog(L"config memory checksum does not match");
 
             return false;
         }
@@ -217,11 +217,11 @@ namespace OWC {
         if (logFn)
             writeLog(bufferToString(configBuf, configBufLen));
 
-        prepareSendPacket(Mode::Write, CMD::Check);
+        prepareSendPacket(Mode::Write, CMD::Init);
 
         if (!initCommunication(Mode::Write)) {
             if (logFn)
-                logFn(L"failed to write config");
+                writeLog(L"failed to write config");
 
             return false;
         }
@@ -237,7 +237,7 @@ namespace OWC {
 
         if (!isConfigValid(calcConfigChecksum(configBuf), Mode::Write)) {
             if (logFn)
-                logFn(L"config memory checksum does not match");
+                writeLog(L"config memory checksum does not match");
 
             return false;
         }
@@ -245,7 +245,7 @@ namespace OWC {
         prepareSendPacket(Mode::Write, CMD::Commit);
         if (!sendWriteRequest()) {
             if (logFn)
-                logFn(L"failed to commit config to controller");
+                writeLog(L"failed to commit config to controller");
 
             return false;
         }
