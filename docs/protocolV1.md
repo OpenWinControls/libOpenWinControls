@@ -475,14 +475,14 @@ Response
         <td>right analog center</td>
         <td>right analog boundary</td>
         <td></td>
-        <td colspan="2">left back button slot 1 delay</td>
-        <td colspan="2">left back button slot 2 delay</td>
-        <td colspan="2">left back button slot 3 delay</td>
-        <td colspan="2">left back button macro delay/hold time</td>
-        <td colspan="2">right back button slot 1 delay</td>
-        <td colspan="2">right back button slot 2 delay</td>
-        <td colspan="2">right back button slot 3 delay</td>
-        <td colspan="2">right back button macro delay/hold time</td>
+        <td colspan="2">left back button slot 1 start time</td>
+        <td colspan="2">left back button slot 2 start time</td>
+        <td colspan="2">left back button slot 3 start time</td>
+        <td colspan="2">left back button macro start time</td>
+        <td colspan="2">right back button slot 1 start time</td>
+        <td colspan="2">right back button slot 2 start time</td>
+        <td colspan="2">right back button slot 3 start time</td>
+        <td colspan="2">right back button macro start time</td>
         <td></td>
     </tr>
     <tr>
