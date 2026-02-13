@@ -100,4 +100,13 @@ namespace OWC {
 
         return false;
     }
+
+    int getBytesSum(const uint8_t *buf, const int len) {
+        int ret = 0;
+
+        for (int i=0; i<len; ++i)
+            ret += buf[i];
+
+        return ret;
+    }
 }

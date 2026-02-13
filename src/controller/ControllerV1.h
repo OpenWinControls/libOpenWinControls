@@ -41,13 +41,15 @@ namespace OWC {
         std::pair<int, int> kVersion;
         uint8_t *sendBuf = nullptr;
         uint8_t *respBuf = nullptr;
+        uint8_t *configBuf = nullptr;
+        int8_t *configI8 = nullptr; // alias
+        uint16_t *configU16 = nullptr; // alias
 
         [[nodiscard]] bool initCommunication(Mode mode) const;
         [[nodiscard]] bool sendReadRequest() const;
         [[nodiscard]] bool sendWriteRequest() const;
         void prepareSendPacket(Mode mode, CMD cmd, uint8_t page = 0) const;
         void prepareRespBuffer() const;
-        [[nodiscard]] int calcConfigChecksum(const uint8_t *buf) const;
         [[nodiscard]] bool isConfigValid(int configChecksum, Mode mode) const;
         void parseVersion();
 
@@ -65,5 +67,21 @@ namespace OWC {
 
         [[nodiscard]] bool readConfig() override;
         [[nodiscard]] bool writeConfig() const override;
+        [[nodiscard]] bool setButton(Button btn, const std::string &key) const override;
+        [[nodiscard]] std::string getButton(Button btn) const override;
+        [[nodiscard]] bool setBackButton(int num, int slot, const std::string &key) const override;
+        [[nodiscard]] std::string getBackButton(int num, int slot) const override;
+        void setBackButtonStartTime(int num, int slot, int timeMs) const override;
+        [[nodiscard]] int getBackButtonStartTime(int num, int slot) const override;
+        void setRumble(const std::string &mode) const override;
+        [[nodiscard]] std::string getRumbleMode() const override;
+        void setLedMode(const std::string &mode) const override;
+        [[nodiscard]] std::string getLedMode() const override;
+        void setLedColor(int r, int g, int b) const override;
+        [[nodiscard]] std::tuple<int, int, int> getLedColor() const override;
+        void setAnalogCenter(int center, bool left) const override;
+        [[nodiscard]] int getAnalogCenter(bool left) const override;
+        void setAnalogBoundary(int boundary, bool left) const override;
+        [[nodiscard]] int getAnalogBoundary(bool left) const override;
     };
 }

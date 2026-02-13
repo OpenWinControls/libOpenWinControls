@@ -20,6 +20,7 @@
 
 #include "ControllerV1.h"
 #include "../Utils.h"
+#include "../include/HIDUsageIDMap.h"
 
 #ifdef _WIN32
 #define HID_SEND_REPORT hid_send_output_report
@@ -29,58 +30,11 @@
 
 namespace OWC {
     ControllerV1::ControllerV1(const int controllerFeatures) {
-        dpadUp_offt = 0;
-        dpadDown_offt = 1;
-        dpadLeft_offt = 2;
-        dpadRight_offt = 3;
-        a_offt = 4;
-        b_offt = 5;
-        x_offt = 6;
-        y_offt = 7;
-        leftAnalogUp_offt = 8;
-        leftAnalogDown_offt = 9;
-        leftAnalogLeft_offt = 10;
-        leftAnalogRight_offt = 11;
-        l3_offt = 12;
-        r3_offt = 13;
-        start_offt = 14;
-        select_offt = 15;
-        menu_offt = 16;
-        l1_offt = 17;
-        r1_offt = 18;
-        l2_offt = 19;
-        r2_offt = 20;
-        backBtnLeftKey1_offt = 25;
-        backBtnLeftKey2_offt = 26;
-        backBtnLeftKey3_offt = 27;
-        backBtnLeftKey4_offt = 28;
-        backBtnRightKey1_offt = 29;
-        backBtnRightKey2_offt = 30;
-        backBtnRightKey3_offt = 31;
-        backBtnRightKey4_offt = 32;
-        rumbleMode_offt = 33;
-        backBtnLeftKey1Delay_offt = 40;
-        backBtnLeftKey2Delay_offt = 41;
-        backBtnLeftKey3Delay_offt = 42;
-        backBtnLeftKey4Delay_offt = 43;
-        backBtnRightKey1Delay_offt = 44;
-        backBtnRightKey2Delay_offt = 45;
-        backBtnRightKey3Delay_offt = 46;
-        backBtnRightKey4Delay_offt = 47;
-        ledMode_offt = 68;
-        ledColorR_offt = 69;
-        ledColorG_offt = 70;
-        ledColorB_offt = 71;
-        leftAnalogCenter_offt = 72;
-        leftAnalogBoundary_offt = 73;
-        rightAnalogCenter_offt = 74;
-        rightAnalogBoundary_offt = 75;
-
         sendBuf = new uint8_t[sendPacketLen];
         respBuf = new uint8_t[respPacketLen];
         configBuf = new uint8_t[configBufLen];
-        configi8 = reinterpret_cast<int8_t *>(configBuf);
-        configu16 = reinterpret_cast<uint16_t *>(configBuf);
+        configI8 = reinterpret_cast<int8_t *>(configBuf);
+        configU16 = reinterpret_cast<uint16_t *>(configBuf);
         features = controllerFeatures;
 
         std::memset(configBuf, 0, configBufLen);
@@ -89,6 +43,7 @@ namespace OWC {
     ControllerV1::~ControllerV1() {
         delete[] sendBuf;
         delete[] respBuf;
+        delete[] configBuf;
     }
 
     // this call also puts version numbers into resp buffer
@@ -158,13 +113,17 @@ namespace OWC {
         respBuf[0] = 1; // report id
     }
 
-    int ControllerV1::calcConfigChecksum(const uint8_t *buf) const {
-        int ret = 0;
+    bool ControllerV1::isConfigValid(const int configChecksum, const Mode mode) const {
+        prepareSendPacket(mode, CMD::Checksum);
 
-        for (int i=0; i<configBufLen; ++i)
-            ret += buf[i];
+        if (!sendReadRequest()) {
+            if (logFn)
+                writeLog(L"failed to send checksum request");
 
-        return ret;
+            return false;
+        }
+
+        return (reinterpret_cast<uint16_t *>(respBuf)[12]) == configChecksum;
     }
 
     void ControllerV1::parseVersion() {
@@ -203,7 +162,7 @@ namespace OWC {
         // real packet size is 64, start from there
         std::memcpy(configBuf + respPacketLen - 1, respBuf, respPacketLen);
 
-        if (!isConfigValid(calcConfigChecksum(configBuf), Mode::Read)) {
+        if (!isConfigValid(getBytesSum(configBuf, configBufLen), Mode::Read)) {
             if (logFn)
                 writeLog(L"config memory checksum does not match");
 
@@ -235,7 +194,7 @@ namespace OWC {
                 return false;
         }
 
-        if (!isConfigValid(calcConfigChecksum(configBuf), Mode::Write)) {
+        if (!isConfigValid(getBytesSum(configBuf, configBufLen), Mode::Write)) {
             if (logFn)
                 writeLog(L"config memory checksum does not match");
 
@@ -253,16 +212,216 @@ namespace OWC {
         return true;
     }
 
-    bool ControllerV1::isConfigValid(const int configChecksum, const Mode mode) const {
-        prepareSendPacket(mode, CMD::Checksum);
-
-        if (!sendReadRequest()) {
-            if (logFn)
-                logFn(L"failed to send checksum request");
-
-            return false;
+    bool ControllerV1::setButton(const Button btn, const std::string &key) const {
+        switch (btn) {
+            case Button::KBD_DPAD_UP:
+                return setButtonKey(configU16, key);
+            case Button::KBD_DPAD_DOWN:
+                return setButtonKey(configU16 + 1, key);
+            case Button::KBD_DPAD_LEFT:
+                return setButtonKey(configU16 + 2, key);
+            case Button::KBD_DPAD_RIGHT:
+                return setButtonKey(configU16 + 3, key);
+            case Button::KBD_A:
+                return setButtonKey(configU16 + 4, key);
+            case Button::KBD_B:
+                return setButtonKey(configU16 + 5, key);
+            case Button::KBD_X:
+                return setButtonKey(configU16 + 6, key);
+            case Button::KBD_Y:
+                return setButtonKey(configU16 + 7, key);
+            case Button::KBD_LANALOG_UP:
+                return setButtonKey(configU16 + 8, key);
+            case Button::KBD_LANALOG_DOWN:
+                return setButtonKey(configU16 + 9, key);
+            case Button::KBD_LANALOG_LEFT:
+                return setButtonKey(configU16 + 10, key);
+            case Button::KBD_LANALOG_RIGHT:
+                return setButtonKey(configU16 + 11, key);
+            case Button::KBD_L3:
+                return setButtonKey(configU16 + 12, key);
+            case Button::KBD_R3:
+                return setButtonKey(configU16 + 13, key);
+            case Button::KBD_START:
+                return setButtonKey(configU16 + 14, key);
+            case Button::KBD_SELECT:
+                return setButtonKey(configU16 + 15, key);
+            case Button::KBD_MENU:
+                return setButtonKey(configU16 + 16, key);
+            case Button::KBD_L1:
+                return setButtonKey(configU16 + 17, key);
+            case Button::KBD_R1:
+                return setButtonKey(configU16 + 18, key);
+            case Button::KBD_L2:
+                return setButtonKey(configU16 + 19, key);
+            case Button::KBD_R2:
+                return setButtonKey(configU16 + 20, key);
+            default:
+                break;
         }
 
-        return (reinterpret_cast<uint16_t *>(respBuf)[12]) == configChecksum;
+        return false;
+    }
+
+    std::string ControllerV1::getButton(const Button btn) const {
+        uint16_t key;
+
+        switch (btn) {
+            case Button::KBD_DPAD_UP:
+                key = configU16[0];
+                break;
+            case Button::KBD_DPAD_DOWN:
+                key = configU16[1];
+                break;
+            case Button::KBD_DPAD_LEFT:
+                key = configU16[2];
+                break;
+            case Button::KBD_DPAD_RIGHT:
+                key = configU16[3];
+                break;
+            case Button::KBD_A:
+                key = configU16[4];
+                break;
+            case Button::KBD_B:
+                key = configU16[5];
+                break;
+            case Button::KBD_X:
+                key = configU16[6];
+                break;
+            case Button::KBD_Y:
+                key = configU16[7];
+                break;
+            case Button::KBD_LANALOG_UP:
+                key = configU16[8];
+                break;
+            case Button::KBD_LANALOG_DOWN:
+                key = configU16[9];
+                break;
+            case Button::KBD_LANALOG_LEFT:
+                key = configU16[10];
+                break;
+            case Button::KBD_LANALOG_RIGHT:
+                key = configU16[11];
+                break;
+            case Button::KBD_L3:
+                key = configU16[12];
+                break;
+            case Button::KBD_R3:
+                key = configU16[13];
+                break;
+            case Button::KBD_START:
+                key = configU16[14];
+                break;
+            case Button::KBD_SELECT:
+                key = configU16[15];
+                break;
+            case Button::KBD_MENU:
+                key = configU16[16];
+                break;
+            case Button::KBD_L1:
+                key = configU16[17];
+                break;
+            case Button::KBD_R1:
+                key = configU16[18];
+                break;
+            case Button::KBD_L2:
+                key = configU16[19];
+                break;
+            case Button::KBD_R2:
+                key = configU16[20];
+                break;
+            default:
+                return "";
+        }
+
+        try {
+            return HIDUsageIDMap.at(key);
+
+        } catch (const std::out_of_range &ex) {
+            if (logFn)
+                writeLog(std::format(L"failed to find key: {:x}", key));
+
+            return "";
+        }
+    }
+
+    bool ControllerV1::setBackButton(const int num, const int slot, const std::string &key) const {
+        const int pos = (num == 1 ? 25:29) + std::clamp(slot, 1, 4) - 1;
+
+        return setButtonKey(configU16 + pos, key);
+    }
+
+    std::string ControllerV1::getBackButton(const int num, const int slot) const {
+        const int pos = (num == 1 ? 25:29) + std::clamp(slot, 1, 4) - 1;
+
+        try {
+            return HIDUsageIDMap.at(configU16[pos]);
+
+        } catch (const std::out_of_range &ex) {
+            if (logFn)
+                writeLog(std::format(L"failed to find key: {:x}", configU16[pos]));
+
+            return "";
+        }
+    }
+
+    void ControllerV1::setBackButtonStartTime(const int num, const int slot, const int timeMs) const {
+        const int pos = (num == 1 ? 40:44) + std::clamp(slot, 1, 4) - 1;
+
+        setBackButtonTime(configU16 + pos, timeMs);
+    }
+
+    int ControllerV1::getBackButtonStartTime(const int num, const int slot) const {
+        const int pos = (num == 1 ? 40:44) + std::clamp(slot, 1, 4) - 1;
+
+        return configU16[pos];
+    }
+
+    void ControllerV1::setRumble(const std::string &mode) const {
+        configBuf[66] = rumbleStrToRumbleMode(mode);
+    }
+
+    std::string ControllerV1::getRumbleMode() const {
+        return rumbleModeToString(configBuf[66]);
+    }
+
+    void ControllerV1::setLedMode(const std::string &mode) const {
+        configBuf[68] = ledModeStrToLedMode(mode);
+
+        if (configBuf[68] == 0x21) // rotate also resets the color
+            setLedColor(0xff, 0, 0);
+    }
+
+    std::string ControllerV1::getLedMode() const {
+        return ledModeToString(configBuf[68]);
+    }
+
+    void ControllerV1::setLedColor(const int r, const int g, const int b) const {
+        if (configBuf[68] == 0 || configBuf[68] == 0x21)
+            return;
+
+        configBuf[69] = std::clamp(r, 0, 255);
+        configBuf[70] = std::clamp(g, 0, 255);
+        configBuf[71] = std::clamp(b, 0, 255);
+    }
+
+    std::tuple<int, int, int> ControllerV1::getLedColor() const {
+        return std::make_tuple(configBuf[69], configBuf[70], configBuf[71]);
+    }
+
+    void ControllerV1::setAnalogCenter(const int center, const bool left) const {
+        setAnalogDeadzone(configI8 + (left ? 72:74), center);
+    }
+
+    void ControllerV1::setAnalogBoundary(const int boundary, const bool left) const {
+        setAnalogDeadzone(configI8 + (left ? 73:75), boundary);
+    }
+
+    int ControllerV1::getAnalogCenter(const bool left) const {
+        return configI8[left ? 72:74];
+    }
+
+    int ControllerV1::getAnalogBoundary(const bool left) const {
+        return configI8[left ? 73:75];
     }
 }

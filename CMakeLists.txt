@@ -17,6 +17,7 @@ set(PROJECT_SRC
     src/include/export.h
     src/include/HIDUsageIDMap.h
     src/include/ControllerFeature.h
+    src/include/Button.h
 
     src/controller/Controller.h
     src/controller/Controller.cpp

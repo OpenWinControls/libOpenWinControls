@@ -17,15 +17,29 @@
  */
 #pragma once
 
-#include <cstdint>
-
 namespace OWC {
-    [[nodiscard]] std::wstring bufferToString(const uint8_t *buf, int sz);
-    [[nodiscard]] std::wstring strTowstr(const char *str);
-    [[nodiscard]] uint16_t rumbleStrToRumbleMode(std::string mode);
-    [[nodiscard]] std::string rumbleModeToString(uint16_t mode);
-    [[nodiscard]] uint8_t ledModeStrToLedMode(std::string mode);
-    [[nodiscard]] std::string ledModeToString(uint8_t mode);
-    [[nodiscard]] bool findHIDKeycode(const std::string &key, uint16_t &outCode);
-    [[nodiscard]] int getBytesSum(const uint8_t *buf, int len);
+    enum struct Button {
+        // keyboard&mode
+        KBD_A,
+        KBD_B,
+        KBD_X,
+        KBD_Y,
+        KBD_DPAD_UP,
+        KBD_DPAD_DOWN,
+        KBD_DPAD_LEFT,
+        KBD_DPAD_RIGHT,
+        KBD_LANALOG_UP,
+        KBD_LANALOG_DOWN,
+        KBD_LANALOG_LEFT,
+        KBD_LANALOG_RIGHT,
+        KBD_START,
+        KBD_SELECT,
+        KBD_MENU,
+        KBD_L1,
+        KBD_L2,
+        KBD_L3,
+        KBD_R1,
+        KBD_R2,
+        KBD_R3,
+    };
 }
