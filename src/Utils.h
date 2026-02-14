@@ -27,6 +27,7 @@ namespace OWC {
     [[nodiscard]] std::wstring bufferToString(const uint8_t *buf, int sz);
     [[nodiscard]] std::wstring strTowstr(const char *str);
     [[nodiscard]] bool findHIDKeycode(const std::string &key, uint16_t &outCode);
+    [[nodiscard]] bool findXinputKeycode(const std::string &key, uint16_t &outCode);
     [[nodiscard]] int getBytesSum(const uint8_t *buf, int len);
 
     [[nodiscard]] OWC_EXPORT std::string rumbleModeToString(RumbleMode mode);

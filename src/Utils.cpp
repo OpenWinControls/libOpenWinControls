@@ -22,6 +22,7 @@
 
 #include "Utils.h"
 #include "include/HIDUsageIDMap.h"
+#include "include/XinputUsageIDMap.h"
 
 namespace OWC {
     std::wstring bufferToString(const uint8_t *buf, const int sz) {
@@ -76,8 +77,9 @@ namespace OWC {
         return "Unknown";
     }
 
-    bool findHIDKeycode(const std::string &key, uint16_t &outCode) {
-        for (const auto &[code, str]: HIDUsageIDMap) {
+    [[nodiscard]]
+    static bool findKeyCode(const std::string &key, uint16_t &outCode, const bool hid) {
+        for (const auto &[code, str]: (hid ? HIDUsageIDMap:XinputUsageIDMap)) {
             if (key != str)
                 continue;
 
@@ -86,6 +88,14 @@ namespace OWC {
         }
 
         return false;
+    }
+
+    bool findHIDKeycode(const std::string &key, uint16_t &outCode) {
+        return findKeyCode(key, outCode, true);
+    }
+
+    bool findXinputKeycode(const std::string &key, uint16_t &outCode) {
+        return findKeyCode(key, outCode, false);
     }
 
     int getBytesSum(const uint8_t *buf, const int len) {
