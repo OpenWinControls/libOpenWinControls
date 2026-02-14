@@ -179,13 +179,7 @@ Response
     </tr>
 </table>
 
-Repeat until byte **8** is **0xaa** (ready).
-
-Gamepad version is the xbox360 part of the controller, keyboard is the keyboard/mouse part.
-
-GPD uses the code **Xyyy** for the gamepad and **Kyyy** for the keyboard/mouse in their official app for devices using this protocol.
-
-Example: X408 K407, this is version 4.8 and 4.7.
+Successful initialization returns **0xaa** in byte **8**.
 
 ## Get current config
 
