@@ -320,10 +320,10 @@ Response
         <td colspan="2">checksum</td>
         <td></td>
         <td></td>
-        <td>gamepad version minor</td>
-        <td>gamepad version major</td>
-        <td>keyboard version minor</td>
-        <td>keyboard version major</td>
+        <td>xinput version minor</td>
+        <td>xinput version major</td>
+        <td>keyboard&mouse version minor</td>
+        <td>keyboard&mouse version major</td>
         <td></td>
     </tr>
     <tr>
