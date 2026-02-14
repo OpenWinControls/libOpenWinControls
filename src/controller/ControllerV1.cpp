@@ -465,12 +465,12 @@ namespace OWC {
         setAnalogDeadzone(configI8 + (left ? 72:74), center);
     }
 
-    void ControllerV1::setAnalogBoundary(const int boundary, const bool left) const {
-        setAnalogDeadzone(configI8 + (left ? 73:75), boundary);
-    }
-
     int ControllerV1::getAnalogCenter(const bool left) const {
         return configI8[left ? 72:74];
+    }
+
+    void ControllerV1::setAnalogBoundary(const int boundary, const bool left) const {
+        setAnalogDeadzone(configI8 + (left ? 73:75), boundary);
     }
 
     int ControllerV1::getAnalogBoundary(const bool left) const {
