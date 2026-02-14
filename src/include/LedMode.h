@@ -17,18 +17,12 @@
  */
 #pragma once
 
-#include <cstdint>
-
-#include "include/export.h"
-#include "include/LedMode.h"
-#include "include/RumbleMode.h"
-
 namespace OWC {
-    [[nodiscard]] std::wstring bufferToString(const uint8_t *buf, int sz);
-    [[nodiscard]] std::wstring strTowstr(const char *str);
-    [[nodiscard]] bool findHIDKeycode(const std::string &key, uint16_t &outCode);
-    [[nodiscard]] int getBytesSum(const uint8_t *buf, int len);
-
-    [[nodiscard]] OWC_EXPORT std::string rumbleModeToString(RumbleMode mode);
-    [[nodiscard]] OWC_EXPORT std::string ledModeToString(LedMode mode);
+    enum struct LedMode: int {
+        Unknown = -1,
+        Off = 0,
+        Solid = 1,
+        Breathe = 2,
+        Rotate = 3
+    };
 }

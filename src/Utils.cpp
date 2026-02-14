@@ -44,49 +44,36 @@ namespace OWC {
         return std::wstring(ret.get());
     }
 
-    uint16_t rumbleStrToRumbleMode(std::string mode) {
-        std::transform(mode.begin(), mode.end(), mode.begin(), ::tolower);
-
-        if (mode == "low")
-            return 1;
-        else if (mode == "high")
-            return 2;
-
-        return 0;
-    }
-
-    std::string rumbleModeToString(const uint16_t mode) {
-        return mode == 0 ? "off" : (mode == 1 ? "low":"high");
-    }
-
-    uint8_t ledModeStrToLedMode(std::string mode) {
-        std::transform(mode.begin(), mode.end(), mode.begin(), ::tolower);
-
-        if (mode == "solid")
-            return 1;
-        else if (mode == "breathe")
-            return 0x11;
-        else if (mode == "rotate")
-            return 0x21;
-
-        return 0;
-    }
-
-    std::string ledModeToString(const uint8_t mode) {
+    std::string rumbleModeToString(const RumbleMode mode) {
         switch (mode) {
-            case 0:
-                return "off";
-            case 0x1:
-                return "solid";
-            case 0x11:
-                return "breathe";
-            case 0x21:
-                return "rotate";
+            case RumbleMode::Off:
+                return "Off";
+            case RumbleMode::Low:
+                return "Low";
+            case RumbleMode::High:
+                return "High";
             default:
                 break;
         }
 
-        return "unknown";
+        return "Unknown";
+    }
+
+    std::string ledModeToString(const LedMode mode) {
+        switch (mode) {
+            case LedMode::Off:
+                return "Off";
+            case LedMode::Solid:
+                return "Solid";
+            case LedMode::Breathe:
+                return "Breathe";
+            case LedMode::Rotate:
+                return "Rotate";
+            default:
+                break;
+        }
+
+        return "Unknown";
     }
 
     bool findHIDKeycode(const std::string &key, uint16_t &outCode) {

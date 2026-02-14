@@ -378,23 +378,74 @@ namespace OWC {
         return configU16[pos];
     }
 
-    void ControllerV1::setRumble(const std::string &mode) const {
-        configBuf[66] = rumbleStrToRumbleMode(mode);
+    void ControllerV1::setRumble(const RumbleMode mode) const {
+        switch (mode) {
+            case RumbleMode::Off:
+                configBuf[66] = 0;
+                break;
+            case RumbleMode::Low:
+                configBuf[66] = 1;
+                break;
+            case RumbleMode::High:
+                configBuf[66] = 2;
+                break;
+            default:
+                break;
+        }
     }
 
-    std::string ControllerV1::getRumbleMode() const {
-        return rumbleModeToString(configBuf[66]);
+    RumbleMode ControllerV1::getRumbleMode() const {
+        switch (configBuf[66]) {
+            case 0:
+                return RumbleMode::Off;
+            case 1:
+                return RumbleMode::Low;
+            case 2:
+                return RumbleMode::High;
+            default:
+                break;
+        }
+
+        return RumbleMode::Unknown;
     }
 
-    void ControllerV1::setLedMode(const std::string &mode) const {
-        configBuf[68] = ledModeStrToLedMode(mode);
-
-        if (configBuf[68] == 0x21) // rotate also resets the color
-            setLedColor(0xff, 0, 0);
+    void ControllerV1::setLedMode(const LedMode mode) const {
+        switch (mode) {
+            case LedMode::Off: {
+                configBuf[68] = 0;
+                setLedColor(0, 0, 0);
+            }
+                break;
+            case LedMode::Solid:
+                configBuf[68] = 1;
+                break;
+            case LedMode::Breathe:
+                configBuf[68] = 0x11;
+                break;
+            case LedMode::Rotate: {
+                configBuf[68] = 0x21;
+                setLedColor(0xff, 0, 0);
+            }
+            default:
+                break;
+        }
     }
 
-    std::string ControllerV1::getLedMode() const {
-        return ledModeToString(configBuf[68]);
+    LedMode ControllerV1::getLedMode() const {
+        switch (configBuf[68]) {
+            case 0:
+                return LedMode::Off;
+            case 1:
+                return LedMode::Solid;
+            case 0x11:
+                return LedMode::Breathe;
+            case 0x21:
+                return LedMode::Rotate;
+            default:
+                break;
+        }
+
+        return LedMode::Unknown;
     }
 
     void ControllerV1::setLedColor(const int r, const int g, const int b) const {

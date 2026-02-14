@@ -73,10 +73,10 @@ namespace OWC {
         [[nodiscard]] std::string getBackButton(int num, int slot) const override;
         void setBackButtonStartTime(int num, int slot, int timeMs) const override;
         [[nodiscard]] int getBackButtonStartTime(int num, int slot) const override;
-        void setRumble(const std::string &mode) const override;
-        [[nodiscard]] std::string getRumbleMode() const override;
-        void setLedMode(const std::string &mode) const override;
-        [[nodiscard]] std::string getLedMode() const override;
+        void setRumble(RumbleMode mode) const override;
+        [[nodiscard]] RumbleMode getRumbleMode() const override;
+        void setLedMode(LedMode mode) const override;
+        [[nodiscard]] LedMode getLedMode() const override;
         void setLedColor(int r, int g, int b) const override;
         [[nodiscard]] std::tuple<int, int, int> getLedColor() const override;
         void setAnalogCenter(int center, bool left) const override;

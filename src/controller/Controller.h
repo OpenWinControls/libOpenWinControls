@@ -24,6 +24,8 @@
 #include "../extern/hidapi/hidapi/hidapi.h"
 #include "../include/export.h"
 #include "../include/Button.h"
+#include "../include/LedMode.h"
+#include "../include/RumbleMode.h"
 
 namespace OWC {
     class OWC_EXPORT Controller {
@@ -52,10 +54,10 @@ namespace OWC {
         [[nodiscard]] virtual std::string getBackButton(int num, int slot) const = 0;
         virtual void setBackButtonStartTime(int num, int slot, int timeMs) const = 0;
         [[nodiscard]] virtual int getBackButtonStartTime(int num, int slot) const = 0;
-        virtual void setRumble(const std::string &mode) const = 0;
-        [[nodiscard]] virtual std::string getRumbleMode() const = 0;
-        virtual void setLedMode(const std::string &mode) const = 0;
-        [[nodiscard]] virtual std::string getLedMode() const = 0;
+        virtual void setRumble(RumbleMode mode) const = 0;
+        [[nodiscard]] virtual RumbleMode getRumbleMode() const = 0;
+        virtual void setLedMode(LedMode mode) const = 0;
+        [[nodiscard]] virtual LedMode getLedMode() const = 0;
         virtual void setLedColor(int r, int g, int b) const = 0;
         [[nodiscard]] virtual std::tuple<int, int, int> getLedColor() const = 0;
         virtual void setAnalogCenter(int center, bool left) const = 0;
