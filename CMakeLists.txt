@@ -16,6 +16,7 @@ set(BUILD_SHARED_LIBS ${O_BUILD_SHARED})
 set(PROJECT_SRC
     src/include/export.h
     src/include/HIDUsageIDMap.h
+    src/include/XinputUsageIDMap.h
     src/include/ControllerFeature.h
     src/include/Button.h
     src/include/LedMode.h
