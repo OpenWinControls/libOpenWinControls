@@ -17,6 +17,7 @@
  */
 #include <format>
 #include <cstring>
+#include <algorithm>
 
 #include "ControllerV2.h"
 #include "../Utils.h"
