@@ -378,6 +378,7 @@ Send
         <td></td>
         <td></td>
         <td>unk</td>
+        <td></td>
     </tr>
     <tr>
         <td>01</td>
@@ -502,6 +503,7 @@ Response
         <td colspan="2">left analog down</td>
         <td colspan="2">left analog left</td>
         <td colspan="2">left analog right</td>
+        <td></td>
     </tr>
     <tr>
         <td>01</td>
@@ -566,6 +568,7 @@ Response
         <td>xx</td>
         <td>xx</td>
         <td>xx</td>
+        <td>00</td>
     </tr>
 </table>
 
@@ -3532,6 +3535,7 @@ Send
         <td colspan="2">left analog down</td>
         <td colspan="2">left analog left</td>
         <td colspan="2">left analog right</td>
+        <td></td>
     </tr>
     <tr>
         <td>01</td>
@@ -3596,6 +3600,7 @@ Send
         <td>xx</td>
         <td>xx</td>
         <td>xx</td>
+        <td>00</td>
     </tr>
 </table>
 
