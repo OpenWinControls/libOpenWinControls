@@ -345,8 +345,6 @@ Response
     </tr>
 </table>
 
-Gamepad version is the xbox360 part of the controller, keyboard is the keyboard/mouse part.
-
 ## Get current config
 
 After sending the read command, applications must read _(get input report)_ until the end packet is received.
