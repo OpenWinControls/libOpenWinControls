@@ -109,9 +109,9 @@ Endpoint 0x81 IN, sent by the controller every 1 second.
     </tr>
     <tr>
         <td>ID</td>
-        <td>unk</td>
+        <td>const</td>
         <td>unused</td>
-        <td>unk ^ 0xff</td>
+        <td>const ^ 0xff</td>
         <td>unused ^ 0xff</td>
         <td></td>
         <td>version major</td>
@@ -154,7 +154,7 @@ Send
     </tr>
     <tr>
         <td>ID</td>
-        <td>unk</td>
+        <td>cmd</td>
         <td></td>
     </tr>
     <tr>
@@ -181,7 +181,7 @@ Response
     </tr>
     <tr>
         <td>ID</td>
-        <td>unk</td>
+        <td>cmd</td>
         <td>unk</td>
         <td></td>
         <td>unk</td>
@@ -214,7 +214,7 @@ Send
     </tr>
     <tr>
         <td>ID</td>
-        <td>unk</td>
+        <td>cmd</td>
         <td></td>
     </tr>
     <tr>
@@ -241,7 +241,7 @@ Response
     </tr>
     <tr>
         <td>ID</td>
-        <td>unk</td>
+        <td>cmd</td>
         <td>unk</td>
         <td></td>
         <td>unk</td>
@@ -280,7 +280,7 @@ Send
     </tr>
     <tr>
         <td>ID</td>
-        <td>unk</td>
+        <td>cmd</td>
         <td></td>
     </tr>
     <tr>
@@ -312,7 +312,7 @@ Response
     </tr>
     <tr>
         <td>ID</td>
-        <td>unk</td>
+        <td>cmd</td>
         <td>unk</td>
         <td></td>
         <td>unk</td>
