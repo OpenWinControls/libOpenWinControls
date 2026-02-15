@@ -2,7 +2,7 @@
 
 Multiplaftom C++ library to read/write GPD dual-mode controller settings.
 
-This exposes more features and control than what GPD has made available in their very limited official app.
+This exposes all known and working features of the GPD controller, way more than what GPD has made available in their very limited official app.
 
 ## Supported devices
 
@@ -13,12 +13,10 @@ This exposes more features and control than what GPD has made available in their
 - win mini 23/24
 - win 4
 
-All features supported, all buttons can be remapped
-
 ### Protocol v2
 
-- win 5 (**future, wip**)
-- win mini 25 (**future, wip**)
+- win 5
+- win mini 25
 
 ## Docs
 
