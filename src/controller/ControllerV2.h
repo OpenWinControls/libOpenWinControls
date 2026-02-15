@@ -27,6 +27,7 @@ namespace OWC {
         enum struct CMD: int {
             Init1 = 0x21,
             Init2 = 0x2b,
+            Version = 0x41,
             Read = 0x44,
             Write = 0x43,
             Commit1 = 0x27,
@@ -44,7 +45,7 @@ namespace OWC {
         uint16_t *configU16 = nullptr; // alias
         std::pair<int, int> version;
 
-        [[nodiscard]] bool readStatusInterrupt();
+        [[nodiscard]] bool readVersion();
         [[nodiscard]] bool initReadCommunication() const;
         [[nodiscard]] bool initWriteCommunication() const;
         [[nodiscard]] bool sendReadRequest(int *respBytesCount = nullptr) const;

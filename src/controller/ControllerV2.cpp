@@ -48,30 +48,14 @@ namespace OWC {
         delete[] configBuf;
     }
 
-    bool ControllerV2::readStatusInterrupt() {
-        int retry = 3;
+    bool ControllerV2::readVersion() {
+        prepareSendBuffer(CMD::Version);
 
-        while (retry > 0) {
-            std::memset(respBuf, 0, respPacketLen);
+        if (!sendReadRequest() || !isValidRespPacket())
+            return false;
 
-            if (hid_read_timeout(gamepad, respBuf, respPacketLen, 1000) < 0) {
-                if (logFn)
-                    writeLog(hid_error(gamepad));
-
-                return false;
-            }
-
-            writeLog(bufferToString(respBuf, respPacketLen));
-
-            if (respBuf[1] == 0xa5) {
-                version = std::make_pair(respBuf[6], respBuf[7]);
-                return true;
-            }
-
-            --retry;
-        }
-
-        return false;
+        version = std::make_pair(respBuf[12], respBuf[13]);
+        return true;
     }
 
     bool ControllerV2::initReadCommunication() const {
@@ -168,16 +152,16 @@ namespace OWC {
     bool ControllerV2::readConfig() {
         int respBytesCnt;
 
-        if (!readStatusInterrupt()) {
+        if (!initReadCommunication()) {
             if (logFn)
-                writeLog(L"failed to read version");
+                writeLog(L"failed to init communication");
 
             return false;
         }
 
-        if (!initReadCommunication()) {
+        if (!readVersion()) {
             if (logFn)
-                writeLog(L"failed to init communication");
+                writeLog(L"failed to read version");
 
             return false;
         }
