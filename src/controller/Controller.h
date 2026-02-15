@@ -39,6 +39,7 @@ namespace OWC {
 
         void writeLog(const std::wstring &msg, std::source_location loc = std::source_location::current()) const;
         [[nodiscard]] bool setButtonKey(uint16_t *btn, const std::string &key) const;
+        [[nodiscard]] bool setXinputKey(uint16_t *btn, const std::string &key) const;
         void setBackButtonTime(uint16_t *field, int time) const;
         void setAnalogDeadzone(int8_t *field, int value) const;
 

@@ -77,6 +77,49 @@ namespace OWC {
         return "Unknown";
     }
 
+    std::string emulationModeToString(const EmulationMode mode) {
+        switch (mode) {
+            case EmulationMode::Xinput:
+                return "Xinput";
+            case EmulationMode::KeyboardMouse:
+                return "Keyboard and mouse";
+            case EmulationMode::KeyboardSpecial:
+                return "Keyboard special mode";
+            default:
+                break;
+        }
+
+        return "Unknown";
+    }
+
+    std::string backButtonModeToString(const BackButtonMode mode) {
+        switch (mode) {
+            case BackButtonMode::Single:
+                return "Single button";
+            case BackButtonMode::Four:
+                return "Four buttons";
+            case BackButtonMode::Macro:
+                return "Macro";
+            default:
+                break;
+        }
+
+        return "Unknown";
+    }
+
+    std::string backButtonMacroTypeToString(const BackButtonMacroType type) {
+        switch (type) {
+            case BackButtonMacroType::Xinput:
+                return "Xinput";
+            case BackButtonMacroType::Keyboard:
+                return "Keyboard";
+            default:
+                break;
+        }
+
+        return "Unknown";
+    }
+
     [[nodiscard]]
     static bool findKeyCode(const std::string &key, uint16_t &outCode, const bool hid) {
         for (const auto &[code, str]: (hid ? HIDUsageIDMap:XinputUsageIDMap)) {

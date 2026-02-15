@@ -18,10 +18,8 @@
 #pragma once
 
 namespace OWC {
-    enum ControllerFeature: int {
-        DeadZoneControlV1 = 1,
-        ShoulderLedsV1 = 1 << 1,
-        RumbleV1 = 1 << 2,
-        XinputMappingV1 = 1 << 3
+    enum struct BackButtonMacroType: int {
+        Xinput = 0,
+        Keyboard = 1
     };
 }

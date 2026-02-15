@@ -18,14 +18,19 @@ set(PROJECT_SRC
     src/include/HIDUsageIDMap.h
     src/include/XinputUsageIDMap.h
     src/include/ControllerFeature.h
+    src/include/EmulationMode.h
     src/include/Button.h
     src/include/LedMode.h
     src/include/RumbleMode.h
+    src/include/BackButtonMode.h
+    src/include/BackButtonMacroType.h
 
     src/controller/Controller.h
     src/controller/Controller.cpp
     src/controller/ControllerV1.h
     src/controller/ControllerV1.cpp
+    src/controller/ControllerV2.h
+    src/controller/ControllerV2.cpp
 
     src/Utils.h
     src/Utils.cpp

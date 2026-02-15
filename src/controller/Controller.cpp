@@ -78,6 +78,16 @@ namespace OWC {
         return true;
     }
 
+    bool Controller::setXinputKey(uint16_t *btn, const std::string &key) const {
+        uint16_t keycode;
+
+        if (!findXinputKeycode(key, keycode))
+            return false;
+
+        *btn = keycode;
+        return true;
+    }
+
     void Controller::setBackButtonTime(uint16_t *field, const int time) const {
         *field = std::clamp(time, 0, INT16_MAX - 1);
     }

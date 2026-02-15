@@ -20,6 +20,9 @@
 #include <cstdint>
 
 #include "include/export.h"
+#include "include/EmulationMode.h"
+#include "include/BackButtonMode.h"
+#include "include/BackButtonMacroType.h"
 #include "include/LedMode.h"
 #include "include/RumbleMode.h"
 
@@ -32,4 +35,7 @@ namespace OWC {
 
     [[nodiscard]] OWC_EXPORT std::string rumbleModeToString(RumbleMode mode);
     [[nodiscard]] OWC_EXPORT std::string ledModeToString(LedMode mode);
+    [[nodiscard]] OWC_EXPORT std::string emulationModeToString(EmulationMode mode);
+    [[nodiscard]] OWC_EXPORT std::string backButtonModeToString(BackButtonMode mode);
+    [[nodiscard]] OWC_EXPORT std::string backButtonMacroTypeToString(BackButtonMacroType type);
 }
