@@ -23,6 +23,7 @@
 namespace OWC {
     // custom GPD codes
     static const std::map<int, std::string> XinputUsageIDMap = {
+        {0, "UNSET"},
         {0x8000, "DPAD_UP"},
         {0x8001, "DPAD_DOWN"},
         {0x8002, "DPAD_LEFT"},
