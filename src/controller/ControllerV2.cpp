@@ -618,21 +618,23 @@ namespace OWC {
     }
 
     bool ControllerV2::setBackButton(const int num, const int slot, const std::string &key) const {
-        return setButtonKey(configU16 + getBackButtonKeyPos(num, slot), key);
+        uint16_t *btn = configU16 + getBackButtonKeyPos(num, slot);
+
+        return setButtonKey(btn, key) || setXinputKey(btn, key);
     }
 
     std::string ControllerV2::getBackButton(const int num, const int slot) const {
         const uint16_t key = configU16[getBackButtonKeyPos(num, slot)];
 
-        try {
+        if (HIDUsageIDMap.contains(key))
             return HIDUsageIDMap.at(key);
+        else if (XinputUsageIDMap.contains(key))
+            return XinputUsageIDMap.at(key);
 
-        } catch (const std::out_of_range &ex) {
-            if (logFn)
-                writeLog(std::format(L"failed to find key: {:x}", key));
+        if (logFn)
+            writeLog(std::format(L"failed to find key: {:x}", key));
 
-            return "";
-        }
+        return "";
     }
 
     void ControllerV2::setBackButtonStartTime(const int num, const int slot, const int timeMs) const {
