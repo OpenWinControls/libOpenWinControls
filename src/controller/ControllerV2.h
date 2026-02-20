@@ -72,11 +72,11 @@ namespace OWC {
         [[nodiscard]] EmulationMode getEmulationMode() const;
         [[nodiscard]] bool setButton(Button btn, const std::string &key) const override;
         [[nodiscard]] std::string getButton(Button btn) const override;
-        //void setBackButtonMode(int num, BackButtonMode mode) const;
+        void setBackButtonMode(int num, BackButtonMode mode) const;
         [[nodiscard]] BackButtonMode getBackButtonMode(int num) const;
         //void setBackButtonMacroType(int num, BackButtonMacroType type) const;
         //[[nodiscard]] BackButtonMacroType getBackButtonMacroType(int num) const;
-        //void setBackButtonActiveSlots(int num, uint8_t count) const;
+        void setBackButtonActiveSlots(int num, uint8_t count) const;
         [[nodiscard]] int getBackButtonActiveSlots(int num) const;
         [[nodiscard]] bool setBackButton(int num, int slot, const std::string &key) const override;
         [[nodiscard]] std::string getBackButton(int num, int slot) const override;

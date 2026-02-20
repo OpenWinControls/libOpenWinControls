@@ -556,7 +556,7 @@ namespace OWC {
         return "";
     }
 
-    /*void ControllerV2::setBackButtonMode(const int num, const BackButtonMode mode) const {
+    void ControllerV2::setBackButtonMode(const int num, const BackButtonMode mode) const {
         switch (mode) {
             case BackButtonMode::Single:
                 configBuf[getBackButtonModeIdx(num)] = 0;
@@ -570,7 +570,7 @@ namespace OWC {
             default:
                 break;
         }
-    }*/
+    }
 
     BackButtonMode ControllerV2::getBackButtonMode(const int num) const {
         switch (configBuf[getBackButtonModeIdx(num)]) {
@@ -607,11 +607,11 @@ namespace OWC {
 
     BackButtonMacroType ControllerV2::getBackButtonMacroType(const int num) const {
         return !!(configBuf[getBackButtonModeIdx(num)] & 0x04) ? BackButtonMacroType::Xinput : BackButtonMacroType::Keyboard;
-    }
+    }*/
 
     void ControllerV2::setBackButtonActiveSlots(const int num, const uint8_t count) const {
         configBuf[getBackButtonModeIdx(num) + 1] = count;
-    }*/
+    }
 
     int ControllerV2::getBackButtonActiveSlots(const int num) const {
         return configBuf[getBackButtonModeIdx(num) + 1];
