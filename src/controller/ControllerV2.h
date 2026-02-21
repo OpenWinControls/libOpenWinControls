@@ -34,7 +34,7 @@ namespace OWC {
             Commit2 = 0x22
         };
 
-        static constexpr int sendPacketLen = 64 + 1;
+        static constexpr int sendPacketLen = 64;
         static constexpr int respPacketLen = 64 + 1;
         static constexpr int configBufLen = 1024;
         uint8_t writeReqHeader[12] = {0};
