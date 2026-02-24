@@ -45,6 +45,13 @@ namespace OWC {
         return std::wstring(ret.get());
     }
 
+    std::string strToUpper(const std::string &str) {
+        std::string upstr = str;
+
+        std::transform(upstr.begin(), upstr.end(), upstr.begin(), ::toupper);
+        return upstr;
+    }
+
     std::string rumbleModeToString(const RumbleMode mode) {
         switch (mode) {
             case RumbleMode::Off:

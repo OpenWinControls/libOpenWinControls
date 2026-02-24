@@ -71,7 +71,7 @@ namespace OWC {
     bool Controller::setButtonKey(uint16_t *btn, const std::string &key) const {
         uint16_t keycode;
 
-        if (!findHIDKeycode(key, keycode))
+        if (!findHIDKeycode(strToUpper(key), keycode))
             return false;
 
         *btn = keycode;
@@ -81,7 +81,7 @@ namespace OWC {
     bool Controller::setXinputKey(uint16_t *btn, const std::string &key) const {
         uint16_t keycode;
 
-        if (!findXinputKeycode(key, keycode))
+        if (!findXinputKeycode(strToUpper(key), keycode))
             return false;
 
         *btn = keycode;
