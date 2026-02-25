@@ -29,7 +29,7 @@ var NAVTREE =
       [ "Protocol v1", "index.html#autotoc_md2", null ],
       [ "Protocol v2", "index.html#autotoc_md3", null ]
     ] ],
-    [ "Docs", "index.html#autotoc_md4", null ],
+    [ "Documentation", "index.html#autotoc_md4", null ],
     [ "Credits", "index.html#autotoc_md5", null ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
