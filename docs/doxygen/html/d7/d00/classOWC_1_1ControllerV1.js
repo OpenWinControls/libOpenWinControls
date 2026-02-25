@@ -1,0 +1,25 @@
+var classOWC_1_1ControllerV1 =
+[
+    [ "ControllerV1", "d7/d00/classOWC_1_1ControllerV1.html#af2cdc16cd2659c07a584ef251e8c6636", null ],
+    [ "getAnalogBoundary", "d7/d00/classOWC_1_1ControllerV1.html#a0c4f683fdae88fb52a1d5c5dc43c872c", null ],
+    [ "getAnalogCenter", "d7/d00/classOWC_1_1ControllerV1.html#ada1e754bda47765d8abf9edb11c695f9", null ],
+    [ "getBackButton", "d7/d00/classOWC_1_1ControllerV1.html#a0caa8e1121b4a27e49b450a7ce1af965", null ],
+    [ "getBackButtonStartTime", "d7/d00/classOWC_1_1ControllerV1.html#a96867697410619edb2b6b866154665f8", null ],
+    [ "getButton", "d7/d00/classOWC_1_1ControllerV1.html#aebf5bdbca9652a4744c09bbe1c2803b5", null ],
+    [ "getControllerType", "d7/d00/classOWC_1_1ControllerV1.html#a521925aa371496c8690d30cd69cd5e26", null ],
+    [ "getKVersion", "d7/d00/classOWC_1_1ControllerV1.html#a312a799aa293f6425ef0a6fc2913e677", null ],
+    [ "getLedColor", "d7/d00/classOWC_1_1ControllerV1.html#ad84f783c84dbc5da1136cb9ccbfebcf8", null ],
+    [ "getLedMode", "d7/d00/classOWC_1_1ControllerV1.html#a29ad12037514d11e323cde44d56f74d0", null ],
+    [ "getRumbleMode", "d7/d00/classOWC_1_1ControllerV1.html#af2dbe2fc5140f9cab9522fe5b523c28b", null ],
+    [ "getXVersion", "d7/d00/classOWC_1_1ControllerV1.html#af0849a39d65fb63a3c693469c28c0914", null ],
+    [ "readConfig", "d7/d00/classOWC_1_1ControllerV1.html#a2c00290e101f01398aaa28065e24e5e9", null ],
+    [ "setAnalogBoundary", "d7/d00/classOWC_1_1ControllerV1.html#ac7c225b656bcac72c9f7e1a07cbe5c19", null ],
+    [ "setAnalogCenter", "d7/d00/classOWC_1_1ControllerV1.html#a38b35cc666af839996fc388dad37b28f", null ],
+    [ "setBackButton", "d7/d00/classOWC_1_1ControllerV1.html#ae2e80d3665c4e4ef283e9bc5e5d734af", null ],
+    [ "setBackButtonStartTime", "d7/d00/classOWC_1_1ControllerV1.html#a3c600b81ad6b8dec68e29e7a76f7e8aa", null ],
+    [ "setButton", "d7/d00/classOWC_1_1ControllerV1.html#a3f5c18eed406274e839e3f3da2a53c46", null ],
+    [ "setLedColor", "d7/d00/classOWC_1_1ControllerV1.html#a230ae26aa2302f9d7e83ed6dedbdce20", null ],
+    [ "setLedMode", "d7/d00/classOWC_1_1ControllerV1.html#aa869e6d43091ae099201530c9f40d464", null ],
+    [ "setRumble", "d7/d00/classOWC_1_1ControllerV1.html#ade658baca5a050ca16f9b981fcd8324f", null ],
+    [ "writeConfig", "d7/d00/classOWC_1_1ControllerV1.html#a99d81d1b2a55ed552c4960560456d02e", null ]
+];
