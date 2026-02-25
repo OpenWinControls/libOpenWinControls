@@ -1,0 +1,25 @@
+var classOWC_1_1Controller =
+[
+    [ "enableLogging", "d3/d07/classOWC_1_1Controller.html#a58bd4dc725dabe2032a91ed55129145e", null ],
+    [ "getAnalogBoundary", "d3/d07/classOWC_1_1Controller.html#a63a1d45d5e6f676769978aba3d8a6704", null ],
+    [ "getAnalogCenter", "d3/d07/classOWC_1_1Controller.html#a89c9cc7e00c488c2ae9af3cfb1d2cd3e", null ],
+    [ "getBackButton", "d3/d07/classOWC_1_1Controller.html#a39bd2a9b76023be86b788d040a4f5841", null ],
+    [ "getBackButtonStartTime", "d3/d07/classOWC_1_1Controller.html#a6916cda741ffb308249a246bf84d6643", null ],
+    [ "getButton", "d3/d07/classOWC_1_1Controller.html#a1bb1a1bffb76fddc414e74251c558493", null ],
+    [ "getControllerType", "d3/d07/classOWC_1_1Controller.html#ae11be4dda4745c496c13002eabd9da60", null ],
+    [ "getLedColor", "d3/d07/classOWC_1_1Controller.html#afedeca2de1073b465fe330182f89fad1", null ],
+    [ "getLedMode", "d3/d07/classOWC_1_1Controller.html#a017ce86e7503448bae862368000bed4f", null ],
+    [ "getRumbleMode", "d3/d07/classOWC_1_1Controller.html#aebfa88e6dcadd151dddd3e0852c9671d", null ],
+    [ "hasFeature", "d3/d07/classOWC_1_1Controller.html#a95ee25e27e74d8984eba590e9988b6c3", null ],
+    [ "init", "d3/d07/classOWC_1_1Controller.html#a89919a7010d04e7797530b500a0528d5", null ],
+    [ "readConfig", "d3/d07/classOWC_1_1Controller.html#a1fb0c302c8a5f4dfe25da14b97a29291", null ],
+    [ "setAnalogBoundary", "d3/d07/classOWC_1_1Controller.html#a109b48e219c738aaf044e19f37781f57", null ],
+    [ "setAnalogCenter", "d3/d07/classOWC_1_1Controller.html#a4b3c155a59c4c21d0b34ec8581dc4e76", null ],
+    [ "setBackButton", "d3/d07/classOWC_1_1Controller.html#aa15eb95ca741649820410accf48ed049", null ],
+    [ "setBackButtonStartTime", "d3/d07/classOWC_1_1Controller.html#a5b71d87b3775e4c4ed6540fd4ce70b09", null ],
+    [ "setButton", "d3/d07/classOWC_1_1Controller.html#a6f7ab9abc6f0b776cc7dfe4891d62333", null ],
+    [ "setLedColor", "d3/d07/classOWC_1_1Controller.html#afc27f66e103a9d6115b3d2a581df3573", null ],
+    [ "setLedMode", "d3/d07/classOWC_1_1Controller.html#ab38767156123052b137a408ba895b086", null ],
+    [ "setRumble", "d3/d07/classOWC_1_1Controller.html#ab0a01f088b6daf4b85184fee161fec76", null ],
+    [ "writeConfig", "d3/d07/classOWC_1_1Controller.html#a29ae312dae014e2df46cdef5599bec62", null ]
+];
