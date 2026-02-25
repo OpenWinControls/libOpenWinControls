@@ -1,8 +1,8 @@
 # libOpenWinControls
 
-Multiplaftom C++ library to read/write GPD dual-mode controller settings.
+Multiplaftom C++ library to interact with the dual-mode controller in GPD devices.
 
-This exposes all known and working features of the GPD controller, way more than what GPD has made available in their very limited official app.
+Exposes all known and working features of the GPD controller, way more than what GPD has made officially available.
 
 ## Supported devices
 
@@ -18,12 +18,15 @@ This exposes all known and working features of the GPD controller, way more than
 - win 5
 - win mini 25
 
-## Docs
+## Documentation
 
-**docs** folder contains docs about the protocols
+[Protocol V1](docs/protocolV1.md)
+
+[Protocol V2](docs/protocolV2.md)
+
+[Library](https://openwincontrols.github.io/libOpenWinControls)
 
 ## Credits
 
-[pyWinControls](https://github.com/pelrun/pyWinControls)
-
-[GPD-LinuxControls](https://github.com/Cryolitia/GPD-LinuxControls)
+[pyWinControls](https://github.com/pelrun/pyWinControls) and [GPD-LinuxControls](https://github.com/Cryolitia/GPD-LinuxControls)
+for protocol v1 research and implementation.
