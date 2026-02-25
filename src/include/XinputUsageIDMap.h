@@ -20,8 +20,14 @@
 #include <map>
 #include <string>
 
+/*!
+ * @file XinputUsageIDMap.h
+ */
 namespace OWC {
-    // custom GPD codes
+    /*!
+     * @brief map of supported controller keys and their GPD custom keycode
+     * @details maps GPD custom HID usage ID -> string key name
+     */
     static const std::map<int, std::string> XinputUsageIDMap = {
         {0, "UNSET"},
         {0x8000, "DPAD_UP"},

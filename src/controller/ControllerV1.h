@@ -20,6 +20,10 @@
 #include "Controller.h"
 
 namespace OWC {
+    /*!
+     * @class ControllerV1
+     * @brief interact with controller V1 devices
+     */
     class OWC_EXPORT ControllerV1 final: public Controller {
     private:
         enum struct Mode: int {
@@ -58,11 +62,25 @@ namespace OWC {
         [[nodiscard]] int getPID() const override { return 0x135; }
 
     public:
+        /*!
+         * @brief create a new @ref ControllerV1 controller
+         * @param controllerFeatures @ref ControllerFeature flag
+         */
         explicit ControllerV1(int controllerFeatures = 0);
         ~ControllerV1() override;
 
         [[nodiscard]] int getControllerType() const override { return 1; }
+
+        /*!
+         * @brief get the firmware xinput mode version
+         * @return major and minor version as a pair
+         */
         [[nodiscard]] std::pair<int, int> getXVersion() const { return xVersion; }
+
+        /*!
+         * @brief get the firmware keyboard mode version
+         * @return major and minor version as a pair
+         */
         [[nodiscard]] std::pair<int, int> getKVersion() const { return kVersion; }
 
         [[nodiscard]] bool readConfig() override;

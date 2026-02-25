@@ -17,56 +17,63 @@
  */
 #pragma once
 
+/*!
+ * @file Button.h
+ */
 namespace OWC {
+    /*!
+     * @enum Button
+     * @brief enum to refer to a physical button and its mode
+     */
     enum struct Button {
         // keyboard&mode
-        KBD_A,
-        KBD_B,
-        KBD_X,
-        KBD_Y,
-        KBD_DPAD_UP,
-        KBD_DPAD_DOWN,
-        KBD_DPAD_LEFT,
-        KBD_DPAD_RIGHT,
-        KBD_LANALOG_UP,
-        KBD_LANALOG_DOWN,
-        KBD_LANALOG_LEFT,
-        KBD_LANALOG_RIGHT,
-        KBD_START,
-        KBD_SELECT,
-        KBD_MENU,
-        KBD_L1,
-        KBD_L2,
-        KBD_L3,
-        KBD_R1,
-        KBD_R2,
-        KBD_R3,
+        KBD_A, ///< keyboard mode A button
+        KBD_B, ///< keyboard mode B button
+        KBD_X, ///< keyboard mode X button
+        KBD_Y, ///< keyboard mode Y button
+        KBD_DPAD_UP, ///< keyboard mode D-pad up button
+        KBD_DPAD_DOWN, ///< keyboard mode D-pad down button
+        KBD_DPAD_LEFT, ///< keyboard mode D-pad left button
+        KBD_DPAD_RIGHT, ///< keyboard mode D-pad right button
+        KBD_LANALOG_UP, ///< keyboard mode left analog up button
+        KBD_LANALOG_DOWN, ///< keyboard mode left analog down button
+        KBD_LANALOG_LEFT, ///< keyboard mode left analog left button
+        KBD_LANALOG_RIGHT, ///< keyboard mode left analog right button
+        KBD_START, ///< keyboard mode Start button
+        KBD_SELECT, ///< keyboard mode Select button
+        KBD_MENU, ///< keyboard mode Menu button
+        KBD_L1, ///< keyboard mode L1 button
+        KBD_L2, ///< keyboard mode L2 button
+        KBD_L3, ///< keyboard mode L3 button
+        KBD_R1, ///< keyboard mode R1 button
+        KBD_R2, ///< keyboard mode R2 button
+        KBD_R3, ///< keyboard mode R3 button
 
         // xinput
-        X_A,
-        X_B,
-        X_X,
-        X_Y,
-        X_DPAD_UP,
-        X_DPAD_DOWN,
-        X_DPAD_LEFT,
-        X_DPAD_RIGHT,
-        X_LANALOG_UP,
-        X_LANALOG_DOWN,
-        X_LANALOG_LEFT,
-        X_LANALOG_RIGHT,
-        X_RANALOG_UP,
-        X_RANALOG_DOWN,
-        X_RANALOG_LEFT,
-        X_RANALOG_RIGHT,
-        X_START,
-        X_SELECT,
-        X_MENU,
-        X_L1,
-        X_L2,
-        X_L3,
-        X_R1,
-        X_R2,
-        X_R3,
+        X_A, ///< xinput mode A button
+        X_B, ///< xinput mode B button
+        X_X, ///< xinput mode X button
+        X_Y, ///< xinput mode Y button
+        X_DPAD_UP, ///< xinput mode D-pad up button
+        X_DPAD_DOWN, ///< xinput mode D-pad down button
+        X_DPAD_LEFT, ///< xinput mode D-pad left button
+        X_DPAD_RIGHT, ///< xinput mode D-pad right button
+        X_LANALOG_UP, ///< xinput mode left analog up button
+        X_LANALOG_DOWN, ///< xinput mode left analog down button
+        X_LANALOG_LEFT, ///< xinput mode left analog left button
+        X_LANALOG_RIGHT, ///< xinput mode left analog right button
+        X_RANALOG_UP, ///< xinput mode right analog up button
+        X_RANALOG_DOWN, ///< xinput mode right analog down button
+        X_RANALOG_LEFT, ///< xinput mode right analog left button
+        X_RANALOG_RIGHT, ///< xinput mode right analog right button
+        X_START, ///< xinput mode Start button
+        X_SELECT, ///< xinput mode Select button
+        X_MENU, ///< xinput mode Menu button
+        X_L1, ///< xinput mode L1 button
+        X_L2, ///< xinput mode L2 button
+        X_L3, ///< xinput mode L3 button
+        X_R1, ///< xinput mode R1 button
+        X_R2, ///< xinput mode R2 button
+        X_R3, ///< xinput mode R3 button
     };
 }

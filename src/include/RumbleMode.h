@@ -17,11 +17,18 @@
  */
 #pragma once
 
+/*!
+ * @file RumbleMode.h
+ */
 namespace OWC {
+    /*!
+     * @enum RumbleMode
+     * @brief vibration intensity
+     */
     enum struct RumbleMode: int {
-        Unknown = -1,
-        Off = 0,
-        Low = 1,
-        High = 2
+        Unknown = -1, ///< invalid/unknown mode
+        Off = 0, ///< disabled
+        Low = 1, ///< low intensity
+        High = 2 ///< high intensity
     };
 }

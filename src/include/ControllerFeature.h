@@ -17,11 +17,18 @@
  */
 #pragma once
 
+/*!
+ * @file ControllerFeature.h
+ */
 namespace OWC {
+    /*!
+     * @enum ControllerFeature
+     * @brief Controller feature flags
+     */
     enum ControllerFeature: int {
-        DeadZoneControlV1 = 1,
-        ShoulderLedsV1 = 1 << 1,
-        RumbleV1 = 1 << 2,
-        XinputMappingV1 = 1 << 3
+        DeadZoneControlV1 = 1, ///< analog sticks center and boundary controls
+        ShoulderLedsV1 = 1 << 1, ///< shoulder leds mode and color
+        RumbleV1 = 1 << 2, ///< vibration intensity
+        XinputMappingV1 = 1 << 3 ///< xinput mode remapping
     };
 }

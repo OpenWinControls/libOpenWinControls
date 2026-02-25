@@ -22,6 +22,10 @@
 #include "../include/EmulationMode.h"
 
 namespace OWC {
+    /*!
+     * @class ControllerV2
+     * @brief interact with controller V2 devices
+     */
     class OWC_EXPORT ControllerV2 final: public Controller {
     private:
         enum struct CMD: int {
@@ -61,29 +65,77 @@ namespace OWC {
         [[nodiscard]] int getPID() const override { return 0x137; }
 
     public:
+        /*!
+         * @brief create a new @ref ControllerV2 controller
+         * @param controllerFeatures @ref ControllerFeature flag
+         */
         explicit ControllerV2(int controllerFeatures = 0);
         ~ControllerV2() override;
 
         [[nodiscard]] int getControllerType() const override { return 2; }
+
+        /*!
+         * @brief get the firmware version
+         * @return major and minor version as a pair
+         */
         [[nodiscard]] std::pair<int, int> getVersion() const { return version; }
+
+        /*!
+         * get the current emulation mode the controller is set to
+         * @return @ref EmulationMode
+         */
+        [[nodiscard]] EmulationMode getEmulationMode() const;
+
+        /*!
+         * @brief set the number of active key slots for back button @p num
+         * @details @p num is the order of appearance in firmware config
+         * @sa https://github.com/OpenWinControls/libOpenWinControls/tree/main/docs
+         * @param num back button numer (1,2, ..)
+         * @param count number of active key slots
+         */
+        void setBackButtonActiveSlots(int num, uint8_t count) const;
+
+        /*!
+         * @brief get the number of active key slots for back button @p num
+         * @details @p num is the order of appearance in firmware config
+         * @sa https://github.com/OpenWinControls/libOpenWinControls/tree/main/docs
+         * @param num back button number (1,2, ..)
+         * @return number of active key slots
+         */
+        [[nodiscard]] int getBackButtonActiveSlots(int num) const;
+
+        /*!
+         * @brief set hold time for key in slot @p slot of back button @p num
+         * @details @p num is the order of appearance in firmware config
+         * @sa https://github.com/OpenWinControls/libOpenWinControls/tree/main/docs
+         * @param num back button number (1,2, ..)
+         * @param slot back button key slot
+         * @param timeMs hold time in milliseconds
+         */
+        void setBackButtonHoldTime(int num, int slot, int timeMs) const;
+
+        /*!
+         * @brief get hold time for key in slot @p slot of back button @p num
+         * @details @p num is the order of appearance in firmware config
+         * @sa https://github.com/OpenWinControls/libOpenWinControls/tree/main/docs
+         * @param num back button number (1,2 ..)
+         * @param slot back button key slot
+         * @return hold time in milliseconds
+         */
+        [[nodiscard]] int getBackButtonHoldTime(int num, int slot) const;
 
         [[nodiscard]] bool readConfig() override;
         [[nodiscard]] bool writeConfig() const override;
-        [[nodiscard]] EmulationMode getEmulationMode() const;
         [[nodiscard]] bool setButton(Button btn, const std::string &key) const override;
         [[nodiscard]] std::string getButton(Button btn) const override;
         void setBackButtonMode(int num, BackButtonMode mode) const;
         [[nodiscard]] BackButtonMode getBackButtonMode(int num) const;
         //void setBackButtonMacroType(int num, BackButtonMacroType type) const;
         //[[nodiscard]] BackButtonMacroType getBackButtonMacroType(int num) const;
-        void setBackButtonActiveSlots(int num, uint8_t count) const;
-        [[nodiscard]] int getBackButtonActiveSlots(int num) const;
         [[nodiscard]] bool setBackButton(int num, int slot, const std::string &key) const override;
         [[nodiscard]] std::string getBackButton(int num, int slot) const override;
         void setBackButtonStartTime(int num, int slot, int timeMs) const override;
         [[nodiscard]] int getBackButtonStartTime(int num, int slot) const override;
-        void setBackButtonHoldTime(int num, int slot, int timeMs) const;
-        [[nodiscard]] int getBackButtonHoldTime(int num, int slot) const;
         void setRumble(RumbleMode mode) const override;
         [[nodiscard]] RumbleMode getRumbleMode() const override;
         void setLedMode(LedMode mode) const override;

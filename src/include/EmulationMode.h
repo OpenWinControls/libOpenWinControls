@@ -17,11 +17,18 @@
  */
 #pragma once
 
+/*!
+ * @file EmulationMode.h
+ */
 namespace OWC {
+    /*!
+     * @enum EmulationMode
+     * @brief controller emulation mode
+     */
     enum struct EmulationMode: int {
-        Unknown = -1,
-        Xinput = 0,
-        KeyboardMouse = 1,
-        KeyboardSpecial = 2
+        Unknown = -1, ///< invalid/unknown mode
+        Xinput = 0, ///< xinput mode (xbox360 controller emulation)
+        KeyboardMouse = 1, ///< keyboard&mouse mode (keyboard emulation but right stick is mouse)
+        KeyboardSpecial = 2 ///< keyboard mode (special mode)
     };
 }

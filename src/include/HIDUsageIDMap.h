@@ -20,7 +20,14 @@
 #include <map>
 #include <string>
 
+/*!
+ * @file HIDUsageIDMap.h
+ */
 namespace OWC {
+    /*!
+     * @brief map of supported keyboard keys and their HID keycode
+     * @details maps HID usage ID -> string key name
+     */
     static const std::map<int, std::string> HIDUsageIDMap = {
         {0x00, "UNSET"},
 

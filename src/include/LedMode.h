@@ -17,12 +17,19 @@
  */
 #pragma once
 
+/*!
+ * @file LedMode.h
+ */
 namespace OWC {
+    /*!
+     * @enum LedMode
+     * @brief led mode
+     */
     enum struct LedMode: int {
-        Unknown = -1,
-        Off = 0,
-        Solid = 1,
-        Breathe = 2,
-        Rotate = 3
+        Unknown = -1, ///< invalid/unknown mode
+        Off = 0, ///< disabled
+        Solid = 1, ///< fixed custom color, no effects
+        Breathe = 2, ///< fixed custom color, breathe effect
+        Rotate = 3 ///< automatic, rotate all supported colors
     };
 }

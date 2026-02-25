@@ -33,6 +33,34 @@ namespace OWC {
         logFn(std::format(L"{}:{}\n{}", strTowstr(loc.function_name()), loc.line(), msg));
     }
 
+    bool Controller::setButtonKey(uint16_t *btn, const std::string &key) const {
+        uint16_t keycode;
+
+        if (!findHIDKeycode(strToUpper(key), keycode))
+            return false;
+
+        *btn = keycode;
+        return true;
+    }
+
+    bool Controller::setXinputKey(uint16_t *btn, const std::string &key) const {
+        uint16_t keycode;
+
+        if (!findXinputKeycode(strToUpper(key), keycode))
+            return false;
+
+        *btn = keycode;
+        return true;
+    }
+
+    void Controller::setBackButtonTime(uint16_t *field, const int time) const {
+        *field = std::clamp(time, 0, INT16_MAX - 1);
+    }
+
+    void Controller::setAnalogDeadzone(int8_t *field, const int value) const {
+        *field = std::clamp(value, -10, 10);
+    }
+
     bool Controller::init() {
         if (hid_init() != 0) {
             if (logFn)
@@ -66,34 +94,6 @@ namespace OWC {
 
         hid_free_enumeration(devInfo);
         return (gamepad != nullptr);
-    }
-
-    bool Controller::setButtonKey(uint16_t *btn, const std::string &key) const {
-        uint16_t keycode;
-
-        if (!findHIDKeycode(strToUpper(key), keycode))
-            return false;
-
-        *btn = keycode;
-        return true;
-    }
-
-    bool Controller::setXinputKey(uint16_t *btn, const std::string &key) const {
-        uint16_t keycode;
-
-        if (!findXinputKeycode(strToUpper(key), keycode))
-            return false;
-
-        *btn = keycode;
-        return true;
-    }
-
-    void Controller::setBackButtonTime(uint16_t *field, const int time) const {
-        *field = std::clamp(time, 0, INT16_MAX - 1);
-    }
-
-    void Controller::setAnalogDeadzone(int8_t *field, const int value) const {
-        *field = std::clamp(value, -10, 10);
     }
 
     bool Controller::hasFeature(const int feature) const {
