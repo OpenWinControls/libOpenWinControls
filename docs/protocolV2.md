@@ -268,8 +268,6 @@ Successful initialization requires both calls to return **0xaa** in byte **8**.
 
 ## Get firmware versions
 
-**unconfirmed, no firmware update to compare, prefer status interrupt.**
-
 Send
 
 <table>
