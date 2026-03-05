@@ -18,6 +18,8 @@
 #include <format>
 #include <cstring>
 #include <algorithm>
+#include <chrono>
+#include <thread>
 
 #include "ControllerV2.h"
 #include "../Utils.h"
@@ -79,6 +81,7 @@ namespace OWC {
     }
 
     bool ControllerV2::sendReadRequest(int *respBytesCount) const {
+        using namespace std::chrono_literals;
         int ret = 0;
 
         prepareRespBuffer();
@@ -92,6 +95,8 @@ namespace OWC {
 
             return false;
         }
+
+        std::this_thread::sleep_for(0.05s); // needs some time to process the cmd, or you wont get the correct response
 
         ret = hid_get_input_report(gamepad, respBuf, respPacketLen);
         if (ret < 0) {
