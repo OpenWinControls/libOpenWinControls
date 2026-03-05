@@ -58,6 +58,7 @@ namespace OWC {
         void prepareSendBuffer(CMD cmd) const;
         void prepareRespBuffer() const;
         [[nodiscard]] bool isValidRespPacket() const;
+        [[nodiscard]] bool isCmdRejected() const;
         [[nodiscard]] int getBackButtonModeIdx(int num) const;
         [[nodiscard]] int getBackButtonKeyPos(int num, int slot) const;
 

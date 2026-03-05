@@ -149,6 +149,10 @@ namespace OWC {
         return checksum == sum;
     }
 
+    bool ControllerV2::isCmdRejected() const {
+        return respBuf[8] == 0xe2;
+    }
+
     int ControllerV2::getBackButtonModeIdx(const int num) const {
         // btn 1 pos + btn num * btn struct size
         return 160 + ((num - 1) * 196);
@@ -183,7 +187,7 @@ namespace OWC {
         sendBuf[6] = 4; // checksum
         sendBuf[9] = 4; // unk
 
-        if (!sendReadRequest(&respBytesCnt) || respBuf[8] == 0xe2 || !isValidRespPacket()) {
+        if (!sendReadRequest(&respBytesCnt) || isCmdRejected() || !isValidRespPacket()) {
             if (logFn)
                 writeLog(L"failed to start config read request");
 
@@ -276,7 +280,7 @@ namespace OWC {
         sendBuf[6] = 4; // checksum
         sendBuf[9] = 4; // unk
 
-        if (!sendReadRequest() || respBuf[8] == 0xe2) {
+        if (!sendReadRequest() || isCmdRejected()) {
             if (logFn)
                 writeLog(L"failed to commit config");
 
@@ -291,7 +295,7 @@ namespace OWC {
         }
 
         prepareSendBuffer(CMD::EndCommit);
-        if (!sendReadRequest() || respBuf[8] == 0xe2) {
+        if (!sendReadRequest() || isCmdRejected()) {
             if (logFn)
                 writeLog(L"failed to end commit");
 
@@ -311,7 +315,7 @@ namespace OWC {
         sendBuf[6] = 4; // checksum
         sendBuf[9] = 4; // unk
 
-        if (!sendReadRequest() || respBuf[8] == 0xe2) {
+        if (!sendReadRequest() || isCmdRejected()) {
             if (logFn)
                 writeLog(L"failed to commit config to flash memory");
 
@@ -319,7 +323,7 @@ namespace OWC {
         }
 
         prepareSendBuffer(CMD::EndCommit);
-        if (!sendReadRequest() || respBuf[8] == 0xe2) {
+        if (!sendReadRequest() || isCmdRejected()) {
             if (logFn)
                 writeLog(L"failed to end commit");
 
