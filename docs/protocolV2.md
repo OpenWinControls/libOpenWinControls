@@ -6293,7 +6293,7 @@ Send (end packet, 0x10)
     </tr>
 </table>
 
-## Commit configuration to the controller
+## Commit configuration to memory
 
 Send
 
@@ -6326,7 +6326,92 @@ Send
     <tr>
         <td>01</td>
         <td>27</td>
-        <td>2</td>
+        <td>02</td>
+        <td>00</td>
+        <td>00</td>
+        <td>00</td>
+        <td>04</td>
+        <td>00</td>
+        <td>00</td>
+        <td>04</td>
+        <td>00</td>
+    </tr>
+</table>
+
+Send
+
+<table>
+    <tr>
+        <th>0</th>
+        <th>1</th>
+        <th>2-63</th>
+    </tr>
+    <tr>
+        <td>ID</td>
+        <td>cmd</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>01</td>
+        <td>22</td>
+        <td>00</td>
+    </tr>
+</table>
+
+## Commit configuration to the controller
+
+Send
+
+<table>
+    <tr>
+        <th>0</th>
+        <th>1</th>
+        <th>2-63</th>
+    </tr>
+    <tr>
+        <td>ID</td>
+        <td>cmd</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>01</td>
+        <td>21</td>
+        <td>00</td>
+    </tr>
+</table>
+
+Send
+
+<table>
+    <tr>
+        <th>0</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+        <th>5</th>
+        <th>6</th>
+        <th>7</th>
+        <th>8</th>
+        <th>9</th>
+        <th>10-63</th>
+    </tr>
+    <tr>
+        <td>ID</td>
+        <td>cmd</td>
+        <td>unk</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td colspan="2">checksum</td>
+        <td></td>
+        <td>unk</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>01</td>
+        <td>25</td>
+        <td>04</td>
         <td>00</td>
         <td>00</td>
         <td>00</td>
