@@ -35,7 +35,8 @@ namespace OWC {
             Read = 0x44,
             Write = 0x43,
             Commit1 = 0x27,
-            Commit2 = 0x22
+            Commit2 = 0x25,
+            EndCommit = 0x22
         };
 
         static constexpr int sendPacketLen = 64;

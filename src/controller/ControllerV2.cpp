@@ -226,6 +226,7 @@ namespace OWC {
     }
 
     bool ControllerV2::writeConfig() const {
+        const int commitSum = getBytesSum(writeReqHeader, sizeof(writeReqHeader)) + getBytesSum(configBuf, configBufLen);
         uint16_t *sendBufU16 = reinterpret_cast<uint16_t *>(sendBuf);
 
         if (!initWriteCommunication()) {
@@ -263,7 +264,7 @@ namespace OWC {
 
             if (!sendWriteRequest()) {
                 if (logFn)
-                    writeLog(L"failed to write config");
+                    writeLog(L"failed to send config data");
 
                 return false;
             }
@@ -275,17 +276,52 @@ namespace OWC {
         sendBuf[6] = 4; // checksum
         sendBuf[9] = 4; // unk
 
-        if (!sendWriteRequest()) {
+        if (!sendReadRequest() || respBuf[8] == 0xe2) {
             if (logFn)
-                writeLog(L"failed to prepare config commit");
+                writeLog(L"failed to commit config");
+
+            return false;
+        }
+
+        if (commitSum != reinterpret_cast<uint16_t *>(respBuf)[5]) {
+            if (logFn)
+                writeLog(std::format(L"commit checksum mismatch: {} != {}", commitSum, reinterpret_cast<uint16_t *>(respBuf)[5]));
+
+            return false;
+        }
+
+        prepareSendBuffer(CMD::EndCommit);
+        if (!sendReadRequest() || respBuf[8] == 0xe2) {
+            if (logFn)
+                writeLog(L"failed to end commit");
+
+            return false;
+        }
+
+        if (!initWriteCommunication()) {
+            if (logFn)
+                writeLog(L"failed to init controller for write");
 
             return false;
         }
 
         prepareSendBuffer(CMD::Commit2);
-        if (!sendWriteRequest()) {
+
+        sendBuf[2] = 4; // unk
+        sendBuf[6] = 4; // checksum
+        sendBuf[9] = 4; // unk
+
+        if (!sendReadRequest() || respBuf[8] == 0xe2) {
             if (logFn)
-                writeLog(L"failed to commit config");
+                writeLog(L"failed to commit config to flash memory");
+
+            return false;
+        }
+
+        prepareSendBuffer(CMD::EndCommit);
+        if (!sendReadRequest() || respBuf[8] == 0xe2) {
+            if (logFn)
+                writeLog(L"failed to end commit");
 
             return false;
         }
