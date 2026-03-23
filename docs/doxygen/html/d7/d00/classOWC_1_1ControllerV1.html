@@ -113,6 +113,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a2c00290e101f01398aaa28065e24e5e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">read the whole configuration  <br /></td></tr>
 <tr class="memitem:a99d81d1b2a55ed552c4960560456d02e" id="r_a99d81d1b2a55ed552c4960560456d02e"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a99d81d1b2a55ed552c4960560456d02e">writeConfig</a> () const override</td></tr>
 <tr class="memdesc:a99d81d1b2a55ed552c4960560456d02e"><td class="mdescLeft">&#160;</td><td class="mdescRight">write the configuration  <br /></td></tr>
+<tr class="memitem:af50241f15427099a199e51f027ffb127" id="r_af50241f15427099a199e51f027ffb127"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#af50241f15427099a199e51f027ffb127">resetConfig</a> () const override</td></tr>
+<tr class="memdesc:af50241f15427099a199e51f027ffb127"><td class="mdescLeft">&#160;</td><td class="mdescRight">reset the whole controller configuration memory  <br /></td></tr>
 <tr class="memitem:a3f5c18eed406274e839e3f3da2a53c46" id="r_a3f5c18eed406274e839e3f3da2a53c46"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a3f5c18eed406274e839e3f3da2a53c46">setButton</a> (<a class="el" href="../../d0/d01/Button_8h.html#a87f917092ee387b88f648ba3859c075e">Button</a> btn, const std::string &amp;key) const override</td></tr>
 <tr class="memdesc:a3f5c18eed406274e839e3f3da2a53c46"><td class="mdescLeft">&#160;</td><td class="mdescRight">set a new <code class="param">key</code> for the button <code class="param">btn</code>  <br /></td></tr>
 <tr class="memitem:aebf5bdbca9652a4744c09bbe1c2803b5" id="r_aebf5bdbca9652a4744c09bbe1c2803b5"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#aebf5bdbca9652a4744c09bbe1c2803b5">getButton</a> (<a class="el" href="../../d0/d01/Button_8h.html#a87f917092ee387b88f648ba3859c075e">Button</a> btn) const override</td></tr>
@@ -585,6 +587,36 @@ Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>true on success </dd></dl>
 
 <p>Implements <a class="el" href="../../d3/d07/classOWC_1_1Controller.html#a1fb0c302c8a5f4dfe25da14b97a29291">OWC::Controller</a>.</p>
+
+</div>
+</div>
+<a id="af50241f15427099a199e51f027ffb127" name="af50241f15427099a199e51f027ffb127"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af50241f15427099a199e51f027ffb127">&#9670;&#160;</a></span>resetConfig()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool OWC::ControllerV1::resetConfig </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>reset the whole controller configuration memory </p>
+<p>writes a known working configuration buffer </p><dl class="section return"><dt>Returns</dt><dd>true on success </dd></dl>
+
+<p>Implements <a class="el" href="../../d3/d07/classOWC_1_1Controller.html#a284b5cc1a657ca413c065efb3a01c32f">OWC::Controller</a>.</p>
 
 </div>
 </div>

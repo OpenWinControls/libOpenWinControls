@@ -13,6 +13,7 @@ var classOWC_1_1ControllerV1 =
     [ "getRumbleMode", "d7/d00/classOWC_1_1ControllerV1.html#af2dbe2fc5140f9cab9522fe5b523c28b", null ],
     [ "getXVersion", "d7/d00/classOWC_1_1ControllerV1.html#af0849a39d65fb63a3c693469c28c0914", null ],
     [ "readConfig", "d7/d00/classOWC_1_1ControllerV1.html#a2c00290e101f01398aaa28065e24e5e9", null ],
+    [ "resetConfig", "d7/d00/classOWC_1_1ControllerV1.html#af50241f15427099a199e51f027ffb127", null ],
     [ "setAnalogBoundary", "d7/d00/classOWC_1_1ControllerV1.html#ac7c225b656bcac72c9f7e1a07cbe5c19", null ],
     [ "setAnalogCenter", "d7/d00/classOWC_1_1ControllerV1.html#a38b35cc666af839996fc388dad37b28f", null ],
     [ "setBackButton", "d7/d00/classOWC_1_1ControllerV1.html#ae2e80d3665c4e4ef283e9bc5e5d734af", null ],

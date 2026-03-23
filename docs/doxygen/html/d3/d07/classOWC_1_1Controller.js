@@ -13,6 +13,7 @@ var classOWC_1_1Controller =
     [ "hasFeature", "d3/d07/classOWC_1_1Controller.html#a95ee25e27e74d8984eba590e9988b6c3", null ],
     [ "init", "d3/d07/classOWC_1_1Controller.html#a89919a7010d04e7797530b500a0528d5", null ],
     [ "readConfig", "d3/d07/classOWC_1_1Controller.html#a1fb0c302c8a5f4dfe25da14b97a29291", null ],
+    [ "resetConfig", "d3/d07/classOWC_1_1Controller.html#a284b5cc1a657ca413c065efb3a01c32f", null ],
     [ "setAnalogBoundary", "d3/d07/classOWC_1_1Controller.html#a109b48e219c738aaf044e19f37781f57", null ],
     [ "setAnalogCenter", "d3/d07/classOWC_1_1Controller.html#a4b3c155a59c4c21d0b34ec8581dc4e76", null ],
     [ "setBackButton", "d3/d07/classOWC_1_1Controller.html#aa15eb95ca741649820410accf48ed049", null ],
