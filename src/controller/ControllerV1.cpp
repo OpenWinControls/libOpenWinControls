@@ -175,6 +175,9 @@ namespace OWC {
             return false;
         }
 
+        if (logFn)
+            writeLog(bufferToString(configBuf, configBufLen));
+
         return true;
     }
 
