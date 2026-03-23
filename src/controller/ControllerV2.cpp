@@ -293,6 +293,12 @@ namespace OWC {
         return true;
     }
 
+    bool ControllerV2::resetConfig() const {
+        // v2 has some kind of reset sequence, but this should do for most cases
+        std::memcpy(configBuf, resetBuf, sizeof(resetBuf));
+        return writeConfig();
+    }
+
     EmulationMode ControllerV2::getEmulationMode() const {
         switch (configBuf[959]) {
             case 0:

@@ -69,6 +69,13 @@ namespace OWC {
         [[nodiscard]] virtual bool writeConfig() const = 0;
 
         /*!
+         * @brief reset the whole controller configuration memory
+         * @details writes a known working configuration buffer
+         * @return true on success
+         */
+        [[nodiscard]] virtual bool resetConfig() const = 0;
+
+        /*!
          * @brief set a new @p key for the button @p btn
          * @param btn the controller button to remap
          * @param key one of @ref HIDUsageIDMap or @ref XinputUsageIDMap values (case insensitive)

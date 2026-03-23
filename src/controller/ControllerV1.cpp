@@ -221,6 +221,11 @@ namespace OWC {
         return true;
     }
 
+    bool ControllerV1::resetConfig() const {
+        std::memcpy(configBuf, resetBuf, sizeof(resetBuf));
+        return writeConfig();
+    }
+
     bool ControllerV1::setButton(const Button btn, const std::string &key) const {
         switch (btn) {
             case Button::KBD_DPAD_UP:
