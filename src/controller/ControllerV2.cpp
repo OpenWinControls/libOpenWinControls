@@ -142,6 +142,10 @@ namespace OWC {
         respBuf[0] = 1; // report id
     }
 
+    bool ControllerV2::isCmdRejected() const {
+        return respBuf[8] == 0xe2;
+    }
+
     bool ControllerV2::isValidRespPacket() const {
         const int checksum = *reinterpret_cast<uint16_t *>(respBuf + 6);
         const int sum = getBytesSum(respBuf + 8, respPacketLen - 8);
@@ -183,7 +187,7 @@ namespace OWC {
         sendBuf[6] = 4; // checksum
         sendBuf[9] = 4; // unk
 
-        if (!sendReadRequest(&respBytesCnt) || respBuf[8] == 0xe2 || !isValidRespPacket()) {
+        if (!sendReadRequest(&respBytesCnt) || isCmdRejected() || !isValidRespPacket()) {
             if (logFn)
                 writeLog(L"failed to start config read request");
 
@@ -226,6 +230,7 @@ namespace OWC {
     }
 
     bool ControllerV2::writeConfig() const {
+        const int commitChecksum = getBytesSum(writeReqHeader, sizeof(writeReqHeader)) + getBytesSum(configBuf, configBufLen);
         uint16_t *sendBufU16 = reinterpret_cast<uint16_t *>(sendBuf);
 
         if (!initWriteCommunication()) {
@@ -248,7 +253,7 @@ namespace OWC {
 
         if (!sendWriteRequest()) {
             if (logFn)
-                logFn(L"failed to start write config request");
+                logFn(L"failed to start config write");
 
             return false;
         }
@@ -263,7 +268,7 @@ namespace OWC {
 
             if (!sendWriteRequest()) {
                 if (logFn)
-                    writeLog(L"failed to write config");
+                    writeLog(L"failed to send config data");
 
                 return false;
             }
@@ -275,17 +280,24 @@ namespace OWC {
         sendBuf[6] = 4; // checksum
         sendBuf[9] = 4; // unk
 
-        if (!sendWriteRequest()) {
+        if (!sendWriteRequest() || isCmdRejected()) {
             if (logFn)
-                writeLog(L"failed to prepare config commit");
+                writeLog(L"failed to commit config");
 
             return false;
         }
 
-        prepareSendBuffer(CMD::Commit2);
-        if (!sendWriteRequest()) {
+        if (commitChecksum != reinterpret_cast<uint16_t *>(respBuf)[5]) {
             if (logFn)
-                writeLog(L"failed to commit config");
+                writeLog(std::format(L"commit checksum mismatch: {} != {}", commitChecksum, reinterpret_cast<uint16_t *>(respBuf)[5]));
+
+            return false;
+        }
+
+        prepareSendBuffer(CMD::EndCommit);
+        if (!sendWriteRequest() || isCmdRejected()) {
+            if (logFn)
+                writeLog(L"failed to end commit");
 
             return false;
         }
