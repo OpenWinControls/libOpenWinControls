@@ -6338,6 +6338,56 @@ Send
     </tr>
 </table>
 
+Response
+
+<table>
+    <tr>
+        <th>0</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+        <th>5</th>
+        <th>6</th>
+        <th>7</th>
+        <th>8</th>
+        <th>9</th>
+        <th>10</th>
+        <th>11</th>
+        <th>12-63</th>
+    </tr>
+    <tr>
+        <td>ID</td>
+        <td>cmd</td>
+        <td>unk</td>
+        <td></td>
+        <td>unk</td>
+        <td>unk</td>
+        <td colspan="2">checksum</td>
+        <td></td>
+        <td>unk</td>
+        <td colspan="2">commit checksum</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>01</td>
+        <td>27</td>
+        <td>xx</td>
+        <td>00</td>
+        <td>xx</td>
+        <td>xx</td>
+        <td>xx</td>
+        <td>xx</td>
+        <td>00</td>
+        <td>xx</td>
+        <td>xx</td>
+        <td>xx</td>
+        <td>00</td>
+    </tr>
+</table>
+
+commit checksum is the sum of: sum(configuration bytes) + sum(bytes **8-19** from first read packet).
+
 Send
 
 <table>
