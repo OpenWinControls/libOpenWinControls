@@ -280,7 +280,7 @@ namespace OWC {
         sendBuf[6] = 4; // checksum
         sendBuf[9] = 4; // unk
 
-        if (!sendWriteRequest() || isCmdRejected()) {
+        if (!sendReadRequest() || isCmdRejected()) {
             if (logFn)
                 writeLog(L"failed to commit config");
 
