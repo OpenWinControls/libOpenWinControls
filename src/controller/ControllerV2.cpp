@@ -295,7 +295,7 @@ namespace OWC {
         }
 
         prepareSendBuffer(CMD::EndCommit);
-        if (!sendWriteRequest() || isCmdRejected()) {
+        if (!sendReadRequest() || isCmdRejected()) {
             if (logFn)
                 writeLog(L"failed to end commit");
 
