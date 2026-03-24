@@ -105,7 +105,10 @@ Endpoint 0x81 IN, sent by the controller every 1 second.
         <th>5</th>
         <th>6</th>
         <th>7</th>
-        <th>8-63</th>
+        <th>8</th>
+        <th>9</th>
+        <th>10</th>
+        <th>11-12</th>
     </tr>
     <tr>
         <td>ID</td>
@@ -116,6 +119,9 @@ Endpoint 0x81 IN, sent by the controller every 1 second.
         <td></td>
         <td>version major</td>
         <td>version minor</td>
+        <td>switch mode button state</td>
+        <td>left back button state</td>
+        <td>right back button state</td>
         <td></td>
     </tr>
     <tr>
@@ -127,10 +133,18 @@ Endpoint 0x81 IN, sent by the controller every 1 second.
         <td>00</td>
         <td>xx</td>
         <td>xx</td>
+        <td>xx</td>
+        <td>xx</td>
+        <td>xx</td>
         <td>00</td>
     </tr>
 </table>
 
+switch mode button state: **00** (not pressed) / **68** (pressed)
+
+left back button state: **00** (not pressed) / **69** (pressed)
+
+right back button state: **00** (not pressed) / **6a** (pressed)
 
 # Packets
 
