@@ -108,7 +108,7 @@ Endpoint 0x81 IN, sent by the controller every 1 second.
         <th>8</th>
         <th>9</th>
         <th>10</th>
-        <th>11-12</th>
+        <th>11</th>
     </tr>
     <tr>
         <td>ID</td>
