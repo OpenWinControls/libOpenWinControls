@@ -89,6 +89,18 @@ Configuration total size is 1024 bytes.
 
 ## Back buttons
 
+### mini 25
+
+Back button **1** on device is: **l4 button**.
+
+Back button **2** on device is: **r4 button**.
+
+Back button **3** is not implemented.
+
+Back button **4** is not implemented.
+
+### win 5
+
 Back button **1** on device is: **left back button**.
 
 Back button **2** on device is: **right back button**.
