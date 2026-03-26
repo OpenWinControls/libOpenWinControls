@@ -87,9 +87,15 @@ Custom key codes for gamepad mode:
 
 Configuration total size is 1024 bytes.
 
-The controller hardware supports up to 4 back buttons, GPD devices have 2 back buttons, thus button 3 and 4 sections can be ignored, even if not empty (default settings).
+## Back buttons
 
-The back button number **does not name a physical position on device**.
+Back button **1** on device is: **left back button**.
+
+Back button **2** on device is: **right back button**.
+
+Back button **3** is not implemented.
+
+Back button **4** on device is: **controller mode switch button (single click)**.
 
 # Status interrupt
 
