@@ -29,6 +29,8 @@ namespace OWC {
         DeadZoneControlV1 = 1, ///< analog sticks center and boundary controls
         ShoulderLedsV1 = 1 << 1, ///< shoulder leds mode and color
         RumbleV1 = 1 << 2, ///< vibration intensity
-        XinputMappingV1 = 1 << 3 ///< xinput mode remapping
+        XinputMappingV1 = 1 << 3, ///< xinput mode remapping
+        BackButton3 = 1 << 4, ///< back button 3 is present
+        BackButton4 = 1 << 5 ///< back button 4 is present
     };
 }
