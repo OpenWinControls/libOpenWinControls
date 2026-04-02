@@ -32,23 +32,6 @@
 #endif
 
 namespace OWC {
-    ControllerV1::ControllerV1(const int controllerFeatures) {
-        sendBuf = new uint8_t[sendPacketLen];
-        respBuf = new uint8_t[respPacketLen];
-        configBuf = new uint8_t[configBufLen];
-        configI8 = reinterpret_cast<int8_t *>(configBuf);
-        configU16 = reinterpret_cast<uint16_t *>(configBuf);
-        features = controllerFeatures;
-
-        std::memset(configBuf, 0, configBufLen);
-    }
-
-    ControllerV1::~ControllerV1() {
-        delete[] sendBuf;
-        delete[] respBuf;
-        delete[] configBuf;
-    }
-
     // this call also puts version numbers into resp buffer
     bool ControllerV1::initCommunication(const Mode mode) const {
         prepareSendPacket(mode, CMD::Init);
@@ -171,8 +154,7 @@ namespace OWC {
             return false;
         }
 
-        // real packet size is 64, start from there
-        std::memcpy(configBuf + respPacketLen - 1, respBuf, respPacketLen);
+        std::memcpy(configBuf + respPacketLen, respBuf, respPacketLen);
 
         if (!isConfigValid(getBytesSum(configBuf, configBufLen), Mode::Read)) {
             if (logFn)

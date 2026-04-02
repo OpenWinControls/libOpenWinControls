@@ -16,17 +16,35 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include <format>
+#include <cstring>
 #include <algorithm>
 
 #include "Controller.h"
 #include "../Utils.h"
 
 namespace OWC {
+    Controller::Controller(const int controllerFeatures, const int sendBufSz, const int respBufSz, const int configBufSz) {
+        sendPacketLen = sendBufSz;
+        respPacketLen = respBufSz;
+        configBufLen = configBufSz;
+        sendBuf = new uint8_t[sendPacketLen];
+        respBuf = new uint8_t[respPacketLen];
+        configBuf = new uint8_t[configBufLen];
+        configI8 = reinterpret_cast<int8_t *>(configBuf);
+        configU16 = reinterpret_cast<uint16_t *>(configBuf);
+        features = controllerFeatures;
+
+        std::memset(configBuf, 0, configBufLen);
+    }
+
     Controller::~Controller() {
         if (gamepad)
             hid_close(gamepad);
 
         hid_exit();
+        delete[] sendBuf;
+        delete[] respBuf;
+        delete[] configBuf;
     }
 
     void Controller::writeLog(const std::wstring &msg, const std::source_location loc) const {

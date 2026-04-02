@@ -36,7 +36,15 @@ namespace OWC {
     protected:
         std::function<void(const std::wstring &)> logFn;
         hid_device *gamepad = nullptr;
+        uint8_t *sendBuf = nullptr;
+        uint8_t *respBuf = nullptr;
+        uint8_t *configBuf = nullptr;
+        int8_t *configI8 = nullptr; // alias
+        uint16_t *configU16 = nullptr; // alias
         int features = 0;
+        int sendPacketLen;
+        int respPacketLen;
+        int configBufLen;
 
         [[nodiscard]] virtual int getVID() const = 0;
         [[nodiscard]] virtual int getPID() const = 0;
@@ -48,6 +56,7 @@ namespace OWC {
         void setAnalogDeadzone(int8_t *field, int value) const;
 
     public:
+        Controller(int controllerFeatures, int sendBufSz, int respBufSz, int configBufSz);
         virtual ~Controller();
 
         /*!
