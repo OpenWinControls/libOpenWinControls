@@ -18,6 +18,8 @@
 #include <format>
 #include <cstring>
 #include <algorithm>
+#include <chrono>
+#include <thread>
 
 #include "ControllerV1.h"
 #include "../Utils.h"
@@ -55,6 +57,8 @@ namespace OWC {
     }
 
     bool ControllerV1::sendReadRequest() const {
+        using namespace std::chrono_literals;
+
         prepareRespBuffer();
 
         if (logFn)
@@ -66,6 +70,8 @@ namespace OWC {
 
             return false;
         }
+
+        std::this_thread::sleep_for(0.05s);
 
         if (hid_get_input_report(gamepad, respBuf, respPacketLen) < 0) {
             if (logFn)
