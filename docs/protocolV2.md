@@ -1,6 +1,6 @@
 # Controller protocol v2
 
-Used in **win 5**, **win mini 25**.
+Used in **win 5**, **win mini 25** (firmware 1.20+).
 
 ## Device info
 
@@ -174,6 +174,8 @@ Rejected commands return **0xe2** in byte **8**.
 
 Unless stated otherwise, checksum is the sum of all bytes after it.
 
+**bytes count** is the number of bytes set, after the header.
+
 ## Init communication
 
 Send
@@ -182,16 +184,19 @@ Send
     <tr>
         <th>0</th>
         <th>1</th>
-        <th>2-63</th>
+        <th>2</th>
+        <th>3-63</th>
     </tr>
     <tr>
         <td>ID</td>
         <td>cmd</td>
+        <td>bytes count</td>
         <td></td>
     </tr>
     <tr>
         <td>01</td>
         <td>21</td>
+        <td>00</td>
         <td>00</td>
     </tr>
 </table>
@@ -209,17 +214,19 @@ Response
         <th>6</th>
         <th>7</th>
         <th>8</th>
-        <th>9-63</th>
+        <th>9</th>
+        <th>10-63</th>
     </tr>
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td>unk</td>
         <td></td>
         <td colspan="2">checksum</td>
         <td>ready state</td>
+        <td></td>
         <td></td>
     </tr>
     <tr>
@@ -233,6 +240,7 @@ Response
         <td>xx</td>
         <td>xx</td>
         <td>00</td>
+        <td>00</td>
     </tr>
 </table>
 
@@ -242,16 +250,19 @@ Send
     <tr>
         <th>0</th>
         <th>1</th>
-        <th>2-63</th>
+        <th>2</th>
+        <th>3-63</th>
     </tr>
     <tr>
         <td>ID</td>
         <td>cmd</td>
+        <td>bytes count</td>
         <td></td>
     </tr>
     <tr>
         <td>01</td>
         <td>2b</td>
+        <td>00</td>
         <td>00</td>
     </tr>
 </table>
@@ -274,7 +285,7 @@ Response
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td>unk</td>
         <td></td>
@@ -306,16 +317,19 @@ Send
     <tr>
         <th>0</th>
         <th>1</th>
-        <th>2-63</th>
+        <th>2</th>
+        <th>3-63</th>
     </tr>
     <tr>
         <td>ID</td>
         <td>cmd</td>
+        <td>bytes count</td>
         <td></td>
     </tr>
     <tr>
         <td>01</td>
         <td>41</td>
+        <td>00</td>
         <td>00</td>
     </tr>
 </table>
@@ -343,7 +357,7 @@ Response
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td>unk</td>
         <td>unk</td>
@@ -400,12 +414,11 @@ Send
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td></td>
         <td></td>
-        <td>unk</td>
-        <td></td>
+        <td colspan="2">checksum</td>
         <td></td>
         <td>unk</td>
         <td></td>
@@ -496,7 +509,7 @@ Response
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
@@ -639,7 +652,7 @@ Response
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
@@ -751,7 +764,7 @@ Response
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
@@ -908,7 +921,7 @@ Response
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
@@ -1078,7 +1091,7 @@ Response
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
@@ -1251,7 +1264,7 @@ Response
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
@@ -1424,7 +1437,7 @@ Response
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
@@ -1598,7 +1611,7 @@ Response
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
@@ -1771,7 +1784,7 @@ Response
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
@@ -1944,7 +1957,7 @@ Response
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
@@ -2117,7 +2130,7 @@ Response
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
@@ -2291,7 +2304,7 @@ Response
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
@@ -2464,7 +2477,7 @@ Response
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
@@ -2637,7 +2650,7 @@ Response
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
@@ -2811,7 +2824,7 @@ Response
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
@@ -2984,7 +2997,7 @@ Response
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
@@ -3157,7 +3170,7 @@ Response
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
@@ -3292,7 +3305,7 @@ Response
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
@@ -3355,16 +3368,18 @@ Response (end packet, 0x10)
         <th>5</th>
         <th>6</th>
         <th>7</th>
-        <th>8-24</th>
+        <th>8-23</th>
+        <th>24-63</th>
     </tr>
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
         <td>reserved</td>
+        <th></th>
     </tr>
     <tr>
         <td>01</td>
@@ -3376,6 +3391,7 @@ Response (end packet, 0x10)
         <td>xx</td>
         <td>xx</td>
         <td>ff</td>
+        <td>00</td>
     </tr>
 </table>
 
@@ -3387,16 +3403,19 @@ Send
     <tr>
         <th>0</th>
         <th>1</th>
-        <th>2-63</th>
+        <th>2</th>
+        <th>3-63</th>
     </tr>
     <tr>
         <td>ID</td>
         <td>cmd</td>
+        <td>bytes count</td>
         <td></td>
     </tr>
     <tr>
         <td>01</td>
         <td>21</td>
+        <td>00</td>
         <td>00</td>
     </tr>
 </table>
@@ -3419,7 +3438,7 @@ Response
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td>unk</td>
         <td></td>
@@ -3528,7 +3547,7 @@ Send
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
@@ -3697,7 +3716,7 @@ Send
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
@@ -3854,7 +3873,7 @@ Send
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
@@ -4024,7 +4043,7 @@ Send
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
@@ -4197,7 +4216,7 @@ Send
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
@@ -4370,7 +4389,7 @@ Send
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
@@ -4544,7 +4563,7 @@ Send
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
@@ -4717,7 +4736,7 @@ Send
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
@@ -4890,7 +4909,7 @@ Send
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
@@ -5063,7 +5082,7 @@ Send
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
@@ -5237,7 +5256,7 @@ Send
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
@@ -5410,7 +5429,7 @@ Send
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
@@ -5583,7 +5602,7 @@ Send
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
@@ -5757,7 +5776,7 @@ Send
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
@@ -5930,7 +5949,7 @@ Send
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
@@ -6103,7 +6122,7 @@ Send
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
@@ -6238,7 +6257,7 @@ Send
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
@@ -6301,16 +6320,18 @@ Send (end packet, 0x10)
         <th>5</th>
         <th>6</th>
         <th>7</th>
-        <th>8-24</th>
+        <th>8-23</th>
+        <th>24-63</th>
     </tr>
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
         <td>reserved</td>
+        <td></td>
     </tr>
     <tr>
         <td>01</td>
@@ -6322,6 +6343,7 @@ Send (end packet, 0x10)
         <td>xx</td>
         <td>xx</td>
         <td>ff</td>
+        <td>00</td>
     </tr>
 </table>
 
@@ -6346,7 +6368,7 @@ Send
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td></td>
         <td></td>
@@ -6358,7 +6380,7 @@ Send
     <tr>
         <td>01</td>
         <td>27</td>
-        <td>2</td>
+        <td>02</td>
         <td>00</td>
         <td>00</td>
         <td>00</td>
@@ -6391,7 +6413,7 @@ Response
     <tr>
         <td>ID</td>
         <td>cmd</td>
-        <td>unk</td>
+        <td>bytes count</td>
         <td></td>
         <td>unk</td>
         <td>unk</td>
@@ -6404,7 +6426,7 @@ Response
     <tr>
         <td>01</td>
         <td>27</td>
-        <td>xx</td>
+        <td>06</td>
         <td>00</td>
         <td>xx</td>
         <td>xx</td>
@@ -6426,16 +6448,19 @@ Send
     <tr>
         <th>0</th>
         <th>1</th>
-        <th>2-63</th>
+        <th>2</th>
+        <th>3-63</th>
     </tr>
     <tr>
         <td>ID</td>
         <td>cmd</td>
+        <td>bytes count</td>
         <td></td>
     </tr>
     <tr>
         <td>01</td>
         <td>22</td>
+        <td>00</td>
         <td>00</td>
     </tr>
 </table>
