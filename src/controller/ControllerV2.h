@@ -34,7 +34,7 @@ namespace OWC {
             Version = 0x41,
             Read = 0x44,
             Write = 0x43,
-            Commit1 = 0x27,
+            Commit = 0x27,
             EndCommit = 0x22
         };
 

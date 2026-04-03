@@ -257,7 +257,7 @@ namespace OWC {
             }
         }
 
-        prepareSendBuffer(CMD::Commit1);
+        prepareSendBuffer(CMD::Commit);
 
         sendBuf[2] = 2; // unk
         sendBuf[6] = 4; // checksum
