@@ -36,7 +36,7 @@ namespace OWC {
     bool ControllerV2::readVersion() {
         prepareSendBuffer(CMD::Version);
 
-        if (!sendReadRequest() || !isValidRespPacket())
+        if (!sendReadRequest() || isCmdRejected() || !isValidRespPacket())
             return false;
 
         version = std::make_pair(respBuf[12], respBuf[13]);
