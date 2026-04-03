@@ -160,7 +160,7 @@ namespace OWC {
         prepareSendBuffer(CMD::Read);
 
         // required args
-        sendBuf[2] = 2; // unk
+        sendBuf[2] = 2; // bytes count
         sendBuf[6] = 4; // checksum
         sendBuf[9] = 4; // unk
 
@@ -223,7 +223,7 @@ namespace OWC {
         prepareSendBuffer(CMD::Write);
 
         // prepare write request packet
-        sendBuf[2] = 0x38; // unk
+        sendBuf[2] = 0x38; // bytes count
         std::memcpy(sendBuf + 8, writeReqHeader, sizeof(writeReqHeader));
         std::memcpy(sendBuf + 20, configBuf, 44);
         sendBufU16[3] = getBytesSum(sendBuf + 8, sendPacketLen - 8); // checksum
@@ -253,7 +253,7 @@ namespace OWC {
 
         prepareSendBuffer(CMD::Commit);
 
-        sendBuf[2] = 2; // unk
+        sendBuf[2] = 2; // bytes count
         sendBuf[6] = 4; // checksum
         sendBuf[9] = 4; // unk
 
@@ -690,20 +690,20 @@ namespace OWC {
     }
 
     void ControllerV2::setLedMode(const LedMode mode) const {
-        // unsed for now, do nothing
+        // unused, do nothing
     }
 
     LedMode ControllerV2::getLedMode() const {
-        // unsed for now
+        // unused
         return LedMode::Unknown;
     }
 
     void ControllerV2::setLedColor(const int r, const int g, const int b) const {
-        // unsed for now, do nothing
+        // unused, do nothing
     }
 
     std::tuple<int, int, int> ControllerV2::getLedColor() const {
-        // unsed for now
+        // unused
         return {0, 0, 0};
     }
 
