@@ -102,12 +102,6 @@ namespace OWC {
         sendBuf[6] = page;
     }
 
-    void ControllerV1::prepareRespBuffer() const {
-        std::memset(respBuf, 0, respPacketLen);
-
-        respBuf[0] = 1; // report id
-    }
-
     bool ControllerV1::isConfigValid(const int configChecksum, const Mode mode) const {
         prepareSendPacket(mode, CMD::Checksum);
 

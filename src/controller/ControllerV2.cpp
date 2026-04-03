@@ -119,12 +119,6 @@ namespace OWC {
         sendBuf[1] = static_cast<uint8_t>(cmd);
     }
 
-    void ControllerV2::prepareRespBuffer() const {
-        std::memset(respBuf, 0, respPacketLen);
-
-        respBuf[0] = 1; // report id
-    }
-
     bool ControllerV2::isCmdRejected() const {
         return respBuf[8] == 0xe2;
     }

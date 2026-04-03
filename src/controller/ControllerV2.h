@@ -48,7 +48,6 @@ namespace OWC {
         [[nodiscard]] bool sendReadRequest(int *respBytesCount = nullptr) const;
         [[nodiscard]] bool sendWriteRequest() const;
         void prepareSendBuffer(CMD cmd) const;
-        void prepareRespBuffer() const;
         [[nodiscard]] bool isCmdRejected() const;
         [[nodiscard]] bool isValidRespPacket() const;
         [[nodiscard]] int getBackButtonModeIdx(int num) const;

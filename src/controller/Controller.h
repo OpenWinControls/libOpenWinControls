@@ -49,6 +49,7 @@ namespace OWC {
         [[nodiscard]] virtual int getVID() const = 0;
         [[nodiscard]] virtual int getPID() const = 0;
 
+        void prepareRespBuffer() const;
         void writeLog(const std::wstring &msg, std::source_location loc = std::source_location::current()) const;
         [[nodiscard]] bool setButtonKey(uint16_t *btn, const std::string &key) const;
         [[nodiscard]] bool setXinputKey(uint16_t *btn, const std::string &key) const;

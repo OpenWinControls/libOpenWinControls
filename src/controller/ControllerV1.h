@@ -46,7 +46,6 @@ namespace OWC {
         [[nodiscard]] bool sendReadRequest() const;
         [[nodiscard]] bool sendWriteRequest() const;
         void prepareSendPacket(Mode mode, CMD cmd, uint8_t page = 0) const;
-        void prepareRespBuffer() const;
         [[nodiscard]] bool isConfigValid(int configChecksum, Mode mode) const;
         void parseVersion();
 

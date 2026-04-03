@@ -47,6 +47,12 @@ namespace OWC {
         delete[] configBuf;
     }
 
+    void Controller::prepareRespBuffer() const {
+        std::memset(respBuf, 0, respPacketLen);
+
+        respBuf[0] = 1; // report id
+    }
+
     void Controller::writeLog(const std::wstring &msg, const std::source_location loc) const {
         logFn(std::format(L"{}:{}\n{}", strTowstr(loc.function_name()), loc.line(), msg));
     }
