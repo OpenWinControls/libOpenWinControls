@@ -266,7 +266,7 @@ namespace OWC {
 
         if (commitChecksum != reinterpret_cast<uint16_t *>(respBuf)[5]) {
             if (logFn)
-                writeLog(std::format(L"commit checksum mismatch: {} != {}", commitChecksum, reinterpret_cast<uint16_t *>(respBuf)[5]));
+                writeLog(std::format(L"commit checksum mismatch: {:x} != {:x}", commitChecksum, reinterpret_cast<uint16_t *>(respBuf)[5]));
 
             return false;
         }
