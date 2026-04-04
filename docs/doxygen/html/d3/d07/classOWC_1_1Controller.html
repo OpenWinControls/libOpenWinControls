@@ -103,6 +103,8 @@ $(function(){initNavTree('d3/d07/classOWC_1_1Controller.html','../../','d9/d06/c
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ae11be4dda4745c496c13002eabd9da60" id="r_ae11be4dda4745c496c13002eabd9da60"><td class="memItemLeft">virtual int&#160;</td><td class="memItemRight"><a class="el" href="#ae11be4dda4745c496c13002eabd9da60">getControllerType</a> () const =0</td></tr>
 <tr class="memdesc:ae11be4dda4745c496c13002eabd9da60"><td class="mdescLeft">&#160;</td><td class="mdescRight">int value of the controller class version  <br /></td></tr>
+<tr class="memitem:a70b27e481595a0f4983af71600f9e1cd" id="r_a70b27e481595a0f4983af71600f9e1cd"><td class="memItemLeft">virtual bool&#160;</td><td class="memItemRight"><a class="el" href="#a70b27e481595a0f4983af71600f9e1cd">readVersion</a> ()=0</td></tr>
+<tr class="memdesc:a70b27e481595a0f4983af71600f9e1cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">read the controller firmware version  <br /></td></tr>
 <tr class="memitem:a1fb0c302c8a5f4dfe25da14b97a29291" id="r_a1fb0c302c8a5f4dfe25da14b97a29291"><td class="memItemLeft">virtual bool&#160;</td><td class="memItemRight"><a class="el" href="#a1fb0c302c8a5f4dfe25da14b97a29291">readConfig</a> ()=0</td></tr>
 <tr class="memdesc:a1fb0c302c8a5f4dfe25da14b97a29291"><td class="mdescLeft">&#160;</td><td class="mdescRight">read the whole configuration  <br /></td></tr>
 <tr class="memitem:a29ae312dae014e2df46cdef5599bec62" id="r_a29ae312dae014e2df46cdef5599bec62"><td class="memItemLeft">virtual bool&#160;</td><td class="memItemRight"><a class="el" href="#a29ae312dae014e2df46cdef5599bec62">writeConfig</a> () const =0</td></tr>
@@ -585,6 +587,36 @@ Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>true on success </dd></dl>
 
 <p>Implemented in <a class="el" href="../../d7/d00/classOWC_1_1ControllerV1.html#a2c00290e101f01398aaa28065e24e5e9">OWC::ControllerV1</a>, and <a class="el" href="../../d4/d00/classOWC_1_1ControllerV2.html#af815b125f3e0f6ce58efe76b768e17d3">OWC::ControllerV2</a>.</p>
+
+</div>
+</div>
+<a id="a70b27e481595a0f4983af71600f9e1cd" name="a70b27e481595a0f4983af71600f9e1cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70b27e481595a0f4983af71600f9e1cd">&#9670;&#160;</a></span>readVersion()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool OWC::Controller::readVersion </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel pure-virtual">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>read the controller firmware version </p>
+<dl class="section return"><dt>Returns</dt><dd>true on success </dd></dl>
+
+<p>Implemented in <a class="el" href="../../d7/d00/classOWC_1_1ControllerV1.html#a6239aa84f01095bdd9c5ca611ce78b8e">OWC::ControllerV1</a>, and <a class="el" href="../../d4/d00/classOWC_1_1ControllerV2.html#a5dc416d1a49f0ffaf3fe98f5c7a96fac">OWC::ControllerV2</a>.</p>
 
 </div>
 </div>
