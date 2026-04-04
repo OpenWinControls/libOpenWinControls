@@ -51,6 +51,8 @@ namespace OWC {
 
         void prepareRespBuffer() const;
         void writeLog(const std::wstring &msg, std::source_location loc = std::source_location::current()) const;
+        [[nodiscard]] bool sendReadRequest() const;
+        [[nodiscard]] bool sendWriteRequest() const;
         [[nodiscard]] bool setButtonKey(uint16_t *btn, const std::string &key) const;
         [[nodiscard]] bool setXinputKey(uint16_t *btn, const std::string &key) const;
         void setBackButtonTime(uint16_t *field, int time) const;

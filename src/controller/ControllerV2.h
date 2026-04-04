@@ -44,8 +44,6 @@ namespace OWC {
 
         [[nodiscard]] bool initReadCommunication() const;
         [[nodiscard]] bool initWriteCommunication() const;
-        [[nodiscard]] bool sendReadRequest() const;
-        [[nodiscard]] bool sendWriteRequest() const;
         void prepareSendBuffer(CMD cmd, int bytesCount = 0) const;
         [[nodiscard]] bool isCmdRejected() const;
         [[nodiscard]] bool isValidRespPacket() const;

@@ -17,20 +17,11 @@
  */
 #include <format>
 #include <cstring>
-#include <algorithm>
-#include <chrono>
-#include <thread>
 
 #include "ControllerV2.h"
 #include "../Utils.h"
 #include "../include/HIDUsageIDMap.h"
 #include "../include/XinputUsageIDMap.h"
-
-#ifdef _WIN32
-#define HID_SEND_REPORT hid_send_output_report
-#else
-#define HID_SEND_REPORT hid_send_feature_report
-#endif
 
 namespace OWC {
     bool ControllerV2::initReadCommunication() const {
@@ -51,50 +42,6 @@ namespace OWC {
         prepareSendBuffer(CMD::Init1);
 
         return sendReadRequest() && respBuf[8] == 0xaa;
-    }
-
-    bool ControllerV2::sendReadRequest() const {
-        using namespace std::chrono_literals;
-
-        prepareRespBuffer();
-
-        if (logFn)
-            writeLog(bufferToString(sendBuf, sendPacketLen));
-
-        if (HID_SEND_REPORT(gamepad, sendBuf, sendPacketLen) < 0) {
-            if (logFn)
-                writeLog(hid_error(gamepad));
-
-            return false;
-        }
-
-        std::this_thread::sleep_for(0.05s); // needs some time to process the cmd, or you wont get the correct response
-
-        if (hid_get_input_report(gamepad, respBuf, respPacketLen) < 0) {
-            if (logFn)
-                writeLog(hid_error(gamepad));
-
-            return false;
-        }
-
-        if (logFn)
-            writeLog(bufferToString(respBuf, respPacketLen));
-
-        return true;
-    }
-
-    bool ControllerV2::sendWriteRequest() const {
-        if (logFn)
-            writeLog(bufferToString(sendBuf, sendPacketLen));
-
-        if (HID_SEND_REPORT(gamepad, sendBuf, sendPacketLen) < 0) {
-            if (logFn)
-                writeLog(hid_error(gamepad));
-
-            return false;
-        }
-
-        return true;
     }
 
     void ControllerV2::prepareSendBuffer(const CMD cmd, const int bytesCount) const {

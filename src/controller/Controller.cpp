@@ -18,9 +18,17 @@
 #include <format>
 #include <cstring>
 #include <algorithm>
+#include <chrono>
+#include <thread>
 
 #include "Controller.h"
 #include "../Utils.h"
+
+#ifdef _WIN32
+#define HID_SEND_REPORT hid_send_output_report
+#else
+#define HID_SEND_REPORT hid_send_feature_report
+#endif
 
 namespace OWC {
     Controller::Controller(const int controllerFeatures, const int sendBufSz, const int respBufSz, const int configBufSz) {
@@ -55,6 +63,50 @@ namespace OWC {
 
     void Controller::writeLog(const std::wstring &msg, const std::source_location loc) const {
         logFn(std::format(L"{}:{}\n{}", strTowstr(loc.function_name()), loc.line(), msg));
+    }
+
+    bool Controller::sendReadRequest() const {
+        using namespace std::chrono_literals;
+
+        prepareRespBuffer();
+
+        if (logFn)
+            writeLog(bufferToString(sendBuf, sendPacketLen));
+
+        if (HID_SEND_REPORT(gamepad, sendBuf, sendPacketLen) < 0) {
+            if (logFn)
+                writeLog(hid_error(gamepad));
+
+            return false;
+        }
+
+        std::this_thread::sleep_for(0.05s);
+
+        if (hid_get_input_report(gamepad, respBuf, respPacketLen) < 0) {
+            if (logFn)
+                writeLog(hid_error(gamepad));
+
+            return false;
+        }
+
+        if (logFn)
+            writeLog(bufferToString(respBuf, respPacketLen));
+
+        return true;
+    }
+
+    bool Controller::sendWriteRequest() const {
+        if (logFn)
+            writeLog(bufferToString(sendBuf, sendPacketLen));
+
+        if (HID_SEND_REPORT(gamepad, sendBuf, sendPacketLen) < 0) {
+            if (logFn)
+                writeLog(hid_error(gamepad));
+
+            return false;
+        }
+
+        return true;
     }
 
     bool Controller::setButtonKey(uint16_t *btn, const std::string &key) const {
