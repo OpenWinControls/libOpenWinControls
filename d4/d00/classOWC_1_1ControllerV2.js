@@ -1,6 +1,6 @@
 var classOWC_1_1ControllerV2 =
 [
-    [ "ControllerV2", "d4/d00/classOWC_1_1ControllerV2.html#ad26c62ce18431313aeea1b2d832c9e20", null ],
+    [ "ControllerV2", "d4/d00/classOWC_1_1ControllerV2.html#a53e4d302b637af50dd4c46e298caef56", null ],
     [ "getAnalogBoundary", "d4/d00/classOWC_1_1ControllerV2.html#a85b2e2bef11fbf9cd21890a6b36be6f0", null ],
     [ "getAnalogCenter", "d4/d00/classOWC_1_1ControllerV2.html#a1fe2ac485f523f4579db58ab7053cf5f", null ],
     [ "getBackButton", "d4/d00/classOWC_1_1ControllerV2.html#a9f83dfd0c2f878dac4c78f735b364111", null ],
@@ -15,6 +15,7 @@ var classOWC_1_1ControllerV2 =
     [ "getRumbleMode", "d4/d00/classOWC_1_1ControllerV2.html#ae7b80e0b49ee71cbe04e67c38e519dcc", null ],
     [ "getVersion", "d4/d00/classOWC_1_1ControllerV2.html#acecd430dfc49df91a9fb9225400a7c89", null ],
     [ "readConfig", "d4/d00/classOWC_1_1ControllerV2.html#af815b125f3e0f6ce58efe76b768e17d3", null ],
+    [ "readVersion", "d4/d00/classOWC_1_1ControllerV2.html#a5dc416d1a49f0ffaf3fe98f5c7a96fac", null ],
     [ "resetConfig", "d4/d00/classOWC_1_1ControllerV2.html#a7b56da4d10101a1b28d276b29fb493bc", null ],
     [ "setAnalogBoundary", "d4/d00/classOWC_1_1ControllerV2.html#a010c7da7fc6c037febd831fb2286d89e", null ],
     [ "setAnalogCenter", "d4/d00/classOWC_1_1ControllerV2.html#a11109046694b08f1f730c3c09ac5bd79", null ],
