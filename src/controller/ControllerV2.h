@@ -42,7 +42,6 @@ namespace OWC {
         uint8_t writeReqHeader[12] = {0};
         std::pair<int, int> version;
 
-        [[nodiscard]] bool readVersion();
         [[nodiscard]] bool initReadCommunication() const;
         [[nodiscard]] bool initWriteCommunication() const;
         [[nodiscard]] bool sendReadRequest(int *respBytesCount = nullptr) const;
@@ -117,6 +116,7 @@ namespace OWC {
          */
         [[nodiscard]] int getBackButtonHoldTime(int num, int slot) const;
 
+        [[nodiscard]] bool readVersion() override;
         [[nodiscard]] bool readConfig() override;
         [[nodiscard]] bool writeConfig() const override;
         [[nodiscard]] bool resetConfig() const override;

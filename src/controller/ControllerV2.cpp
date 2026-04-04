@@ -33,16 +33,6 @@
 #endif
 
 namespace OWC {
-    bool ControllerV2::readVersion() {
-        prepareSendBuffer(CMD::Version);
-
-        if (!sendReadRequest() || isCmdRejected() || !isValidRespPacket())
-            return false;
-
-        version = std::make_pair(respBuf[12], respBuf[13]);
-        return true;
-    }
-
     bool ControllerV2::initReadCommunication() const {
         prepareSendBuffer(CMD::Init1);
 
@@ -140,9 +130,7 @@ namespace OWC {
         return (82 + ((num - 1) * 98)) + ((slot - 1) * 3);
     }
 
-    bool ControllerV2::readConfig() {
-        int respBytesCnt;
-
+    bool ControllerV2::readVersion() {
         if (!initReadCommunication()) {
             if (logFn)
                 writeLog(L"failed to init communication");
@@ -150,9 +138,21 @@ namespace OWC {
             return false;
         }
 
-        if (!readVersion()) {
+        prepareSendBuffer(CMD::Version);
+
+        if (!sendReadRequest() || isCmdRejected() || !isValidRespPacket())
+            return false;
+
+        version = std::make_pair(respBuf[12], respBuf[13]);
+        return true;
+    }
+
+    bool ControllerV2::readConfig() {
+        int respBytesCnt;
+
+        if (!initReadCommunication()) {
             if (logFn)
-                writeLog(L"failed to read version");
+                writeLog(L"failed to init communication");
 
             return false;
         }

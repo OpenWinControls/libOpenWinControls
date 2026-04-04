@@ -115,20 +115,26 @@ namespace OWC {
         return (reinterpret_cast<uint16_t *>(respBuf)[12]) == configChecksum;
     }
 
-    void ControllerV1::parseVersion() {
+    bool ControllerV1::readVersion() {
+        if (!initCommunication(Mode::Read)) {
+            if (logFn)
+                writeLog(L"failed to init communication");
+
+            return false;
+        }
+
         xVersion = std::make_pair(respBuf[9], respBuf[10]);
         kVersion = std::make_pair(respBuf[11], respBuf[12]);
+        return true;
     }
 
     bool ControllerV1::readConfig() {
         if (!initCommunication(Mode::Read)) {
             if (logFn)
-                writeLog(L"failed to read version");
+                writeLog(L"failed to init communication");
 
             return false;
         }
-
-        parseVersion();
 
         prepareSendPacket(Mode::Read, CMD::ReadWrite);
         if (!sendReadRequest()) {

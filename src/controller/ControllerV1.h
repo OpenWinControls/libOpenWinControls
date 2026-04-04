@@ -47,7 +47,6 @@ namespace OWC {
         [[nodiscard]] bool sendWriteRequest() const;
         void prepareSendPacket(Mode mode, CMD cmd, uint8_t page = 0) const;
         [[nodiscard]] bool isConfigValid(int configChecksum, Mode mode) const;
-        void parseVersion();
 
     protected:
         [[nodiscard]] int getVID() const override { return 0x2f24; }
@@ -75,6 +74,7 @@ namespace OWC {
          */
         [[nodiscard]] std::pair<int, int> getKVersion() const { return kVersion; }
 
+        [[nodiscard]] bool readVersion() override;
         [[nodiscard]] bool readConfig() override;
         [[nodiscard]] bool writeConfig() const override;
         [[nodiscard]] bool resetConfig() const override;

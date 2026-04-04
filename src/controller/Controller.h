@@ -67,6 +67,12 @@ namespace OWC {
         [[nodiscard]] virtual int getControllerType() const = 0;
 
         /*!
+         * @brief read the controller firmware version
+         * @return true on success
+         */
+        [[nodiscard]] virtual bool readVersion() = 0;
+
+        /*!
          * @brief read the whole configuration
          * @return true on success
          */
