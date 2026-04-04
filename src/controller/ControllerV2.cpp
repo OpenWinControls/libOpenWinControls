@@ -53,9 +53,8 @@ namespace OWC {
         return sendReadRequest() && respBuf[8] == 0xaa;
     }
 
-    bool ControllerV2::sendReadRequest(int *respBytesCount) const {
+    bool ControllerV2::sendReadRequest() const {
         using namespace std::chrono_literals;
-        int ret = 0;
 
         prepareRespBuffer();
 
@@ -71,16 +70,12 @@ namespace OWC {
 
         std::this_thread::sleep_for(0.05s); // needs some time to process the cmd, or you wont get the correct response
 
-        ret = hid_get_input_report(gamepad, respBuf, respPacketLen);
-        if (ret < 0) {
+        if (hid_get_input_report(gamepad, respBuf, respPacketLen) < 0) {
             if (logFn)
                 writeLog(hid_error(gamepad));
 
             return false;
         }
-
-        if (respBytesCount != nullptr)
-            *respBytesCount = ret;
 
         if (logFn)
             writeLog(bufferToString(respBuf, respPacketLen));
@@ -102,11 +97,12 @@ namespace OWC {
         return true;
     }
 
-    void ControllerV2::prepareSendBuffer(const CMD cmd) const {
+    void ControllerV2::prepareSendBuffer(const CMD cmd, const int bytesCount) const {
         std::memset(sendBuf, 0, sendPacketLen);
 
         sendBuf[0] = 1; // id
         sendBuf[1] = static_cast<uint8_t>(cmd);
+        sendBuf[2] = bytesCount;
     }
 
     bool ControllerV2::isCmdRejected() const {
@@ -148,7 +144,7 @@ namespace OWC {
     }
 
     bool ControllerV2::readConfig() {
-        int respBytesCnt;
+        constexpr int reqHeaderSz = sizeof(writeReqHeader);
 
         if (!initReadCommunication()) {
             if (logFn)
@@ -157,14 +153,13 @@ namespace OWC {
             return false;
         }
 
-        prepareSendBuffer(CMD::Read);
+        prepareSendBuffer(CMD::Read, 2);
 
         // required args
-        sendBuf[2] = 2; // bytes count
         sendBuf[6] = 4; // checksum
         sendBuf[9] = 4; // unk
 
-        if (!sendReadRequest(&respBytesCnt) || isCmdRejected() || !isValidRespPacket()) {
+        if (!sendReadRequest() || isCmdRejected() || !isValidRespPacket()) {
             if (logFn)
                 writeLog(L"failed to start config read request");
 
@@ -172,16 +167,15 @@ namespace OWC {
         }
 
         // copy request packet header
-        std::memcpy(writeReqHeader, respBuf + 8, sizeof(writeReqHeader));
+        std::memcpy(writeReqHeader, respBuf + 8, reqHeaderSz);
 
         // copy first chunck of the config
-        std::memcpy(configBuf, respBuf + 20, respBytesCnt - 20);
+        std::memcpy(configBuf, respBuf + 8 + reqHeaderSz, respBuf[2] - reqHeaderSz);
 
-        for (int i=(respBytesCnt-20); i<0x3f0; i+=(respBytesCnt-8)) {
+        for (int i=(respBuf[2]-reqHeaderSz); i<0x3f0; i+=56) {
             prepareRespBuffer();
 
-            respBytesCnt = hid_get_input_report(gamepad, respBuf, respPacketLen);
-            if (respBytesCnt < 0) {
+            if (hid_get_input_report(gamepad, respBuf, respPacketLen) < 0) {
                 if (logFn)
                     writeLog(hid_error(gamepad));
 
@@ -197,7 +191,7 @@ namespace OWC {
                 return false;
             }
 
-            std::memcpy(configBuf + i, respBuf + 8, respBytesCnt - 8);
+            std::memcpy(configBuf + i, respBuf + 8, respBuf[2]);
         }
 
         if (logFn)
@@ -207,7 +201,8 @@ namespace OWC {
     }
 
     bool ControllerV2::writeConfig() const {
-        const int commitChecksum = getBytesSum(writeReqHeader, sizeof(writeReqHeader)) + getBytesSum(configBuf, configBufLen);
+        constexpr int reqHeaderSz = sizeof(writeReqHeader);
+        const int commitChecksum = getBytesSum(writeReqHeader, reqHeaderSz) + getBytesSum(configBuf, configBufLen);
         uint16_t *sendBufU16 = reinterpret_cast<uint16_t *>(sendBuf);
 
         if (!initWriteCommunication()) {
@@ -220,13 +215,13 @@ namespace OWC {
         if (logFn)
             writeLog(bufferToString(configBuf, configBufLen));
 
-        prepareSendBuffer(CMD::Write);
+        prepareSendBuffer(CMD::Write, 0x38);
 
-        // prepare write request packet
-        sendBuf[2] = 0x38; // bytes count
-        std::memcpy(sendBuf + 8, writeReqHeader, sizeof(writeReqHeader));
-        std::memcpy(sendBuf + 20, configBuf, 44);
-        sendBufU16[3] = getBytesSum(sendBuf + 8, sendPacketLen - 8); // checksum
+        // copy write header and first config chunck
+        std::memcpy(sendBuf + 8, writeReqHeader, reqHeaderSz);
+        std::memcpy(sendBuf + 8 + reqHeaderSz, configBuf, sendBuf[2] - reqHeaderSz);
+
+        sendBufU16[3] = getBytesSum(sendBuf + 8, sendBuf[2]); // checksum
 
         if (!sendWriteRequest()) {
             if (logFn)
@@ -235,13 +230,12 @@ namespace OWC {
             return false;
         }
 
-        for (int i=56,j=44; i<=0x3f0; i+=56,j+=56) {
-            prepareSendBuffer(CMD::Write);
+        for (int i=56,j=(sendBuf[2]-reqHeaderSz); i<=0x3f0; i+=56,j+=56) {
+            prepareSendBuffer(CMD::Write, i == 0x3f0 ? 0x10 : 0x38);
+            std::memcpy(sendBuf + 8, configBuf + j, sendBuf[2]);
 
-            sendBuf[2] = i == 0x3f0 ? 0x10 : 0x38;
-            std::memcpy(sendBuf + 8, configBuf + j, std::clamp(configBufLen - j, 0, 56));
             sendBufU16[2] = i; // page index
-            sendBufU16[3] = getBytesSum(sendBuf + 8, sendPacketLen - 8);
+            sendBufU16[3] = getBytesSum(sendBuf + 8, sendBuf[2]);
 
             if (!sendWriteRequest()) {
                 if (logFn)
@@ -251,9 +245,8 @@ namespace OWC {
             }
         }
 
-        prepareSendBuffer(CMD::Commit);
+        prepareSendBuffer(CMD::Commit, 2);
 
-        sendBuf[2] = 2; // bytes count
         sendBuf[6] = 4; // checksum
         sendBuf[9] = 4; // unk
 
