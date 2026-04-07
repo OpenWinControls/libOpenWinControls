@@ -1,6 +1,6 @@
 var classOWC_1_1ControllerV1 =
 [
-    [ "ControllerV1", "d7/d00/classOWC_1_1ControllerV1.html#adaba667a284dbd6040447c15f5a055af", null ],
+    [ "ControllerV1", "d7/d00/classOWC_1_1ControllerV1.html#af2cdc16cd2659c07a584ef251e8c6636", null ],
     [ "getAnalogBoundary", "d7/d00/classOWC_1_1ControllerV1.html#a0c4f683fdae88fb52a1d5c5dc43c872c", null ],
     [ "getAnalogCenter", "d7/d00/classOWC_1_1ControllerV1.html#ada1e754bda47765d8abf9edb11c695f9", null ],
     [ "getBackButton", "d7/d00/classOWC_1_1ControllerV1.html#a0caa8e1121b4a27e49b450a7ce1af965", null ],
