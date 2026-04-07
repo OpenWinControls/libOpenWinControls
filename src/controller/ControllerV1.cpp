@@ -120,25 +120,27 @@ namespace OWC {
     }
 
     bool ControllerV1::writeConfig() const {
-        if (logFn)
-            writeLog(bufferToString(configBuf, configBufLen));
-
-        prepareSendPacket(Mode::Write, CMD::Init);
-
         if (!initCommunication(Mode::Write)) {
             if (logFn)
-                writeLog(L"failed to write config");
+                writeLog(L"failed to init communication");
 
             return false;
         }
+
+        if (logFn)
+            writeLog(bufferToString(configBuf, configBufLen));
 
         for (int i=0,j=0; i<8; ++i,j+=16) {
             prepareSendPacket(Mode::Write, CMD::ReadWrite, i);
 
             std::memcpy(sendBuf + 8, configBuf + j, 16);
 
-            if (!sendWriteRequest())
+            if (!sendWriteRequest()) {
+                if (logFn)
+                    writeLog(L"failed to write config");
+
                 return false;
+            }
         }
 
         if (!isChecksumValid(Mode::Write))
