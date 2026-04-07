@@ -87,6 +87,8 @@ Custom key codes for gamepad mode:
 
 Configuration total size is 1024 bytes.
 
+Structure: 12 bytes header + 1012 bytes data.
+
 ## Back buttons
 
 ### mini 25
@@ -389,11 +391,9 @@ Response
     </tr>
 </table>
 
-## Get current config
+## Read controller configuration
 
-After sending the read command, applications must read _(get input report)_ until the end packet is received.
-
-**First** and **last** packets are special and have a different layout.
+After sending the read command, applications must read until all 1024 bytes are received.
 
 Send
 
@@ -513,18 +513,7 @@ Response
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
-        <td>unk</td>
-        <td>unk</td>
-        <td>unk</td>
-        <td>unk</td>
-        <td>unk</td>
-        <td>unk</td>
-        <td>unk</td>
-        <td>unk</td>
-        <td>unk12 ^ 0xff</td>
-        <td>unk13 ^ 0xff</td>
-        <td>unk14 ^ 0xff</td>
-        <td>unk15 ^ 0xff</td>
+        <td colspan="12">header</td>
         <td colspan="2">dpad up</td>
         <td colspan="2">dpad left</td>
         <td colspan="2">dpad down</td>
@@ -3356,7 +3345,7 @@ Response
     </tr>
 </table>
 
-Response (end packet, 0x10)
+Response
 
 <table>
     <tr>
@@ -3391,6 +3380,191 @@ Response (end packet, 0x10)
         <td>xx</td>
         <td>xx</td>
         <td>ff</td>
+        <td>00</td>
+    </tr>
+</table>
+
+## Init checksum validation for read data
+
+Send
+
+<table>
+    <tr>
+        <th>0</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3-63</th>
+    </tr>
+    <tr>
+        <td>ID</td>
+        <td>cmd</td>
+        <td>bytes count</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>01</td>
+        <td>2b</td>
+        <td>00</td>
+        <td>00</td>
+    </tr>
+</table>
+
+Response
+
+<table>
+    <tr>
+        <th>0</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+        <th>5</th>
+        <th>6</th>
+        <th>7</th>
+        <th>8</th>
+        <th>9-63</th>
+    </tr>
+    <tr>
+        <td>ID</td>
+        <td>cmd</td>
+        <td>bytes count</td>
+        <td></td>
+        <td>unk</td>
+        <td></td>
+        <td colspan="2">checksum</td>
+        <td>ready state</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>01</td>
+        <td>2b</td>
+        <td>02</td>
+        <td>00</td>
+        <td>xx</td>
+        <td>00</td>
+        <td>xx</td>
+        <td>xx</td>
+        <td>xx</td>
+        <td>00</td>
+    </tr>
+</table>
+
+Successful initialization requires **0xaa** in byte **8**.
+
+## Checksum validation for read data
+
+**config checksum** is the sum of the 1024 configuration bytes in controller memory.
+
+Send
+
+<table>
+    <tr>
+        <th>0</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+        <th>5</th>
+        <th>6</th>
+        <th>7</th>
+        <th>8</th>
+        <th>9</th>
+        <th>10-63</th>
+    </tr>
+    <tr>
+        <td>ID</td>
+        <td>cmd</td>
+        <td>bytes count</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td colspan="2">checksum</td>
+        <td></td>
+        <td>unk</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>01</td>
+        <td>27</td>
+        <td>02</td>
+        <td>00</td>
+        <td>00</td>
+        <td>00</td>
+        <td>04</td>
+        <td>00</td>
+        <td>00</td>
+        <td>04</td>
+        <td>00</td>
+    </tr>
+</table>
+
+Response
+
+<table>
+    <tr>
+        <th>0</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+        <th>5</th>
+        <th>6</th>
+        <th>7</th>
+        <th>8</th>
+        <th>9</th>
+        <th>10</th>
+        <th>11</th>
+        <th>12-63</th>
+    </tr>
+    <tr>
+        <td>ID</td>
+        <td>cmd</td>
+        <td>bytes count</td>
+        <td></td>
+        <td>unk</td>
+        <td>unk</td>
+        <td colspan="2">checksum</td>
+        <td></td>
+        <td>unk</td>
+        <td colspan="2">config checksum</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>01</td>
+        <td>27</td>
+        <td>06</td>
+        <td>00</td>
+        <td>xx</td>
+        <td>xx</td>
+        <td>xx</td>
+        <td>xx</td>
+        <td>00</td>
+        <td>xx</td>
+        <td>xx</td>
+        <td>xx</td>
+        <td>00</td>
+    </tr>
+</table>
+
+Send
+
+<table>
+    <tr>
+        <th>0</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3-63</th>
+    </tr>
+    <tr>
+        <td>ID</td>
+        <td>cmd</td>
+        <td>bytes count</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>01</td>
+        <td>22</td>
+        <td>00</td>
         <td>00</td>
     </tr>
 </table>
@@ -3462,19 +3636,11 @@ Response
 
 Successful initialization returns **0xaa** in byte **8**.
 
-## Write config
+## Write config to memory
 
-Writes don't have a response.
+You must send all 1024 bytes, writes don't have a response.
 
 Checksum must be calculated and updated on each write packet.
-
-**First** and **last** packets are special and have a different layout.
-
-### First packet header
-
-Bytes **8**-**19** are copied from first read packet bytes **8**-**19**.
-
-Origin and generation is unknown, so to build a proper write init packet, read the config first.
 
 Send
 
@@ -3551,18 +3717,7 @@ Send
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
-        <td>unk</td>
-        <td>unk</td>
-        <td>unk</td>
-        <td>unk</td>
-        <td>unk</td>
-        <td>unk</td>
-        <td>unk</td>
-        <td>unk</td>
-        <td>unk12 ^ 0xff</td>
-        <td>unk13 ^ 0xff</td>
-        <td>unk14 ^ 0xff</td>
-        <td>unk15 ^ 0xff</td>
+        <td colspan="12">header</td>
         <td colspan="2">dpad up</td>
         <td colspan="2">dpad left</td>
         <td colspan="2">dpad down</td>
@@ -6308,7 +6463,7 @@ Send
     </tr>
 </table>
 
-Send (end packet, 0x10)
+Send
 
 <table>
     <tr>
@@ -6347,7 +6502,11 @@ Send (end packet, 0x10)
     </tr>
 </table>
 
-## Commit configuration to the controller
+## Checksum validation
+
+Checksum validation, after write sequence, also commits the configuration buffer to memory.
+
+**config checksum** is the sum of the 1024 configuration bytes committed to memory.
 
 Send
 
@@ -6420,7 +6579,7 @@ Response
         <td colspan="2">checksum</td>
         <td></td>
         <td>unk</td>
-        <td colspan="2">commit checksum</td>
+        <td colspan="2">config checksum</td>
         <td></td>
     </tr>
     <tr>
@@ -6439,8 +6598,6 @@ Response
         <td>00</td>
     </tr>
 </table>
-
-commit checksum is the sum of: sum(configuration bytes) + sum(bytes **8-19** from first read packet).
 
 Send
 
@@ -6464,3 +6621,7 @@ Send
         <td>00</td>
     </tr>
 </table>
+
+## Flush config to controller
+
+**known, but not working correctly, help is needed to find what's missing/wrong!**
