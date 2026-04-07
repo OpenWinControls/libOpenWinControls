@@ -63,6 +63,39 @@ namespace OWC {
         return checksum == sum;
     }
 
+    bool ControllerV2::isChecksumValid() const {
+        const int configSum = getBytesSum(writeReqHeader, sizeof(writeReqHeader)) + getBytesSum(configBuf, configBufLen);
+
+        prepareSendBuffer(CMD::Checksum, 2);
+
+        sendBuf[6] = 4; // checksum
+        sendBuf[9] = 4; // unk
+
+        if (!sendReadRequest() || isCmdRejected()) {
+            if (logFn)
+                writeLog(L"failed to get checksum");
+
+            return false;
+        }
+
+        if (configSum != reinterpret_cast<uint16_t *>(respBuf)[5]) {
+            if (logFn)
+                writeLog(std::format(L"checksum mismatch: {:x} != {:x}", configSum, reinterpret_cast<uint16_t *>(respBuf)[5]));
+
+            return false;
+        }
+
+        prepareSendBuffer(CMD::EndCmd);
+        if (!sendReadRequest() || isCmdRejected()) {
+            if (logFn)
+                writeLog(L"failed end cmd");
+
+            return false;
+        }
+
+        return true;
+    }
+
     int ControllerV2::getBackButtonModeIdx(const int num) const {
         // btn 1 pos + btn num * btn struct size
         return 160 + ((num - 1) * 196);
@@ -144,12 +177,19 @@ namespace OWC {
         if (logFn)
             writeLog(bufferToString(configBuf, configBufLen));
 
-        return true;
+        prepareSendBuffer(CMD::Init2);
+        if (!sendReadRequest() || isCmdRejected()) {
+            if (logFn)
+                writeLog(L"failed to init checksum");
+
+            return false;
+        }
+
+        return isChecksumValid();
     }
 
     bool ControllerV2::writeConfig() const {
         constexpr int reqHeaderSz = sizeof(writeReqHeader);
-        const int commitChecksum = getBytesSum(writeReqHeader, reqHeaderSz) + getBytesSum(configBuf, configBufLen);
         uint16_t *sendBufU16 = reinterpret_cast<uint16_t *>(sendBuf);
 
         if (!initWriteCommunication()) {
@@ -192,34 +232,7 @@ namespace OWC {
             }
         }
 
-        prepareSendBuffer(CMD::Commit, 2);
-
-        sendBuf[6] = 4; // checksum
-        sendBuf[9] = 4; // unk
-
-        if (!sendReadRequest() || isCmdRejected()) {
-            if (logFn)
-                writeLog(L"failed to commit config");
-
-            return false;
-        }
-
-        if (commitChecksum != reinterpret_cast<uint16_t *>(respBuf)[5]) {
-            if (logFn)
-                writeLog(std::format(L"commit checksum mismatch: {:x} != {:x}", commitChecksum, reinterpret_cast<uint16_t *>(respBuf)[5]));
-
-            return false;
-        }
-
-        prepareSendBuffer(CMD::EndCommit);
-        if (!sendReadRequest() || isCmdRejected()) {
-            if (logFn)
-                writeLog(L"failed to end commit");
-
-            return false;
-        }
-
-        return true;
+        return isChecksumValid();
     }
 
     bool ControllerV2::resetConfig() const {
