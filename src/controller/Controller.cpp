@@ -31,18 +31,12 @@
 #endif
 
 namespace OWC {
-    Controller::Controller(const int controllerFeatures, const int sendBufSz, const int respBufSz, const int configBufSz) {
+    Controller::Controller(const int controllerFeatures, const int sendBufSz, const int respBufSz) {
         sendPacketLen = sendBufSz;
         respPacketLen = respBufSz;
-        configBufLen = configBufSz;
         sendBuf = new uint8_t[sendPacketLen];
         respBuf = new uint8_t[respPacketLen];
-        configBuf = new uint8_t[configBufLen];
-        configI8 = reinterpret_cast<int8_t *>(configBuf);
-        configU16 = reinterpret_cast<uint16_t *>(configBuf);
         features = controllerFeatures;
-
-        std::memset(configBuf, 0, configBufLen);
     }
 
     Controller::~Controller() {
@@ -52,7 +46,6 @@ namespace OWC {
         hid_exit();
         delete[] sendBuf;
         delete[] respBuf;
-        delete[] configBuf;
     }
 
     void Controller::prepareRespBuffer() const {

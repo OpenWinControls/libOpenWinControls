@@ -24,6 +24,18 @@
 #include "../include/HIDUsageIDMap.h"
 
 namespace OWC {
+    ControllerV1::ControllerV1(const int controllerFeatures): Controller(controllerFeatures, 32, 64) {
+        configBuf = new uint8_t[configBufLen];
+        configI8 = reinterpret_cast<int8_t *>(configBuf);
+        configU16 = reinterpret_cast<uint16_t *>(configBuf);
+
+        std::memset(configBuf, 0, configBufLen);
+    }
+
+    ControllerV1::~ControllerV1() {
+        delete[] configBuf;
+    }
+
     // this call also puts version numbers into resp buffer
     bool ControllerV1::initCommunication(const Mode mode) const {
         prepareSendPacket(mode, CMD::Init);

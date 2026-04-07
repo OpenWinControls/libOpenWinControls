@@ -24,6 +24,19 @@
 #include "../include/XinputUsageIDMap.h"
 
 namespace OWC {
+    ControllerV2::ControllerV2(const int controllerFeatures): Controller(controllerFeatures, 64, 64) {
+        configBuf = new uint8_t[configBufLen];
+        configData = configBuf + configHeaderSz;
+        configDataI8 = reinterpret_cast<int8_t *>(configData);
+        configDataU16 = reinterpret_cast<uint16_t *>(configData);
+
+        std::memset(configBuf, 0, configBufLen);
+    }
+
+    ControllerV2::~ControllerV2() {
+        delete[] configBuf;
+    }
+
     bool ControllerV2::initReadCommunication() const {
         prepareSendBuffer(CMD::Init1);
 
@@ -64,7 +77,7 @@ namespace OWC {
     }
 
     bool ControllerV2::isChecksumValid() const {
-        const int configSum = getBytesSum(writeReqHeader, sizeof(writeReqHeader)) + getBytesSum(configBuf, configBufLen);
+        const int configSum = getBytesSum(configBuf, configBufLen);
 
         prepareSendBuffer(CMD::Checksum, 2);
 
@@ -124,8 +137,6 @@ namespace OWC {
     }
 
     bool ControllerV2::readConfig() {
-        constexpr int reqHeaderSz = sizeof(writeReqHeader);
-
         if (!initReadCommunication()) {
             if (logFn)
                 writeLog(L"failed to init communication");
@@ -139,20 +150,14 @@ namespace OWC {
         sendBuf[6] = 4; // checksum
         sendBuf[9] = 4; // unk
 
-        if (!sendReadRequest() || isCmdRejected() || !isValidRespPacket()) {
+        if (!sendWriteRequest()) {
             if (logFn)
-                writeLog(L"failed to start config read request");
+                writeLog(L"failed to request config data");
 
             return false;
         }
 
-        // copy request packet header
-        std::memcpy(writeReqHeader, respBuf + 8, reqHeaderSz);
-
-        // copy first chunck of the config
-        std::memcpy(configBuf, respBuf + 8 + reqHeaderSz, respBuf[2] - reqHeaderSz);
-
-        for (int i=(respBuf[2]-reqHeaderSz); i<0x3f0; i+=56) {
+        for (int i=0; i<configBufLen;) {
             prepareRespBuffer();
 
             if (hid_get_input_report(gamepad, respBuf, respPacketLen) < 0) {
@@ -165,7 +170,13 @@ namespace OWC {
             if (logFn)
                 writeLog(bufferToString(respBuf, respPacketLen));
 
-            if (!isValidRespPacket()) {
+            if (isCmdRejected()) {
+                if (logFn)
+                    writeLog(L"failed to read: interal error");
+
+                return false;
+
+            } else if (!isValidRespPacket()) {
                 if (logFn)
                     writeLog(L"corrupted packet received, checksum failed");
 
@@ -173,6 +184,7 @@ namespace OWC {
             }
 
             std::memcpy(configBuf + i, respBuf + 8, respBuf[2]);
+            i += respBuf[2];
         }
 
         if (logFn)
@@ -190,7 +202,6 @@ namespace OWC {
     }
 
     bool ControllerV2::writeConfig() const {
-        constexpr int reqHeaderSz = sizeof(writeReqHeader);
         uint16_t *sendBufU16 = reinterpret_cast<uint16_t *>(sendBuf);
 
         if (!initWriteCommunication()) {
@@ -203,31 +214,18 @@ namespace OWC {
         if (logFn)
             writeLog(bufferToString(configBuf, configBufLen));
 
-        prepareSendBuffer(CMD::Write, 0x38);
+        for (int i=0; i<configBufLen; i+=56) {
+            const int bytesCount = std::min(configBufLen - i, 56);
 
-        // copy write header and first config chunck
-        std::memcpy(sendBuf + 8, writeReqHeader, reqHeaderSz);
-        std::memcpy(sendBuf + 8 + reqHeaderSz, configBuf, sendBuf[2] - reqHeaderSz);
-
-        sendBufU16[3] = getBytesSum(sendBuf + 8, sendBuf[2]); // checksum
-
-        if (!sendWriteRequest()) {
-            if (logFn)
-                writeLog(L"failed to start config write");
-
-            return false;
-        }
-
-        for (int i=56,j=(sendBuf[2]-reqHeaderSz); i<=0x3f0; i+=56,j+=56) {
-            prepareSendBuffer(CMD::Write, i == 0x3f0 ? 0x10 : 0x38);
-            std::memcpy(sendBuf + 8, configBuf + j, sendBuf[2]);
+            prepareSendBuffer(CMD::Write, bytesCount);
+            std::memcpy(sendBuf + 8, configBuf + i, bytesCount);
 
             sendBufU16[2] = i; // page index
-            sendBufU16[3] = getBytesSum(sendBuf + 8, sendBuf[2]);
+            sendBufU16[3] = getBytesSum(sendBuf + 8, bytesCount); // checksum
 
             if (!sendWriteRequest()) {
                 if (logFn)
-                    writeLog(L"failed to send config data");
+                    writeLog(L"failed to write config");
 
                 return false;
             }
@@ -238,12 +236,12 @@ namespace OWC {
 
     bool ControllerV2::resetConfig() const {
         // v2 has some kind of reset sequence, but this should do for most cases
-        std::memcpy(configBuf, resetBuf, sizeof(resetBuf));
+        std::memcpy(configBuf + configHeaderSz, resetBuf, sizeof(resetBuf));
         return writeConfig();
     }
 
     EmulationMode ControllerV2::getEmulationMode() const {
-        switch (configBuf[959]) {
+        switch (configData[959]) {
             case 0:
                 return EmulationMode::Xinput;
             case 1:
@@ -260,97 +258,97 @@ namespace OWC {
     bool ControllerV2::setButton(const Button btn, const std::string &key) const {
         switch (btn) {
             case Button::KBD_DPAD_UP:
-                return setButtonKey(configU16, key);
+                return setButtonKey(configDataU16, key);
             case Button::KBD_DPAD_DOWN:
-                return setButtonKey(configU16 + 1, key);
+                return setButtonKey(configDataU16 + 1, key);
             case Button::KBD_DPAD_LEFT:
-                return setButtonKey(configU16 + 2, key);
+                return setButtonKey(configDataU16 + 2, key);
             case Button::KBD_DPAD_RIGHT:
-                return setButtonKey(configU16 + 3, key);
+                return setButtonKey(configDataU16 + 3, key);
             case Button::KBD_START:
-                return setButtonKey(configU16 + 4, key);
+                return setButtonKey(configDataU16 + 4, key);
             case Button::KBD_SELECT:
-                return setButtonKey(configU16 + 5, key);
+                return setButtonKey(configDataU16 + 5, key);
             case Button::KBD_MENU:
-                return setButtonKey(configU16 + 6, key);
+                return setButtonKey(configDataU16 + 6, key);
             case Button::KBD_A:
-                return setButtonKey(configU16 + 7, key);
+                return setButtonKey(configDataU16 + 7, key);
             case Button::KBD_B:
-                return setButtonKey(configU16 + 8, key);
+                return setButtonKey(configDataU16 + 8, key);
             case Button::KBD_X:
-                return setButtonKey(configU16 + 9, key);
+                return setButtonKey(configDataU16 + 9, key);
             case Button::KBD_Y:
-                return setButtonKey(configU16 + 10, key);
+                return setButtonKey(configDataU16 + 10, key);
             case Button::KBD_L1:
-                return setButtonKey(configU16 + 11, key);
+                return setButtonKey(configDataU16 + 11, key);
             case Button::KBD_R1:
-                return setButtonKey(configU16 + 12, key);
+                return setButtonKey(configDataU16 + 12, key);
             case Button::KBD_L2:
-                return setButtonKey(configU16 + 13, key);
+                return setButtonKey(configDataU16 + 13, key);
             case Button::KBD_R2:
-                return setButtonKey(configU16 + 14, key);
+                return setButtonKey(configDataU16 + 14, key);
             case Button::KBD_L3:
-                return setButtonKey(configU16 + 15, key);
+                return setButtonKey(configDataU16 + 15, key);
             case Button::KBD_R3:
-                return setButtonKey(configU16 + 16, key);
+                return setButtonKey(configDataU16 + 16, key);
             case Button::KBD_LANALOG_UP:
-                return setButtonKey(configU16 + 17, key);
+                return setButtonKey(configDataU16 + 17, key);
             case Button::KBD_LANALOG_DOWN:
-                return setButtonKey(configU16 + 18, key);
+                return setButtonKey(configDataU16 + 18, key);
             case Button::KBD_LANALOG_LEFT:
-                return setButtonKey(configU16 + 19, key);
+                return setButtonKey(configDataU16 + 19, key);
             case Button::KBD_LANALOG_RIGHT:
-                return setButtonKey(configU16 + 20, key);
+                return setButtonKey(configDataU16 + 20, key);
             case Button::X_DPAD_UP:
-                return setXinputKey(configU16 + 40, key);
+                return setXinputKey(configDataU16 + 40, key);
             case Button::X_DPAD_DOWN:
-                return setXinputKey(configU16 + 41, key);
+                return setXinputKey(configDataU16 + 41, key);
             case Button::X_DPAD_LEFT:
-                return setXinputKey(configU16 + 42, key);
+                return setXinputKey(configDataU16 + 42, key);
             case Button::X_DPAD_RIGHT:
-                return setXinputKey(configU16 + 43, key);
+                return setXinputKey(configDataU16 + 43, key);
             case Button::X_START:
-                return setXinputKey(configU16 + 44, key);
+                return setXinputKey(configDataU16 + 44, key);
             case Button::X_SELECT:
-                return setXinputKey(configU16 + 45, key);
+                return setXinputKey(configDataU16 + 45, key);
             case Button::X_MENU:
-                return setXinputKey(configU16 + 46, key);
+                return setXinputKey(configDataU16 + 46, key);
             case Button::X_A:
-                return setXinputKey(configU16 + 47, key);
+                return setXinputKey(configDataU16 + 47, key);
             case Button::X_B:
-                return setXinputKey(configU16 + 48, key);
+                return setXinputKey(configDataU16 + 48, key);
             case Button::X_X:
-                return setXinputKey(configU16 + 49, key);
+                return setXinputKey(configDataU16 + 49, key);
             case Button::X_Y:
-                return setXinputKey(configU16 + 50, key);
+                return setXinputKey(configDataU16 + 50, key);
             case Button::X_L1:
-                return setXinputKey(configU16 + 51, key);
+                return setXinputKey(configDataU16 + 51, key);
             case Button::X_R1:
-                return setXinputKey(configU16 + 52, key);
+                return setXinputKey(configDataU16 + 52, key);
             case Button::X_L2:
-                return setXinputKey(configU16 + 53, key);
+                return setXinputKey(configDataU16 + 53, key);
             case Button::X_R2:
-                return setXinputKey(configU16 + 54, key);
+                return setXinputKey(configDataU16 + 54, key);
             case Button::X_L3:
-                return setXinputKey(configU16 + 55, key);
+                return setXinputKey(configDataU16 + 55, key);
             case Button::X_R3:
-                return setXinputKey(configU16 + 56, key);
+                return setXinputKey(configDataU16 + 56, key);
             case Button::X_LANALOG_UP:
-                return setXinputKey(configU16 + 57, key);
+                return setXinputKey(configDataU16 + 57, key);
             case Button::X_LANALOG_DOWN:
-                return setXinputKey(configU16 + 58, key);
+                return setXinputKey(configDataU16 + 58, key);
             case Button::X_LANALOG_LEFT:
-                return setXinputKey(configU16 + 59, key);
+                return setXinputKey(configDataU16 + 59, key);
             case Button::X_LANALOG_RIGHT:
-                return setXinputKey(configU16 + 60, key);
+                return setXinputKey(configDataU16 + 60, key);
             case Button::X_RANALOG_UP:
-                return setXinputKey(configU16 + 61, key);
+                return setXinputKey(configDataU16 + 61, key);
             case Button::X_RANALOG_DOWN:
-                return setXinputKey(configU16 + 62, key);
+                return setXinputKey(configDataU16 + 62, key);
             case Button::X_RANALOG_LEFT:
-                return setXinputKey(configU16 + 63, key);
+                return setXinputKey(configDataU16 + 63, key);
             case Button::X_RANALOG_RIGHT:
-                return setXinputKey(configU16 + 64, key);
+                return setXinputKey(configDataU16 + 64, key);
             default:
                 break;
         }
@@ -363,142 +361,142 @@ namespace OWC {
 
         switch (btn) {
             case Button::KBD_DPAD_UP:
-                key = configU16[0];
+                key = configDataU16[0];
                 break;
             case Button::KBD_DPAD_DOWN:
-                key = configU16[1];
+                key = configDataU16[1];
                 break;
             case Button::KBD_DPAD_LEFT:
-                key = configU16[2];
+                key = configDataU16[2];
                 break;
             case Button::KBD_DPAD_RIGHT:
-                key = configU16[3];
+                key = configDataU16[3];
                 break;
             case Button::KBD_START:
-                key = configU16[4];
+                key = configDataU16[4];
                 break;
             case Button::KBD_SELECT:
-                key = configU16[5];
+                key = configDataU16[5];
                 break;
             case Button::KBD_MENU:
-                key = configU16[6];
+                key = configDataU16[6];
                 break;
             case Button::KBD_A:
-                key = configU16[7];
+                key = configDataU16[7];
                 break;
             case Button::KBD_B:
-                key = configU16[8];
+                key = configDataU16[8];
                 break;
             case Button::KBD_X:
-                key = configU16[9];
+                key = configDataU16[9];
                 break;
             case Button::KBD_Y:
-                key = configU16[10];
+                key = configDataU16[10];
                 break;
             case Button::KBD_L1:
-                key = configU16[11];
+                key = configDataU16[11];
                 break;
             case Button::KBD_R1:
-                key = configU16[12];
+                key = configDataU16[12];
                 break;
             case Button::KBD_L2:
-                key = configU16[13];
+                key = configDataU16[13];
                 break;
             case Button::KBD_R2:
-                key = configU16[14];
+                key = configDataU16[14];
                 break;
             case Button::KBD_L3:
-                key = configU16[15];
+                key = configDataU16[15];
                 break;
             case Button::KBD_R3:
-                key = configU16[16];
+                key = configDataU16[16];
                 break;
             case Button::KBD_LANALOG_UP:
-                key = configU16[17];
+                key = configDataU16[17];
                 break;
             case Button::KBD_LANALOG_DOWN:
-                key = configU16[18];
+                key = configDataU16[18];
                 break;
             case Button::KBD_LANALOG_LEFT:
-                key = configU16[19];
+                key = configDataU16[19];
                 break;
             case Button::KBD_LANALOG_RIGHT:
-                key = configU16[20];
+                key = configDataU16[20];
                 break;
             case Button::X_DPAD_UP:
-                key = configU16[40];
+                key = configDataU16[40];
                 break;
             case Button::X_DPAD_DOWN:
-                key = configU16[41];
+                key = configDataU16[41];
                 break;
             case Button::X_DPAD_LEFT:
-                key = configU16[42];
+                key = configDataU16[42];
                 break;
             case Button::X_DPAD_RIGHT:
-                key = configU16[43];
+                key = configDataU16[43];
                 break;
             case Button::X_START:
-                key = configU16[44];
+                key = configDataU16[44];
                 break;
             case Button::X_SELECT:
-                key = configU16[45];
+                key = configDataU16[45];
                 break;
             case Button::X_MENU:
-                key = configU16[46];
+                key = configDataU16[46];
                 break;
             case Button::X_A:
-                key = configU16[47];
+                key = configDataU16[47];
                 break;
             case Button::X_B:
-                key = configU16[48];
+                key = configDataU16[48];
                 break;
             case Button::X_X:
-                key = configU16[49];
+                key = configDataU16[49];
                 break;
             case Button::X_Y:
-                key = configU16[50];
+                key = configDataU16[50];
                 break;
             case Button::X_L1:
-                key = configU16[51];
+                key = configDataU16[51];
                 break;
             case Button::X_R1:
-                key = configU16[52];
+                key = configDataU16[52];
                 break;
             case Button::X_L2:
-                key = configU16[53];
+                key = configDataU16[53];
                 break;
             case Button::X_R2:
-                key = configU16[54];
+                key = configDataU16[54];
                 break;
             case Button::X_L3:
-                key = configU16[55];
+                key = configDataU16[55];
                 break;
             case Button::X_R3:
-                key = configU16[56];
+                key = configDataU16[56];
                 break;
             case Button::X_LANALOG_UP:
-                key = configU16[57];
+                key = configDataU16[57];
                 break;
             case Button::X_LANALOG_DOWN:
-                key = configU16[58];
+                key = configDataU16[58];
                 break;
             case Button::X_LANALOG_LEFT:
-                key = configU16[59];
+                key = configDataU16[59];
                 break;
             case Button::X_LANALOG_RIGHT:
-                key = configU16[60];
+                key = configDataU16[60];
                 break;
             case Button::X_RANALOG_UP:
-                key = configU16[61];
+                key = configDataU16[61];
                 break;
             case Button::X_RANALOG_DOWN:
-                key = configU16[62];
+                key = configDataU16[62];
                 break;
             case Button::X_RANALOG_LEFT:
-                key = configU16[63];
+                key = configDataU16[63];
                 break;
             case Button::X_RANALOG_RIGHT:
-                key = configU16[64];
+                key = configDataU16[64];
                 break;
             default:
                 return "";
@@ -518,13 +516,13 @@ namespace OWC {
     void ControllerV2::setBackButtonMode(const int num, const BackButtonMode mode) const {
         switch (mode) {
             case BackButtonMode::Single:
-                configBuf[getBackButtonModeIdx(num)] = 0;
+                configData[getBackButtonModeIdx(num)] = 0;
                 break;
             case BackButtonMode::Four:
-                configBuf[getBackButtonModeIdx(num)] = 1;
+                configData[getBackButtonModeIdx(num)] = 1;
                 break;
             case BackButtonMode::Macro:
-                configBuf[getBackButtonModeIdx(num)] = 2;
+                configData[getBackButtonModeIdx(num)] = 2;
                 break;
             default:
                 break;
@@ -532,7 +530,7 @@ namespace OWC {
     }
 
     BackButtonMode ControllerV2::getBackButtonMode(const int num) const {
-        switch (configBuf[getBackButtonModeIdx(num)]) {
+        switch (configData[getBackButtonModeIdx(num)]) {
             case 0:
             case 4: // xinput
                 return BackButtonMode::Single;
@@ -554,10 +552,10 @@ namespace OWC {
 
         switch (type) {
             case BackButtonMacroType::Keyboard:
-                configBuf[pos] &= 0xfb;
+                configData[pos] &= 0xfb;
                 break;
             case BackButtonMacroType::Xinput:
-                configBuf[pos] |= 0x04;
+                configData[pos] |= 0x04;
                 break;
             default:
                 break;
@@ -565,25 +563,25 @@ namespace OWC {
     }
 
     BackButtonMacroType ControllerV2::getBackButtonMacroType(const int num) const {
-        return !!(configBuf[getBackButtonModeIdx(num)] & 0x04) ? BackButtonMacroType::Xinput : BackButtonMacroType::Keyboard;
+        return !!(configData[getBackButtonModeIdx(num)] & 0x04) ? BackButtonMacroType::Xinput : BackButtonMacroType::Keyboard;
     }*/
 
     void ControllerV2::setBackButtonActiveSlots(const int num, const uint8_t count) const {
-        configBuf[getBackButtonModeIdx(num) + 1] = count;
+        configData[getBackButtonModeIdx(num) + 1] = count;
     }
 
     int ControllerV2::getBackButtonActiveSlots(const int num) const {
-        return configBuf[getBackButtonModeIdx(num) + 1];
+        return configData[getBackButtonModeIdx(num) + 1];
     }
 
     bool ControllerV2::setBackButton(const int num, const int slot, const std::string &key) const {
-        uint16_t *btn = configU16 + getBackButtonKeyPos(num, slot);
+        uint16_t *btn = configDataU16 + getBackButtonKeyPos(num, slot);
 
         return setButtonKey(btn, key) || setXinputKey(btn, key);
     }
 
     std::string ControllerV2::getBackButton(const int num, const int slot) const {
-        const uint16_t key = configU16[getBackButtonKeyPos(num, slot)];
+        const uint16_t key = configDataU16[getBackButtonKeyPos(num, slot)];
 
         if (HIDUsageIDMap.contains(key))
             return HIDUsageIDMap.at(key);
@@ -597,31 +595,31 @@ namespace OWC {
     }
 
     void ControllerV2::setBackButtonStartTime(const int num, const int slot, const int timeMs) const {
-        configU16[getBackButtonKeyPos(num, slot) + 1] = timeMs;
+        configDataU16[getBackButtonKeyPos(num, slot) + 1] = timeMs;
     }
 
     int ControllerV2::getBackButtonStartTime(const int num, const int slot) const {
-        return configU16[getBackButtonKeyPos(num, slot) + 1];
+        return configDataU16[getBackButtonKeyPos(num, slot) + 1];
     }
 
     void ControllerV2::setBackButtonHoldTime(const int num, const int slot, const int timeMs) const {
-        configU16[getBackButtonKeyPos(num, slot) + 2] = timeMs;
+        configDataU16[getBackButtonKeyPos(num, slot) + 2] = timeMs;
     }
 
     int ControllerV2::getBackButtonHoldTime(const int num, const int slot) const {
-        return configU16[getBackButtonKeyPos(num, slot) + 2];
+        return configDataU16[getBackButtonKeyPos(num, slot) + 2];
     }
 
     void ControllerV2::setRumble(const RumbleMode mode) const {
         switch (mode) {
             case RumbleMode::Off:
-                configBuf[944] = 0;
+                configData[944] = 0;
                 break;
             case RumbleMode::Low:
-                configBuf[944] = 1;
+                configData[944] = 1;
                 break;
             case RumbleMode::High:
-                configBuf[944] = 2;
+                configData[944] = 2;
                 break;
             default:
                 break;
@@ -629,7 +627,7 @@ namespace OWC {
     }
 
     RumbleMode ControllerV2::getRumbleMode() const {
-        switch (configBuf[944]) {
+        switch (configData[944]) {
             case 0:
                 return RumbleMode::Off;
             case 1:
@@ -662,18 +660,18 @@ namespace OWC {
     }
 
     void ControllerV2::setAnalogCenter(const int center, const bool left) const {
-        setAnalogDeadzone(configI8 + (left ? 949:951), center);
+        setAnalogDeadzone(configDataI8 + (left ? 949:951), center);
     }
 
     int ControllerV2::getAnalogCenter(const bool left) const {
-        return configI8[left ? 949:951];
+        return configDataI8[left ? 949:951];
     }
 
     void ControllerV2::setAnalogBoundary(const int boundary, const bool left) const {
-        setAnalogDeadzone(configI8 + (left ? 950:952), boundary);
+        setAnalogDeadzone(configDataI8 + (left ? 950:952), boundary);
     }
 
     int ControllerV2::getAnalogBoundary(const bool left) const {
-        return configI8[left ? 950:952];
+        return configDataI8[left ? 950:952];
     }
 }
