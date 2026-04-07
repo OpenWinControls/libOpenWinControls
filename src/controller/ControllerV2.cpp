@@ -172,7 +172,7 @@ namespace OWC {
 
         if (!sendWriteRequest()) {
             if (logFn)
-                logFn(L"failed to start config write");
+                writeLog(L"failed to start config write");
 
             return false;
         }
