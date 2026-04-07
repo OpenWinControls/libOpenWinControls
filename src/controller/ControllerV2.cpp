@@ -162,7 +162,8 @@ namespace OWC {
                 return false;
             }
 
-            writeLog(bufferToString(respBuf, respPacketLen));
+            if (logFn)
+                writeLog(bufferToString(respBuf, respPacketLen));
 
             if (!isValidRespPacket()) {
                 if (logFn)
