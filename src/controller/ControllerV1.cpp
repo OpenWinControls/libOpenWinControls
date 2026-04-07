@@ -50,17 +50,26 @@ namespace OWC {
         sendBuf[6] = page;
     }
 
-    bool ControllerV1::isConfigValid(const int configChecksum, const Mode mode) const {
+    bool ControllerV1::isChecksumValid(const Mode mode) const {
+        const int configSum = getBytesSum(configBuf, configBufLen);
+
         prepareSendPacket(mode, CMD::Checksum);
 
         if (!sendReadRequest()) {
             if (logFn)
-                writeLog(L"failed to send checksum request");
+                writeLog(L"failed to get checksum");
 
             return false;
         }
 
-        return (reinterpret_cast<uint16_t *>(respBuf)[12]) == configChecksum;
+        if (configSum != reinterpret_cast<uint16_t *>(respBuf)[12]) {
+            if (logFn)
+                writeLog(std::format(L"checksum mismatch: {:x} != {:x}", configSum, reinterpret_cast<uint16_t *>(respBuf)[12]));
+
+            return false;
+        }
+
+        return true;
     }
 
     bool ControllerV1::readVersion() {
@@ -104,17 +113,10 @@ namespace OWC {
 
         std::memcpy(configBuf + respPacketLen, respBuf, respPacketLen);
 
-        if (!isConfigValid(getBytesSum(configBuf, configBufLen), Mode::Read)) {
-            if (logFn)
-                writeLog(L"config memory checksum does not match");
-
-            return false;
-        }
-
         if (logFn)
             writeLog(bufferToString(configBuf, configBufLen));
 
-        return true;
+        return isChecksumValid(Mode::Read);
     }
 
     bool ControllerV1::writeConfig() const {
@@ -139,12 +141,8 @@ namespace OWC {
                 return false;
         }
 
-        if (!isConfigValid(getBytesSum(configBuf, configBufLen), Mode::Write)) {
-            if (logFn)
-                writeLog(L"config memory checksum does not match");
-
+        if (!isChecksumValid(Mode::Write))
             return false;
-        }
 
         prepareSendPacket(Mode::Write, CMD::Commit);
         if (!sendWriteRequest()) {

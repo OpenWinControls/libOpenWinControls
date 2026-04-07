@@ -44,7 +44,7 @@ namespace OWC {
 
         [[nodiscard]] bool initCommunication(Mode mode) const;
         void prepareSendPacket(Mode mode, CMD cmd, uint8_t page = 0) const;
-        [[nodiscard]] bool isConfigValid(int configChecksum, Mode mode) const;
+        [[nodiscard]] bool isChecksumValid(Mode mode) const;
 
     protected:
         [[nodiscard]] int getVID() const override { return 0x2f24; }
