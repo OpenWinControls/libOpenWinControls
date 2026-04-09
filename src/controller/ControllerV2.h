@@ -35,6 +35,7 @@ namespace OWC {
             Read = 0x44,
             Write = 0x43,
             Checksum = 0x27,
+            Flush = 0x25,
             EndCmd = 0x22
         };
 
@@ -119,6 +120,13 @@ namespace OWC {
          * @return hold time in milliseconds
          */
         [[nodiscard]] int getBackButtonHoldTime(int num, int slot) const;
+
+        /*!
+         * @brief flush config buffer to controller to make it permanent
+         * @details NOT WORKING, help needed
+         * @return true on success
+         */
+        [[nodiscard]] bool flushConfig() const;
 
         [[nodiscard]] bool readVersion() override;
         [[nodiscard]] bool readConfig() override;

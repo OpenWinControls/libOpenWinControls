@@ -3449,7 +3449,7 @@ Response
     </tr>
 </table>
 
-Successful initialization requires **0xaa** in byte **8**.
+Successful initialization returns **0xaa** in byte **8**.
 
 ## Checksum validation for read data
 
@@ -6585,7 +6585,7 @@ Response
     <tr>
         <td>01</td>
         <td>27</td>
-        <td>06</td>
+        <td>xx</td>
         <td>00</td>
         <td>xx</td>
         <td>xx</td>
@@ -6622,6 +6622,144 @@ Send
     </tr>
 </table>
 
+## Prepare for flush
+
+Send
+
+<table>
+    <tr>
+        <th>0</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3-63</th>
+    </tr>
+    <tr>
+        <td>ID</td>
+        <td>cmd</td>
+        <td>bytes count</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>01</td>
+        <td>21</td>
+        <td>00</td>
+        <td>00</td>
+    </tr>
+</table>
+
+Response
+
+<table>
+    <tr>
+        <th>0</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+        <th>5</th>
+        <th>6</th>
+        <th>7</th>
+        <th>8</th>
+        <th>9</th>
+        <th>10-63</th>
+    </tr>
+    <tr>
+        <td>ID</td>
+        <td>cmd</td>
+        <td>bytes count</td>
+        <td></td>
+        <td>unk</td>
+        <td></td>
+        <td colspan="2">checksum</td>
+        <td>ready state</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>01</td>
+        <td>21</td>
+        <td>xx</td>
+        <td>00</td>
+        <td>xx</td>
+        <td>00</td>
+        <td>xx</td>
+        <td>xx</td>
+        <td>xx</td>
+        <td>00</td>
+        <td>00</td>
+    </tr>
+</table>
+
+Successful initialization returns **0xaa** in byte **8**.
+
 ## Flush config to controller
 
-**known, but not working correctly, help is needed to find what's missing/wrong!**
+> [!WARNING]:
+> 
+> Not working for some reason, help is needed! 
+
+Send
+
+<table>
+    <tr>
+        <th>0</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+        <th>5</th>
+        <th>6</th>
+        <th>7</th>
+        <th>8</th>
+        <th>9</th>
+        <th>10-63</th>
+    </tr>
+    <tr>
+        <td>ID</td>
+        <td>cmd</td>
+        <td>bytes count</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td colspan="2">checksum</td>
+        <td></td>
+        <td>unk</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>01</td>
+        <td>25</td>
+        <td>04</td>
+        <td>00</td>
+        <td>00</td>
+        <td>00</td>
+        <td>04</td>
+        <td>00</td>
+        <td>00</td>
+        <td>04</td>
+        <td>00</td>
+    </tr>
+</table>
+
+Send
+
+<table>
+    <tr>
+        <th>0</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3-63</th>
+    </tr>
+    <tr>
+        <td>ID</td>
+        <td>cmd</td>
+        <td>bytes count</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>01</td>
+        <td>22</td>
+        <td>00</td>
+        <td>00</td>
+    </tr>
+</table>

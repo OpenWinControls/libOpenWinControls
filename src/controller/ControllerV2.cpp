@@ -234,6 +234,31 @@ namespace OWC {
         return isChecksumValid();
     }
 
+    bool ControllerV2::flushConfig() const {
+        if (!initWriteCommunication()) {
+            if (logFn)
+                writeLog(L"failed to init communication");
+
+            return false;
+        }
+
+        prepareSendBuffer(CMD::Flush, 4);
+
+        // required args
+        sendBuf[6] = 4; // checksum
+        sendBuf[9] = 4; // unk
+
+        if (!sendReadRequest() || isCmdRejected()) {
+            if (logFn)
+                writeLog(L"failed to flush config buffer");
+
+            return false;
+        }
+
+        prepareSendBuffer(CMD::EndCmd);
+        return sendReadRequest() && !isCmdRejected();
+    }
+
     bool ControllerV2::resetConfig() const {
         // v2 has some kind of reset sequence, but this should do for most cases
         std::memcpy(configBuf + configHeaderSz, resetBuf, sizeof(resetBuf));
