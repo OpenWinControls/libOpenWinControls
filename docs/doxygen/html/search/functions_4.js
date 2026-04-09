@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['init_0',['init',['../d3/d07/classOWC_1_1Controller.html#a89919a7010d04e7797530b500a0528d5',1,'OWC::Controller']]]
+  ['hasfeature_0',['hasFeature',['../d3/d07/classOWC_1_1Controller.html#a95ee25e27e74d8984eba590e9988b6c3',1,'OWC::Controller']]]
 ];
