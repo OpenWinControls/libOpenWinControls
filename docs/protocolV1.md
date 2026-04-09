@@ -703,7 +703,7 @@ Response
     </tr>
 </table>
 
-Initialization is successful if byte **8** contains **0xaa**.
+Successful initialization returns **0xaa** in byte **8**.
 
 ## Write config
 
