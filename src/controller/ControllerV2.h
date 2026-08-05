@@ -83,7 +83,7 @@ namespace OWC {
         [[nodiscard]] std::pair<int, int> getVersion() const { return version; }
 
         /*!
-         * get the current emulation mode the controller is set to
+         * @brief get the current emulation mode the controller is set to
          * @return @ref EmulationMode
          */
         [[nodiscard]] EmulationMode getEmulationMode() const;
