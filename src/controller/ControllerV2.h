@@ -36,6 +36,8 @@ namespace OWC {
             Write = 0x43,
             Checksum = 0x27,
             Flush = 0x25,
+            FlashLock = 0x29,   // close/commit a flash session (official app sends after flush; device replies 0x01)
+            FlashUnlock = 0x2a, // (re)open a config session (official app sends right before a write; device replies 0x00)
             EndCmd = 0x22
         };
 
@@ -50,6 +52,9 @@ namespace OWC {
 
         [[nodiscard]] bool initReadCommunication() const;
         [[nodiscard]] bool initWriteCommunication() const;
+        [[nodiscard]] bool sendKeepAlive() const;
+        [[nodiscard]] bool flashBracket(int keepAlives) const;
+        [[nodiscard]] bool writePages() const;
         void prepareSendBuffer(CMD cmd, int bytesCount = 0) const;
         [[nodiscard]] bool isCmdRejected() const;
         [[nodiscard]] bool isValidRespPacket() const;
@@ -121,16 +126,10 @@ namespace OWC {
          */
         [[nodiscard]] int getBackButtonHoldTime(int num, int slot) const;
 
-        /*!
-         * @brief flush config buffer to controller to make it permanent
-         * @details NOT WORKING, help needed
-         * @return true on success
-         */
-        [[nodiscard]] bool flushConfig() const;
-
         [[nodiscard]] bool readVersion() override;
         [[nodiscard]] bool readConfig() override;
         [[nodiscard]] bool writeConfig() const override;
+        [[nodiscard]] bool flushConfig() const override;
         [[nodiscard]] bool resetConfig() const override;
         [[nodiscard]] bool setButton(Button btn, const std::string &key) const override;
         [[nodiscard]] std::string getButton(Button btn) const override;

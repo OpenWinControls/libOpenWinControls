@@ -17,6 +17,8 @@
  */
 #include <format>
 #include <cstring>
+#include <thread>
+#include <chrono>
 
 #include "ControllerV2.h"
 #include "../Utils.h"
@@ -52,9 +54,91 @@ namespace OWC {
     }
 
     bool ControllerV2::initWriteCommunication() const {
-        prepareSendBuffer(CMD::Init1);
+        // GPD's official app opens every write/flush transaction with 0x21 carrying
+        // a fixed 56-byte "unlock" payload (not a bare init). The firmware only
+        // persists writes / honours the 0x25 flush when this token is present;
+        // a bare 0x21 leaves changes in RAM only (which is why flushing did nothing).
+        static constexpr uint8_t unlock[56] = {
+            0xa2,0xa3,0xa0,0xa1,0xa6,0xa7,0xa4,0xa5, 0xba,0xbb,0xb8,0xb9,0xbe,0xbf,0xbc,0xbd,
+            0xb2,0xb3,0xb0,0xb1,0xb6,0xb7,0xb4,0xb5, 0x8a,0x8b,0x88,0x89,0x8e,0x8f,0x8c,0x8d,
+            0x82,0x83,0x80,0x81,0x86,0x87,0x84,0x85, 0x9a,0x9b,0x98,0x99,0x9e,0x9f,0x9c,0x9d,
+            0x92,0x93,0x90,0x91,0x96,0x97,0x94,0x95
+        };
+        uint16_t *sendBufU16 = reinterpret_cast<uint16_t *>(sendBuf);
+
+        prepareSendBuffer(CMD::Init1, sizeof(unlock));
+        sendBufU16[2] = 0;                                   // page index
+        sendBufU16[3] = getBytesSum(unlock, sizeof(unlock)); // checksum (== 0x2284)
+        std::memcpy(sendBuf + 8, unlock, sizeof(unlock));
 
         return sendReadRequest() && respBuf[8] == 0xaa;
+    }
+
+    bool ControllerV2::sendKeepAlive() const {
+        // 0x2b carrying u32 2000 — the keep-alive the official app sends every
+        // 2000ms while a config session is open (payload = the interval itself)
+        static constexpr uint8_t interval[4] = {0xd0, 0x07, 0x00, 0x00};
+        uint16_t *sendBufU16 = reinterpret_cast<uint16_t *>(sendBuf);
+
+        prepareSendBuffer(CMD::Init2, sizeof(interval));
+        sendBufU16[2] = 0;                                       // page index
+        sendBufU16[3] = getBytesSum(interval, sizeof(interval)); // checksum
+        std::memcpy(sendBuf + 8, interval, sizeof(interval));
+
+        return sendReadRequest() && respBuf[8] == 0xaa;
+    }
+
+    bool ControllerV2::flashBracket(const int keepAlives) const {
+        // The official app brackets every write/flush with a
+        //   magic-0x21, 0x2b, 0x29, N x 0x2b (2s apart), 0x2a, 0x22
+        // session (captured from WinControls on Windows). Without it the 0x25
+        // flush is acknowledged but nothing is persisted; with it the config
+        // survives a controller reset. 0x29 appears to close/commit the flash
+        // session, 0x2a to (re)arm config writes.
+        using namespace std::chrono_literals;
+
+        if (!initWriteCommunication()) {
+            if (logFn)
+                writeLog(L"failed to init communication");
+
+            return false;
+        }
+
+        if (!sendKeepAlive())
+            return false;
+
+        prepareSendBuffer(CMD::FlashLock);
+        if (!sendReadRequest() || isCmdRejected()) {
+            if (logFn)
+                writeLog(L"flash lock (0x29) rejected");
+
+            return false;
+        }
+
+        for (int i=0; i<keepAlives; ++i) {
+            std::this_thread::sleep_for(2s);
+
+            if (!sendKeepAlive())
+                return false;
+        }
+
+        prepareSendBuffer(CMD::FlashUnlock);
+        if (!sendReadRequest() || isCmdRejected()) {
+            if (logFn)
+                writeLog(L"flash unlock (0x2a) rejected");
+
+            return false;
+        }
+
+        prepareSendBuffer(CMD::EndCmd);
+        if (!sendReadRequest() || isCmdRejected()) {
+            if (logFn)
+                writeLog(L"failed end cmd");
+
+            return false;
+        }
+
+        return true;
     }
 
     void ControllerV2::prepareSendBuffer(const CMD cmd, const int bytesCount) const {
@@ -201,8 +285,16 @@ namespace OWC {
         return isChecksumValid();
     }
 
-    bool ControllerV2::writeConfig() const {
+    bool ControllerV2::writePages() const {
         uint16_t *sendBufU16 = reinterpret_cast<uint16_t *>(sendBuf);
+        uint16_t *configBufU16 = reinterpret_cast<uint16_t *>(configBuf);
+        const uint16_t dataSum = getBytesSum(configData, configBufLen - configHeaderSz);
+
+        // keep the header self-checksum consistent with the (possibly modified)
+        // config data: u16@4 = sum of data bytes, u16@8 = its complement.
+        // The official app maintains these on every write.
+        configBufU16[2] = dataSum;
+        configBufU16[4] = 0xffff - dataSum;
 
         if (!initWriteCommunication()) {
             if (logFn)
@@ -210,9 +302,6 @@ namespace OWC {
 
             return false;
         }
-
-        if (logFn)
-            writeLog(bufferToString(configBuf, configBufLen));
 
         for (int i=0; i<configBufLen; i+=56) {
             const int bytesCount = std::min(configBufLen - i, 56);
@@ -234,7 +323,32 @@ namespace OWC {
         return isChecksumValid();
     }
 
+    bool ControllerV2::writeConfig() const {
+        if (logFn)
+            writeLog(bufferToString(configBuf, configBufLen));
+
+        return writePages();
+    }
+
     bool ControllerV2::flushConfig() const {
+        // Persist the current configBuf to device flash so it survives a
+        // controller reset / reboot without physically toggling the mode switch.
+        //
+        // This replays the official WinControls app's Apply choreography exactly
+        // (captured over USB): the 0x25 flush alone is acknowledged but does NOT
+        // persist anything — the write and flush must be wrapped in 0x29/0x2a
+        // flash-session brackets:
+        //
+        //   bracket -> write all pages -> flush (0x25) -> bracket (burn window)
+        //
+        // Self-contained: re-sends the pages itself, so it can be called after
+        // writeConfig() (or standalone) and always commits what configBuf holds.
+        if (!flashBracket(2))
+            return false;
+
+        if (!writePages())
+            return false;
+
         if (!initWriteCommunication()) {
             if (logFn)
                 writeLog(L"failed to init communication");
@@ -242,21 +356,29 @@ namespace OWC {
             return false;
         }
 
+        // 01 25 04 00 00 00 04 00 00 04 — same arg shape as the checksum query
         prepareSendBuffer(CMD::Flush, 4);
 
-        // required args
         sendBuf[6] = 4; // checksum
         sendBuf[9] = 4; // unk
 
         if (!sendReadRequest() || isCmdRejected()) {
             if (logFn)
-                writeLog(L"failed to flush config buffer");
+                writeLog(L"failed to flush config to flash");
 
             return false;
         }
 
         prepareSendBuffer(CMD::EndCmd);
-        return sendReadRequest() && !isCmdRejected();
+        if (!sendReadRequest() || isCmdRejected()) {
+            if (logFn)
+                writeLog(L"failed end cmd after flush");
+
+            return false;
+        }
+
+        // post-flush bracket: the flash burn happens in this window
+        return flashBracket(3);
     }
 
     bool ControllerV2::resetConfig() const {
