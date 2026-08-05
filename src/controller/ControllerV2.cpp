@@ -694,25 +694,6 @@ namespace OWC {
         return BackButtonMode::Unknown;
     }
 
-    /*void ControllerV2::setBackButtonMacroType(const int num, const BackButtonMacroType type) const {
-        const int pos = getBackButtonModeIdx(num);
-
-        switch (type) {
-            case BackButtonMacroType::Keyboard:
-                configData[pos] &= 0xfb;
-                break;
-            case BackButtonMacroType::Xinput:
-                configData[pos] |= 0x04;
-                break;
-            default:
-                break;
-        }
-    }
-
-    BackButtonMacroType ControllerV2::getBackButtonMacroType(const int num) const {
-        return !!(configData[getBackButtonModeIdx(num)] & 0x04) ? BackButtonMacroType::Xinput : BackButtonMacroType::Keyboard;
-    }*/
-
     void ControllerV2::setBackButtonActiveSlots(const int num, const uint8_t count) const {
         configData[getBackButtonModeIdx(num) + 1] = count;
     }
