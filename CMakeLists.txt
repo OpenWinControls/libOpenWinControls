@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 3.23)
 
 project(libOpenWinControls VERSION 1.0 DESCRIPTION "Multiplatform GPD WinControls library" LANGUAGES CXX)
 
-option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
-
 set(PROJECT_AUTHOR "kylon")
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
