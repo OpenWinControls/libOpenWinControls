@@ -41,6 +41,8 @@ namespace OWC {
         int features = 0;
         int sendPacketLen;
         int respPacketLen;
+        std::pair<int, int> xVersion;
+        std::pair<int, int> kVersion;
 
         [[nodiscard]] virtual int getVID() const = 0;
         [[nodiscard]] virtual int getPID() const = 0;
@@ -240,5 +242,18 @@ namespace OWC {
          * @return true if the feature is enabled
          */
         [[nodiscard]] bool hasFeature(int feature) const;
+
+
+        /*!
+         * @brief get the firmware xinput mode version
+         * @return major and minor version as a pair
+         */
+        [[nodiscard]] virtual std::pair<int, int> getXVersion() const;
+
+        /*!
+         * @brief get the firmware keyboard mode version
+         * @return major and minor version as a pair
+         */
+        [[nodiscard]] virtual std::pair<int, int> getKVersion() const;
     };
 }

@@ -52,7 +52,6 @@ namespace OWC {
         uint8_t *configData = nullptr; // handle to data
         int8_t *configDataI8 = nullptr; // alias
         uint16_t *configDataU16 = nullptr; // alias
-        std::pair<int, int> version;
 
         [[nodiscard]] bool sendInit1Request() const;
         [[nodiscard]] bool sendInit2Request() const;
@@ -79,12 +78,6 @@ namespace OWC {
         ~ControllerV2() override;
 
         [[nodiscard]] int getControllerType() const override { return 2; }
-
-        /*!
-         * @brief get the firmware version
-         * @return major and minor version as a pair
-         */
-        [[nodiscard]] std::pair<int, int> getVersion() const { return version; }
 
         /*!
          * @brief get the current emulation mode the controller is set to

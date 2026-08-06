@@ -43,8 +43,6 @@ namespace OWC {
         uint8_t *configBuf = nullptr;
         int8_t *configI8 = nullptr; // alias
         uint16_t *configU16 = nullptr; // alias
-        std::pair<int, int> xVersion;
-        std::pair<int, int> kVersion;
 
         [[nodiscard]] bool initCommunication(Mode mode) const;
         void prepareSendPacket(Mode mode, CMD cmd, uint8_t page = 0) const;
@@ -63,18 +61,6 @@ namespace OWC {
         ~ControllerV1() override;
 
         [[nodiscard]] int getControllerType() const override { return 1; }
-
-        /*!
-         * @brief get the firmware xinput mode version
-         * @return major and minor version as a pair
-         */
-        [[nodiscard]] std::pair<int, int> getXVersion() const { return xVersion; }
-
-        /*!
-         * @brief get the firmware keyboard mode version
-         * @return major and minor version as a pair
-         */
-        [[nodiscard]] std::pair<int, int> getKVersion() const { return kVersion; }
 
         [[nodiscard]] bool readVersion() override;
         [[nodiscard]] bool readConfig() override;

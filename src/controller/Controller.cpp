@@ -172,4 +172,12 @@ namespace OWC {
     bool Controller::hasFeature(const int feature) const {
         return !!(features & feature);
     }
+
+    std::pair<int, int> Controller::getXVersion() const {
+        return xVersion;
+    }
+
+    std::pair<int, int> Controller::getKVersion() const {
+        return kVersion;
+    }
 }

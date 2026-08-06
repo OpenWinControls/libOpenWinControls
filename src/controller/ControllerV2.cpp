@@ -244,7 +244,8 @@ namespace OWC {
         if (!sendReadRequest() || isCmdRejected() || !isValidRespPacket())
             return false;
 
-        version = std::make_pair(respBuf[12], respBuf[13]);
+        xVersion = std::make_pair(respBuf[10], respBuf[11]);
+        kVersion = std::make_pair(respBuf[12], respBuf[13]);
         return true;
     }
 
