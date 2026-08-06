@@ -75,6 +75,10 @@ Custom key codes for gamepad mode:
 0x8018 - right stick right
 ```
 
+## Configuration
+
+Configuration total size is 256 bytes.
+
 ## Commands
 
 Mode:
@@ -159,7 +163,7 @@ Response
         <td>xinput version major</td>
         <td>keyboard&mouse version minor</td>
         <td>keyboard&mouse version major</td>
-        <td>other bytes</td>
+        <td>unk</td>
     </tr>
     <tr>
         <td>01</td>
@@ -182,6 +186,8 @@ Response
 Successful initialization returns **0xaa** in byte **8**.
 
 ## Get current config
+
+_Some fields are only present in latest firmware, find latest firmwares in **gpd_devices** discord._
 
 Send
 
@@ -376,12 +382,6 @@ Response
     </tr>
 </table>
 
-Sample response using [hidapi](https://github.com/libusb/hidapi):
-
-`1b00 1900 0600 0500 5100 4f00 5000 5200 1a00 1600 0400 0700 2c00 2800 0d00 1200 2900 ea00 eb00 1300 1000 0000 0000 0000 0000 0900 0000 0000 0000 0a00 0000 0000 0000`
-
-keycodes are **uint16_t**.
-
 Send
 
 <table>
@@ -513,12 +513,6 @@ Response
     </tr>
 </table>
 
-Deadzone fields are present in latest firmwares for max 2, mini and win4.
-
-Win4 led fields are 0 on other devices.
-
-Configuration does not fit in a single response, use the index to get all parts.
-
 ## Checksum for read config
 
 Send
@@ -589,8 +583,8 @@ Response
         <td>keyboard version minor</td>
         <td>keyboard version major</td>
         <td></td>
-        <td colspan="2">checksum</td>
-        <td>other bytes</td>
+        <td colspan="2">config checksum</td>
+        <td>unk</td>
     </tr>
     <tr>
         <td>01</td>
@@ -613,9 +607,7 @@ Response
     </tr>
 </table>
 
-Checksum is the sum of all configuration bytes (whole configuration).
-
-No need to wait for ready state here.
+Checksum is the sum of the 256 configuration bytes.
 
 ## Prepare for write
 
@@ -707,11 +699,7 @@ Successful initialization returns **0xaa** in byte **8**.
 
 ## Write config
 
-You must send a total of 256 bytes, each packet is 32 bytes. (8 * 32)
-
-Use the index to specify the packet number.
-
-Writes don't have a response.
+You must send all 256 bytes, writes don't have a response.
 
 Send
 
@@ -1263,7 +1251,7 @@ Send
     </tr>
 </table>
 
-## Checksum pending written config in memory
+## Checksum validation
 
 Send
 
@@ -1333,7 +1321,7 @@ Response
         <td>keyboard version minor</td>
         <td>keyboard version major</td>
         <td></td>
-        <td colspan="2">checksum</td>
+        <td colspan="2">config checksum</td>
         <td>unk</td>
     </tr>
     <tr>
@@ -1357,9 +1345,7 @@ Response
     </tr>
 </table>
 
-Checksum is the sum of all configuration bytes (whole configuration).
-
-No need to wait for ready state here.
+Checksum is the sum of the 256 configuration bytes.
 
 ## Commit configuration to the controller
 
@@ -1395,6 +1381,3 @@ Send
         <td>00</td>
     </tr>
 </table>
-
-The controller does not read the configuration from memory,
-so it is not possible to create configs on fly in memory to avoid commits.
