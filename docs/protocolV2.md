@@ -87,38 +87,7 @@ Custom key codes for gamepad mode:
 
 Configuration total size is 1024 bytes.
 
-Structure: 12 bytes header + 1012 bytes data.
-
-Header:
-
-<table>
-    <tr>
-        <th>0-3</th>
-        <th>4-5</th>
-        <th>6-7</th>
-        <th>8-9</th>
-        <th>10-11</th>
-    </tr>
-    <tr>
-        <td>const</td>
-        <td>data checksum</td>
-        <td></td>
-        <td>data checksum ^ 0xffff</td>
-        <td>const</td>
-    </tr>
-    <tr>
-        <td>75 56 34 12</td>
-        <td>xx xx</td>
-        <td>00 00</td>
-        <td>xx xx</td>
-        <td>ff ff</td>
-    </tr>
-</table>
-
-**data checksum** is the sum of the 1012 data bytes.
-
-The official app keeps both header checksum fields consistent with the data on
-every write; update them after modifying the data.
+Structure: 12 bytes [header](#controller-buffer-header) + 1012 bytes data.
 
 ## Back buttons
 
@@ -199,25 +168,63 @@ right back button state: **00** (not pressed) / **6a** (pressed)
 
 # Packets
 
-> NOTE:
-> 
+> [!NOTE]
 > The following sections may be inaccurate
 
 Rejected commands return **0xe2** in byte **8**.
 
 Unless stated otherwise, checksum is the sum of all bytes after it.
 
-**bytes count** is the number of bytes set, after the header.
+**bytes count** is the number of bytes set in the packet, after the packet header (8 bytes).  
+(_some packets may send some zeros, in which case, **count**, is the number of zeros_)
 
-> NOTE:
-> 
-> All packets go over the control pipe. The official app sends them as
-> SET_REPORT(Output); on Linux use HID **feature** reports
-> (`hid_send_feature_report`) — interface 0 also has an interrupt OUT
-> endpoint, so output reports are routed down the interrupt pipe there and
-> the command handler silently ignores them.
+## Controller buffer header
 
-## Init communication
+<table>
+    <tr>
+        <th>0</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+        <th>5</th>
+        <th>6</th>
+        <th>7</th>
+        <th>8</th>
+        <th>9</th>
+        <th>10</th>
+        <th>11</th>
+    </tr>
+    <tr>
+        <td colspan="4">const</td>
+        <td colspan="2">checksum</td>
+        <td></td>
+        <td></td>
+        <td colspan="2">checksum ^ 0xffff</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>75</td>
+        <td>56</td>
+        <td>34</td>
+        <td>12</td>
+        <td>xx</td>
+        <td>xx</td>
+        <td>00</td>
+        <td>00</td>
+        <td>xx</td>
+        <td>xx</td>
+        <td>ff</td>
+        <td>ff</td>
+    </tr>
+</table>
+
+**checksum** is the sum of the 1012 data bytes.
+
+**checksum**, and its complement, should be updated on write.
+
+## Init command 21
 
 Send
 
@@ -226,23 +233,245 @@ Send
         <th>0</th>
         <th>1</th>
         <th>2</th>
-        <th>3-63</th>
+        <th>3</th>
+        <th>4</th>
+        <th>5</th>
+        <th>6</th>
+        <th>7</th>
+        <th>8</th>
+        <th>9</th>
+        <th>10</th>
+        <th>11</th>
+        <th>12</th>
+        <th>13</th>
+        <th>14</th>
+        <th>15</th>
+        <th>16</th>
+        <th>17</th>
+        <th>18</th>
+        <th>19</th>
+        <th>20</th>
+        <th>21</th>
+        <th>22</th>
+        <th>23</th>
+        <th>24</th>
+        <th>25</th>
+        <th>26</th>
+        <th>27</th>
+        <th>28</th>
+        <th>29</th>
+        <th>30</th>
+        <th>31</th>
+        <th>32</th>
+        <th>33</th>
+        <th>34</th>
+        <th>35</th>
+        <th>36</th>
+        <th>37</th>
+        <th>38</th>
+        <th>39</th>
+        <th>40</th>
+        <th>41</th>
+        <th>42</th>
+        <th>43</th>
+        <th>44</th>
+        <th>45</th>
+        <th>46</th>
+        <th>47</th>
+        <th>48</th>
+        <th>49</th>
+        <th>50</th>
+        <th>51</th>
+        <th>52</th>
+        <th>53</th>
+        <th>54</th>
+        <th>55</th>
+        <th>56</th>
+        <th>57</th>
+        <th>58</th>
+        <th>59</th>
+        <th>60</th>
+        <th>61</th>
+        <th>62</th>
+        <th>63</th>
     </tr>
     <tr>
         <td>ID</td>
         <td>cmd</td>
         <td>bytes count</td>
         <td></td>
+        <td colspan="2">page index</td>
+        <td colspan="2">checksum</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
+        <td>unk</td>
     </tr>
     <tr>
         <td>01</td>
         <td>21</td>
+        <td>38</td>
         <td>00</td>
         <td>00</td>
+        <td>00</td>
+        <td>84</td>
+        <td>22</td>
+        <td>a2</td>
+        <td>a3</td>
+        <td>a0</td>
+        <td>a1</td>
+        <td>a6</td>
+        <td>a7</td>
+        <td>a4</td>
+        <td>a5</td>
+        <td>ba</td>
+        <td>bb</td>
+        <td>b8</td>
+        <td>b9</td>
+        <td>be</td>
+        <td>bf</td>
+        <td>bc</td>
+        <td>bd</td>
+        <td>b2</td>
+        <td>b3</td>
+        <td>b0</td>
+        <td>b1</td>
+        <td>b6</td>
+        <td>b7</td>
+        <td>b4</td>
+        <td>b5</td>
+        <td>8a</td>
+        <td>8b</td>
+        <td>88</td>
+        <td>89</td>
+        <td>8e</td>
+        <td>8f</td>
+        <td>8c</td>
+        <td>8d</td>
+        <td>82</td>
+        <td>83</td>
+        <td>80</td>
+        <td>81</td>
+        <td>86</td>
+        <td>87</td>
+        <td>84</td>
+        <td>85</td>
+        <td>9a</td>
+        <td>9b</td>
+        <td>98</td>
+        <td>99</td>
+        <td>9e</td>
+        <td>9f</td>
+        <td>9c</td>
+        <td>9d</td>
+        <td>92</td>
+        <td>93</td>
+        <td>90</td>
+        <td>91</td>
+        <td>96</td>
+        <td>97</td>
+        <td>94</td>
+        <td>95</td>
     </tr>
 </table>
 
 Response
+
+<table>
+    <tr>
+        <th>0</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+        <th>5</th>
+        <th>6</th>
+        <th>7</th>
+        <th>8</th>
+        <th>9-63</th>
+    </tr>
+    <tr>
+        <td>ID</td>
+        <td>cmd</td>
+        <td>bytes count</td>
+        <td></td>
+        <td>unk</td>
+        <td></td>
+        <td colspan="2">checksum</td>
+        <td>ready state</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>01</td>
+        <td>21</td>
+        <td>xx</td>
+        <td>00</td>
+        <td>xx</td>
+        <td>00</td>
+        <td>xx</td>
+        <td>xx</td>
+        <td>xx</td>
+        <td>00</td>
+    </tr>
+</table>
+
+Successful initialization returns **0xaa** in byte **8**.
+
+## Init command 2b
+
+Send
 
 <table>
     <tr>
@@ -263,47 +492,23 @@ Response
         <td>cmd</td>
         <td>bytes count</td>
         <td></td>
-        <td>unk</td>
+        <td></td>
         <td></td>
         <td colspan="2">checksum</td>
-        <td>ready state</td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>01</td>
-        <td>21</td>
-        <td>02</td>
-        <td>00</td>
-        <td>xx</td>
-        <td>00</td>
-        <td>xx</td>
-        <td>xx</td>
-        <td>xx</td>
-        <td>00</td>
-        <td>00</td>
-    </tr>
-</table>
-
-Send
-
-<table>
-    <tr>
-        <th>0</th>
-        <th>1</th>
-        <th>2</th>
-        <th>3-63</th>
-    </tr>
-    <tr>
-        <td>ID</td>
-        <td>cmd</td>
-        <td>bytes count</td>
+        <td colspan="2">unk</td>
         <td></td>
     </tr>
     <tr>
         <td>01</td>
         <td>2b</td>
+        <td>04</td>
         <td>00</td>
+        <td>00</td>
+        <td>00</td>
+        <td>d7</td>
+        <td>00</td>
+        <td>d0</td>
+        <td>07</td>
         <td>00</td>
     </tr>
 </table>
@@ -348,9 +553,13 @@ Response
     </tr>
 </table>
 
-Successful initialization requires both calls to return **0xaa** in byte **8**.
+Successful initialization returns **0xaa** in byte **8**.
 
 ## Get firmware versions
+
+Requires:
+1. [init command 21](#init-command-21)
+2. [init command 2b](#init-command-2b)
 
 Send
 
@@ -431,6 +640,10 @@ Response
 </table>
 
 ## Read controller configuration
+
+Requires:
+1. [init command 21](#init-command-21)
+2. [init command 2b](#init-command-2b)
 
 After sending the read command, applications must read until all 1024 bytes are received.
 
@@ -552,7 +765,7 @@ Response
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
-        <td colspan="12">header</td>
+        <td colspan="12"><a href="#controller-buffer-header">header</a></td>
         <td colspan="2">dpad up</td>
         <td colspan="2">dpad left</td>
         <td colspan="2">dpad down</td>
@@ -3423,74 +3636,10 @@ Response
     </tr>
 </table>
 
-## Init checksum validation for read data
+## Checksum validation of read data
 
-Send
-
-<table>
-    <tr>
-        <th>0</th>
-        <th>1</th>
-        <th>2</th>
-        <th>3-63</th>
-    </tr>
-    <tr>
-        <td>ID</td>
-        <td>cmd</td>
-        <td>bytes count</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>01</td>
-        <td>2b</td>
-        <td>00</td>
-        <td>00</td>
-    </tr>
-</table>
-
-Response
-
-<table>
-    <tr>
-        <th>0</th>
-        <th>1</th>
-        <th>2</th>
-        <th>3</th>
-        <th>4</th>
-        <th>5</th>
-        <th>6</th>
-        <th>7</th>
-        <th>8</th>
-        <th>9-63</th>
-    </tr>
-    <tr>
-        <td>ID</td>
-        <td>cmd</td>
-        <td>bytes count</td>
-        <td></td>
-        <td>unk</td>
-        <td></td>
-        <td colspan="2">checksum</td>
-        <td>ready state</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>01</td>
-        <td>2b</td>
-        <td>02</td>
-        <td>00</td>
-        <td>xx</td>
-        <td>00</td>
-        <td>xx</td>
-        <td>xx</td>
-        <td>xx</td>
-        <td>00</td>
-    </tr>
-</table>
-
-Successful initialization returns **0xaa** in byte **8**.
-
-## Checksum validation for read data
+Requires:
+1. [init command 2b](#init-command-2b)
 
 **config checksum** is the sum of the 1024 configuration bytes in controller memory.
 
@@ -3608,124 +3757,10 @@ Send
     </tr>
 </table>
 
-## Prepare for write
-
-Send
-
-<table>
-    <tr>
-        <th>0</th>
-        <th>1</th>
-        <th>2</th>
-        <th>3-63</th>
-    </tr>
-    <tr>
-        <td>ID</td>
-        <td>cmd</td>
-        <td>bytes count</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>01</td>
-        <td>21</td>
-        <td>00</td>
-        <td>00</td>
-    </tr>
-</table>
-
-Response
-
-<table>
-    <tr>
-        <th>0</th>
-        <th>1</th>
-        <th>2</th>
-        <th>3</th>
-        <th>4</th>
-        <th>5</th>
-        <th>6</th>
-        <th>7</th>
-        <th>8</th>
-        <th>9-63</th>
-    </tr>
-    <tr>
-        <td>ID</td>
-        <td>cmd</td>
-        <td>bytes count</td>
-        <td></td>
-        <td>unk</td>
-        <td></td>
-        <td colspan="2">checksum</td>
-        <td>ready state</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>01</td>
-        <td>21</td>
-        <td>02</td>
-        <td>00</td>
-        <td>xx</td>
-        <td>00</td>
-        <td>xx</td>
-        <td>xx</td>
-        <td>xx</td>
-        <td>00</td>
-    </tr>
-</table>
-
-Successful initialization returns **0xaa** in byte **8**.
-
-The payload-less init above is enough for writes that only reach controller
-RAM (lost on controller reset). For a write that is going to be flushed to
-flash, the official app always sends this init with a fixed 56 bytes unlock
-payload instead:
-
-Send
-
-<table>
-    <tr>
-        <th>0</th>
-        <th>1</th>
-        <th>2</th>
-        <th>3</th>
-        <th>4-5</th>
-        <th>6</th>
-        <th>7</th>
-        <th>8-63</th>
-    </tr>
-    <tr>
-        <td>ID</td>
-        <td>cmd</td>
-        <td>bytes count</td>
-        <td></td>
-        <td>page</td>
-        <td colspan="2">checksum</td>
-        <td>unlock payload</td>
-    </tr>
-    <tr>
-        <td>01</td>
-        <td>21</td>
-        <td>38</td>
-        <td>00</td>
-        <td>00 00</td>
-        <td>84</td>
-        <td>22</td>
-        <td>see below</td>
-    </tr>
-</table>
-
-Unlock payload (fixed):
-
-```
-a2 a3 a0 a1 a6 a7 a4 a5 ba bb b8 b9 be bf bc bd
-b2 b3 b0 b1 b6 b7 b4 b5 8a 8b 88 89 8e 8f 8c 8d
-82 83 80 81 86 87 84 85 9a 9b 98 99 9e 9f 9c 9d
-92 93 90 91 96 97 94 95
-```
-
-The response is the same as for the payload-less init.
-
 ## Write config to memory
+
+Requires:
+1. [init command 21](#init-command-21)
 
 You must send all 1024 bytes, writes don't have a response.
 
@@ -3806,7 +3841,7 @@ Send
         <td></td>
         <td colspan="2">page index</td>
         <td colspan="2">checksum</td>
-        <td colspan="12">header</td>
+        <td colspan="12"><a href="#controller-buffer-header">header</a></td>
         <td colspan="2">dpad up</td>
         <td colspan="2">dpad left</td>
         <td colspan="2">dpad down</td>
@@ -6591,7 +6626,12 @@ Send
     </tr>
 </table>
 
-## Checksum validation
+## Checksum validation / commit to memory
+
+> [!TIP]
+> You can stop here to only write to temporary memory.  
+> Changes will be lost after sleep/reboot/shutdown.  
+> Allows you to save some writes while experimenting.
 
 Checksum validation, after write sequence, also commits the configuration buffer to memory.
 
@@ -6711,101 +6751,10 @@ Send
     </tr>
 </table>
 
-## Prepare for flush
+## Command 25 (unknown)
 
-The official app sends this init with the same fixed 56 bytes unlock payload
-described in [Prepare for write](#prepare-for-write).
-
-Send
-
-<table>
-    <tr>
-        <th>0</th>
-        <th>1</th>
-        <th>2</th>
-        <th>3-63</th>
-    </tr>
-    <tr>
-        <td>ID</td>
-        <td>cmd</td>
-        <td>bytes count</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>01</td>
-        <td>21</td>
-        <td>00</td>
-        <td>00</td>
-    </tr>
-</table>
-
-Response
-
-<table>
-    <tr>
-        <th>0</th>
-        <th>1</th>
-        <th>2</th>
-        <th>3</th>
-        <th>4</th>
-        <th>5</th>
-        <th>6</th>
-        <th>7</th>
-        <th>8</th>
-        <th>9</th>
-        <th>10-63</th>
-    </tr>
-    <tr>
-        <td>ID</td>
-        <td>cmd</td>
-        <td>bytes count</td>
-        <td></td>
-        <td>unk</td>
-        <td></td>
-        <td colspan="2">checksum</td>
-        <td>ready state</td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>01</td>
-        <td>21</td>
-        <td>xx</td>
-        <td>00</td>
-        <td>xx</td>
-        <td>00</td>
-        <td>xx</td>
-        <td>xx</td>
-        <td>xx</td>
-        <td>00</td>
-        <td>00</td>
-    </tr>
-</table>
-
-Successful initialization returns **0xaa** in byte **8**.
-
-## Flush config to controller
-
-Flush persists the current configuration to controller flash, so it survives a
-controller reset (reboot / suspend) without toggling the controller mode
-switch.
-
-> [!IMPORTANT]
-> 
-> The flush command is acknowledged even when it has no effect. To actually
-> persist, the write and the flush must run between two
-> [flash session brackets](#flash-session-bracket):
-> 
-> ```
-> bracket : the full sequence below
-> write   : prepare for write (with unlock payload) → write config → checksum validation → end
-> flush   : prepare for flush → flush → end
-> bracket : again — the flash burn happens in this window
-> ```
-> 
-> Verified on Win Mini 2025 (firmware 1.22): with the brackets the config
-> survives suspend/resume and a full power cycle; without them the device
-> reverts to its previous flash config on the next reset.
+Requires:
+1. [init command 21](#init-command-21)
 
 Send
 
@@ -6873,69 +6822,14 @@ Send
     </tr>
 </table>
 
-## Flash session bracket
+## Flash config to controller
 
-The official app wraps every write + flush between two of these sequences;
-the flash burn happens in the window after the flush (see
-[Flush config to controller](#flush-config-to-controller)).
+Requires:
+1. [command 25](#command-25-unkown)
+2. [init command 21](#init-command-21)
+3. [init command 2b](#init-command-2b)
 
-```
-init (0x21, with unlock payload) → keep-alive (0x2b) → 0x29 →
-N × keep-alive (2 s apart) → 0x2a → end (0x22)
-```
-
-`0x29` responds **0x01** in byte **8**, `0x2a` responds **0x00**. The exact
-semantics are unknown; from the ordering, `0x29` appears to close/commit a
-flash session and `0x2a` to (re)arm config writes. The official app keeps a
-bracket open with keep-alives for as long as it runs; N = 2–3 keep-alives per
-bracket is verified to be sufficient.
-
-### Keep-alive
-
-Inside a flash session the official app sends this every 2000 ms; the payload
-is the interval itself (u32, 0x07d0 = 2000).
-
-Send
-
-<table>
-    <tr>
-        <th>0</th>
-        <th>1</th>
-        <th>2</th>
-        <th>3</th>
-        <th>4-5</th>
-        <th>6</th>
-        <th>7</th>
-        <th>8-11</th>
-        <th>12-63</th>
-    </tr>
-    <tr>
-        <td>ID</td>
-        <td>cmd</td>
-        <td>bytes count</td>
-        <td></td>
-        <td>page</td>
-        <td colspan="2">checksum</td>
-        <td>interval ms</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>01</td>
-        <td>2b</td>
-        <td>04</td>
-        <td>00</td>
-        <td>00 00</td>
-        <td>d7</td>
-        <td>00</td>
-        <td>d0 07 00 00</td>
-        <td>00</td>
-    </tr>
-</table>
-
-The response is the same as for [Init communication](#init-communication)
-(**0xaa** in byte **8**).
-
-### 0x29
+Sleep some milliseconds after command 29, do not send 2a immediately.
 
 Send
 
@@ -6981,9 +6875,9 @@ Response
         <td>bytes count</td>
         <td></td>
         <td>unk</td>
-        <td></td>
+        <td>unk</td>
         <td colspan="2">checksum</td>
-        <td>status</td>
+        <td>unk</td>
         <td></td>
     </tr>
     <tr>
@@ -6992,15 +6886,13 @@ Response
         <td>01</td>
         <td>00</td>
         <td>xx</td>
-        <td>04</td>
+        <td>xx</td>
         <td>01</td>
         <td>00</td>
         <td>01</td>
         <td>00</td>
     </tr>
 </table>
-
-### 0x2a
 
 Send
 
@@ -7046,9 +6938,9 @@ Response
         <td>bytes count</td>
         <td></td>
         <td>unk</td>
-        <td></td>
+        <td>unk</td>
         <td colspan="2">checksum</td>
-        <td>status</td>
+        <td>unk</td>
         <td></td>
     </tr>
     <tr>
@@ -7057,9 +6949,32 @@ Response
         <td>01</td>
         <td>00</td>
         <td>xx</td>
-        <td>04</td>
+        <td>xx</td>
         <td>00</td>
         <td>00</td>
+        <td>00</td>
+        <td>00</td>
+    </tr>
+</table>
+
+Send
+
+<table>
+    <tr>
+        <th>0</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3-63</th>
+    </tr>
+    <tr>
+        <td>ID</td>
+        <td>cmd</td>
+        <td>bytes count</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>01</td>
+        <td>22</td>
         <td>00</td>
         <td>00</td>
     </tr>
