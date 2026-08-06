@@ -23,5 +23,6 @@ var classOWC_1_1Controller =
     [ "setLedColor", "d3/d07/classOWC_1_1Controller.html#afc27f66e103a9d6115b3d2a581df3573", null ],
     [ "setLedMode", "d3/d07/classOWC_1_1Controller.html#ab38767156123052b137a408ba895b086", null ],
     [ "setRumble", "d3/d07/classOWC_1_1Controller.html#ab0a01f088b6daf4b85184fee161fec76", null ],
-    [ "writeConfig", "d3/d07/classOWC_1_1Controller.html#a29ae312dae014e2df46cdef5599bec62", null ]
+    [ "writeConfig", "d3/d07/classOWC_1_1Controller.html#a29ae312dae014e2df46cdef5599bec62", null ],
+    [ "writeConfigMem", "d3/d07/classOWC_1_1Controller.html#a3beef05bfef8ec6a52f07a9b70b1e3d8", null ]
 ];
