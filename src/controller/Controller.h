@@ -83,13 +83,12 @@ namespace OWC {
         [[nodiscard]] virtual bool writeConfig() const = 0;
 
         /*!
-         * @brief persist the current in-RAM config to device flash
-         * @details commits changes so they survive a controller reset / reboot
-         *          without physically toggling the mode switch. Default no-op for
-         *          controllers that persist on write.
+         * @brief write the configuration to controller temporary memory (no flash)
+         * @details changes are lost after sleep/reboot/shutdown.<br>
+         *          on protocols that don't support this, it is an alias for @ref writeConfig
          * @return true on success
          */
-        [[nodiscard]] virtual bool flushConfig() const { return true; }
+        [[nodiscard]] virtual bool writeConfigMem() const;
 
         /*!
          * @brief reset the whole controller configuration memory

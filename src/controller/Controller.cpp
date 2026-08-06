@@ -102,6 +102,10 @@ namespace OWC {
         return true;
     }
 
+    bool Controller::writeConfigMem() const {
+        return writeConfig();
+    }
+
     bool Controller::setButtonKey(uint16_t *btn, const std::string &key) const {
         uint16_t keycode;
 
