@@ -1,7 +1,6 @@
 var classOWC_1_1ControllerV2 =
 [
     [ "ControllerV2", "d4/d00/classOWC_1_1ControllerV2.html#ad26c62ce18431313aeea1b2d832c9e20", null ],
-    [ "flushConfig", "d4/d00/classOWC_1_1ControllerV2.html#a60ac54fc47f6247f87c30f60611aaa99", null ],
     [ "getAnalogBoundary", "d4/d00/classOWC_1_1ControllerV2.html#a85b2e2bef11fbf9cd21890a6b36be6f0", null ],
     [ "getAnalogCenter", "d4/d00/classOWC_1_1ControllerV2.html#a1fe2ac485f523f4579db58ab7053cf5f", null ],
     [ "getBackButton", "d4/d00/classOWC_1_1ControllerV2.html#a9f83dfd0c2f878dac4c78f735b364111", null ],
@@ -28,5 +27,6 @@ var classOWC_1_1ControllerV2 =
     [ "setLedColor", "d4/d00/classOWC_1_1ControllerV2.html#a2b82972d3213dc4387d85b2bd79bf080", null ],
     [ "setLedMode", "d4/d00/classOWC_1_1ControllerV2.html#a5b1e69b1bb47fce29973f81cb2579d10", null ],
     [ "setRumble", "d4/d00/classOWC_1_1ControllerV2.html#ac23ffff35891bafd30e3bfeec474730a", null ],
-    [ "writeConfig", "d4/d00/classOWC_1_1ControllerV2.html#aad3950131faf22aa9072e552f7a7176f", null ]
+    [ "writeConfig", "d4/d00/classOWC_1_1ControllerV2.html#aad3950131faf22aa9072e552f7a7176f", null ],
+    [ "writeConfigMem", "d4/d00/classOWC_1_1ControllerV2.html#abfa9fbac9aac915d736d1de15b391877", null ]
 ];

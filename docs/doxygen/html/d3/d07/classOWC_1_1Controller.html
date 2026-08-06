@@ -109,6 +109,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a1fb0c302c8a5f4dfe25da14b97a29291"><td class="mdescLeft">&#160;</td><td class="mdescRight">read the whole configuration  <br /></td></tr>
 <tr class="memitem:a29ae312dae014e2df46cdef5599bec62" id="r_a29ae312dae014e2df46cdef5599bec62"><td class="memItemLeft">virtual bool&#160;</td><td class="memItemRight"><a class="el" href="#a29ae312dae014e2df46cdef5599bec62">writeConfig</a> () const =0</td></tr>
 <tr class="memdesc:a29ae312dae014e2df46cdef5599bec62"><td class="mdescLeft">&#160;</td><td class="mdescRight">write the configuration  <br /></td></tr>
+<tr class="memitem:a3beef05bfef8ec6a52f07a9b70b1e3d8" id="r_a3beef05bfef8ec6a52f07a9b70b1e3d8"><td class="memItemLeft">virtual bool&#160;</td><td class="memItemRight"><a class="el" href="#a3beef05bfef8ec6a52f07a9b70b1e3d8">writeConfigMem</a> () const</td></tr>
+<tr class="memdesc:a3beef05bfef8ec6a52f07a9b70b1e3d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">write the configuration to controller temporary memory (no flash)  <br /></td></tr>
 <tr class="memitem:a284b5cc1a657ca413c065efb3a01c32f" id="r_a284b5cc1a657ca413c065efb3a01c32f"><td class="memItemLeft">virtual bool&#160;</td><td class="memItemRight"><a class="el" href="#a284b5cc1a657ca413c065efb3a01c32f">resetConfig</a> () const =0</td></tr>
 <tr class="memdesc:a284b5cc1a657ca413c065efb3a01c32f"><td class="mdescLeft">&#160;</td><td class="mdescRight">reset the whole controller configuration memory  <br /></td></tr>
 <tr class="memitem:a6f7ab9abc6f0b776cc7dfe4891d62333" id="r_a6f7ab9abc6f0b776cc7dfe4891d62333"><td class="memItemLeft">virtual bool&#160;</td><td class="memItemRight"><a class="el" href="#a6f7ab9abc6f0b776cc7dfe4891d62333">setButton</a> (<a class="el" href="../../d0/d01/Button_8h.html#a87f917092ee387b88f648ba3859c075e">Button</a> btn, const std::string &amp;key) const =0</td></tr>
@@ -1009,6 +1011,37 @@ Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>true on success </dd></dl>
 
 <p>Implemented in <a class="el" href="../../d7/d00/classOWC_1_1ControllerV1.html#a99d81d1b2a55ed552c4960560456d02e">OWC::ControllerV1</a>, and <a class="el" href="../../d4/d00/classOWC_1_1ControllerV2.html#aad3950131faf22aa9072e552f7a7176f">OWC::ControllerV2</a>.</p>
+
+</div>
+</div>
+<a id="a3beef05bfef8ec6a52f07a9b70b1e3d8" name="a3beef05bfef8ec6a52f07a9b70b1e3d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3beef05bfef8ec6a52f07a9b70b1e3d8">&#9670;&#160;</a></span>writeConfigMem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool OWC::Controller::writeConfigMem </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>write the configuration to controller temporary memory (no flash) </p>
+<p>changes are lost after sleep/reboot/shutdown.<br  />
+ on protocols that don't support this, it is an alias for <a class="el" href="#a29ae312dae014e2df46cdef5599bec62" title="writeConfig">writeConfig</a> </p><dl class="section return"><dt>Returns</dt><dd>true on success </dd></dl>
+
+<p>Reimplemented in <a class="el" href="../../d4/d00/classOWC_1_1ControllerV2.html#abfa9fbac9aac915d736d1de15b391877">OWC::ControllerV2</a>.</p>
 
 </div>
 </div>
