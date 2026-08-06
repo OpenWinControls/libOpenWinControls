@@ -105,8 +105,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ad26c62ce18431313aeea1b2d832c9e20"><td class="mdescLeft">&#160;</td><td class="mdescRight">create a new <a class="el" href="../../d4/d00/classOWC_1_1ControllerV2.html" title="ControllerV2">ControllerV2</a> controller  <br /></td></tr>
 <tr class="memitem:a95504df23823e3d4aa900106d040f561" id="r_a95504df23823e3d4aa900106d040f561"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a95504df23823e3d4aa900106d040f561">getControllerType</a> () const override</td></tr>
 <tr class="memdesc:a95504df23823e3d4aa900106d040f561"><td class="mdescLeft">&#160;</td><td class="mdescRight">int value of the controller class version  <br /></td></tr>
-<tr class="memitem:acecd430dfc49df91a9fb9225400a7c89" id="r_acecd430dfc49df91a9fb9225400a7c89"><td class="memItemLeft">std::pair&lt; int, int &gt;&#160;</td><td class="memItemRight"><a class="el" href="#acecd430dfc49df91a9fb9225400a7c89">getVersion</a> () const</td></tr>
-<tr class="memdesc:acecd430dfc49df91a9fb9225400a7c89"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the firmware version  <br /></td></tr>
 <tr class="memitem:a567d189668cd5d589e71875a9a556b1c" id="r_a567d189668cd5d589e71875a9a556b1c"><td class="memItemLeft"><a class="el" href="../../d4/d06/EmulationMode_8h.html#a82d4212b28b9dcb7e5eceaf8266f14a6">EmulationMode</a>&#160;</td><td class="memItemRight"><a class="el" href="#a567d189668cd5d589e71875a9a556b1c">getEmulationMode</a> () const</td></tr>
 <tr class="memdesc:a567d189668cd5d589e71875a9a556b1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the current emulation mode the controller is set to  <br /></td></tr>
 <tr class="memitem:a2a5687a7c828c8b979a23dfc9d3ae4b7" id="r_a2a5687a7c828c8b979a23dfc9d3ae4b7"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a2a5687a7c828c8b979a23dfc9d3ae4b7">setBackButtonActiveSlots</a> (int num, uint8_t count) const</td></tr>
@@ -166,6 +164,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a89919a7010d04e7797530b500a0528d5 inherit pub_methods_classOWC_1_1Controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the controller.  <br /></td></tr>
 <tr class="memitem:a95ee25e27e74d8984eba590e9988b6c3 inherit pub_methods_classOWC_1_1Controller" id="r_a95ee25e27e74d8984eba590e9988b6c3"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="../../d3/d07/classOWC_1_1Controller.html#a95ee25e27e74d8984eba590e9988b6c3">hasFeature</a> (int feature) const</td></tr>
 <tr class="memdesc:a95ee25e27e74d8984eba590e9988b6c3 inherit pub_methods_classOWC_1_1Controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if <code class="param">feature</code> is enabled for this controller.  <br /></td></tr>
+<tr class="memitem:a6078f56c05226023740c62a55475105c inherit pub_methods_classOWC_1_1Controller" id="r_a6078f56c05226023740c62a55475105c"><td class="memItemLeft">virtual std::pair&lt; int, int &gt;&#160;</td><td class="memItemRight"><a class="el" href="../../d3/d07/classOWC_1_1Controller.html#a6078f56c05226023740c62a55475105c">getXVersion</a> () const</td></tr>
+<tr class="memdesc:a6078f56c05226023740c62a55475105c inherit pub_methods_classOWC_1_1Controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the firmware xinput mode version  <br /></td></tr>
+<tr class="memitem:a1e521843b6ca3018555497f845ef4b83 inherit pub_methods_classOWC_1_1Controller" id="r_a1e521843b6ca3018555497f845ef4b83"><td class="memItemLeft">virtual std::pair&lt; int, int &gt;&#160;</td><td class="memItemRight"><a class="el" href="../../d3/d07/classOWC_1_1Controller.html#a1e521843b6ca3018555497f845ef4b83">getKVersion</a> () const</td></tr>
+<tr class="memdesc:a1e521843b6ca3018555497f845ef4b83 inherit pub_methods_classOWC_1_1Controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the firmware keyboard mode version  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>interact with controller V2 devices </p>
@@ -616,34 +618,6 @@ Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="../../d3/d07/RumbleMode_8h.html#a809e8d89384692e9634b16cf0f1b865a" title="RumbleMode">RumbleMode</a> </dd></dl>
 
 <p>Implements <a class="el" href="../../d3/d07/classOWC_1_1Controller.html#aebfa88e6dcadd151dddd3e0852c9671d">OWC::Controller</a>.</p>
-
-</div>
-</div>
-<a id="acecd430dfc49df91a9fb9225400a7c89" name="acecd430dfc49df91a9fb9225400a7c89"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acecd430dfc49df91a9fb9225400a7c89">&#9670;&#160;</a></span>getVersion()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::pair&lt; int, int &gt; OWC::ControllerV2::getVersion </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>get the firmware version </p>
-<dl class="section return"><dt>Returns</dt><dd>major and minor version as a pair </dd></dl>
 
 </div>
 </div>

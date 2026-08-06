@@ -105,10 +105,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:af2cdc16cd2659c07a584ef251e8c6636"><td class="mdescLeft">&#160;</td><td class="mdescRight">create a new <a class="el" href="../../d7/d00/classOWC_1_1ControllerV1.html" title="ControllerV1">ControllerV1</a> controller  <br /></td></tr>
 <tr class="memitem:a521925aa371496c8690d30cd69cd5e26" id="r_a521925aa371496c8690d30cd69cd5e26"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a521925aa371496c8690d30cd69cd5e26">getControllerType</a> () const override</td></tr>
 <tr class="memdesc:a521925aa371496c8690d30cd69cd5e26"><td class="mdescLeft">&#160;</td><td class="mdescRight">int value of the controller class version  <br /></td></tr>
-<tr class="memitem:af0849a39d65fb63a3c693469c28c0914" id="r_af0849a39d65fb63a3c693469c28c0914"><td class="memItemLeft">std::pair&lt; int, int &gt;&#160;</td><td class="memItemRight"><a class="el" href="#af0849a39d65fb63a3c693469c28c0914">getXVersion</a> () const</td></tr>
-<tr class="memdesc:af0849a39d65fb63a3c693469c28c0914"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the firmware xinput mode version  <br /></td></tr>
-<tr class="memitem:a312a799aa293f6425ef0a6fc2913e677" id="r_a312a799aa293f6425ef0a6fc2913e677"><td class="memItemLeft">std::pair&lt; int, int &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a312a799aa293f6425ef0a6fc2913e677">getKVersion</a> () const</td></tr>
-<tr class="memdesc:a312a799aa293f6425ef0a6fc2913e677"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the firmware keyboard mode version  <br /></td></tr>
 <tr class="memitem:a6239aa84f01095bdd9c5ca611ce78b8e" id="r_a6239aa84f01095bdd9c5ca611ce78b8e"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a6239aa84f01095bdd9c5ca611ce78b8e">readVersion</a> () override</td></tr>
 <tr class="memdesc:a6239aa84f01095bdd9c5ca611ce78b8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">read the controller firmware version  <br /></td></tr>
 <tr class="memitem:a2c00290e101f01398aaa28065e24e5e9" id="r_a2c00290e101f01398aaa28065e24e5e9"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a2c00290e101f01398aaa28065e24e5e9">readConfig</a> () override</td></tr>
@@ -158,6 +154,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a89919a7010d04e7797530b500a0528d5 inherit pub_methods_classOWC_1_1Controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the controller.  <br /></td></tr>
 <tr class="memitem:a95ee25e27e74d8984eba590e9988b6c3 inherit pub_methods_classOWC_1_1Controller" id="r_a95ee25e27e74d8984eba590e9988b6c3"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="../../d3/d07/classOWC_1_1Controller.html#a95ee25e27e74d8984eba590e9988b6c3">hasFeature</a> (int feature) const</td></tr>
 <tr class="memdesc:a95ee25e27e74d8984eba590e9988b6c3 inherit pub_methods_classOWC_1_1Controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if <code class="param">feature</code> is enabled for this controller.  <br /></td></tr>
+<tr class="memitem:a6078f56c05226023740c62a55475105c inherit pub_methods_classOWC_1_1Controller" id="r_a6078f56c05226023740c62a55475105c"><td class="memItemLeft">virtual std::pair&lt; int, int &gt;&#160;</td><td class="memItemRight"><a class="el" href="../../d3/d07/classOWC_1_1Controller.html#a6078f56c05226023740c62a55475105c">getXVersion</a> () const</td></tr>
+<tr class="memdesc:a6078f56c05226023740c62a55475105c inherit pub_methods_classOWC_1_1Controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the firmware xinput mode version  <br /></td></tr>
+<tr class="memitem:a1e521843b6ca3018555497f845ef4b83 inherit pub_methods_classOWC_1_1Controller" id="r_a1e521843b6ca3018555497f845ef4b83"><td class="memItemLeft">virtual std::pair&lt; int, int &gt;&#160;</td><td class="memItemRight"><a class="el" href="../../d3/d07/classOWC_1_1Controller.html#a1e521843b6ca3018555497f845ef4b83">getKVersion</a> () const</td></tr>
+<tr class="memdesc:a1e521843b6ca3018555497f845ef4b83 inherit pub_methods_classOWC_1_1Controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the firmware keyboard mode version  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>interact with controller V1 devices </p>
@@ -418,34 +418,6 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a312a799aa293f6425ef0a6fc2913e677" name="a312a799aa293f6425ef0a6fc2913e677"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a312a799aa293f6425ef0a6fc2913e677">&#9670;&#160;</a></span>getKVersion()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::pair&lt; int, int &gt; OWC::ControllerV1::getKVersion </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>get the firmware keyboard mode version </p>
-<dl class="section return"><dt>Returns</dt><dd>major and minor version as a pair </dd></dl>
-
-</div>
-</div>
 <a id="ad84f783c84dbc5da1136cb9ccbfebcf8" name="ad84f783c84dbc5da1136cb9ccbfebcf8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad84f783c84dbc5da1136cb9ccbfebcf8">&#9670;&#160;</a></span>getLedColor()</h2>
 
@@ -533,34 +505,6 @@ Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="../../d3/d07/RumbleMode_8h.html#a809e8d89384692e9634b16cf0f1b865a" title="RumbleMode">RumbleMode</a> </dd></dl>
 
 <p>Implements <a class="el" href="../../d3/d07/classOWC_1_1Controller.html#aebfa88e6dcadd151dddd3e0852c9671d">OWC::Controller</a>.</p>
-
-</div>
-</div>
-<a id="af0849a39d65fb63a3c693469c28c0914" name="af0849a39d65fb63a3c693469c28c0914"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af0849a39d65fb63a3c693469c28c0914">&#9670;&#160;</a></span>getXVersion()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::pair&lt; int, int &gt; OWC::ControllerV1::getXVersion </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>get the firmware xinput mode version </p>
-<dl class="section return"><dt>Returns</dt><dd>major and minor version as a pair </dd></dl>
 
 </div>
 </div>
