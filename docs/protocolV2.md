@@ -1,6 +1,6 @@
 # Controller protocol v2
 
-Used in **win 5**, **win mini 25** (firmware 1.20+).
+Used in **win 5**, **win mini 25** _(firmware 1.20+)_, **win max 3**.
 
 ## Device info
 
