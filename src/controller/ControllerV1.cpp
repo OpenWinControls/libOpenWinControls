@@ -22,6 +22,7 @@
 #include "ControllerV1.h"
 #include "../Utils.h"
 #include "../include/HIDUsageIDMap.h"
+#include "../include/XinputUsageIDMap.h"
 
 namespace OWC {
     ControllerV1::ControllerV1(const int controllerFeatures): Controller(controllerFeatures, 32, 64) {
@@ -309,22 +310,24 @@ namespace OWC {
 
     bool ControllerV1::setBackButton(const int num, const int slot, const std::string &key) const {
         const int pos = (num == 1 ? 25:29) + std::clamp(slot, 1, 4) - 1;
+        uint16_t *btn = configU16 + pos;
 
-        return setButtonKey(configU16 + pos, key);
+        return setButtonKey(btn, key) || setXinputKey(btn, key);
     }
 
     std::string ControllerV1::getBackButton(const int num, const int slot) const {
         const int pos = (num == 1 ? 25:29) + std::clamp(slot, 1, 4) - 1;
+        const uint16_t key = configU16[pos];
 
-        try {
-            return HIDUsageIDMap.at(configU16[pos]);
+        if (HIDUsageIDMap.contains(key))
+            return HIDUsageIDMap.at(key);
+        else if (XinputUsageIDMap.contains(key))
+            return XinputUsageIDMap.at(key);
 
-        } catch (const std::out_of_range &ex) {
-            if (logFn)
-                writeLog(std::format(L"failed to find key: {:x}", configU16[pos]));
+        if (logFn)
+            writeLog(std::format(L"failed to find key: {:x}", key));
 
-            return "";
-        }
+        return "";
     }
 
     void ControllerV1::setBackButtonStartTime(const int num, const int slot, const int timeMs) const {
