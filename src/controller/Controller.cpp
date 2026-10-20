@@ -119,7 +119,7 @@ namespace OWC {
     bool Controller::setXinputKey(uint16_t *btn, const std::string &key) const {
         uint16_t keycode;
 
-        if (!findXinputKeycode(strToUpper(key), keycode))
+        if (!findXinputKeycode(strToUpper(key), keycode, getControllerType()))
             return false;
 
         *btn = keycode;

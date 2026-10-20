@@ -14,7 +14,8 @@ set(BUILD_SHARED_LIBS ${O_BUILD_SHARED})
 set(PROJECT_SRC
     src/include/export.h
     src/include/HIDUsageIDMap.h
-    src/include/XinputUsageIDMap.h
+    src/include/XinputV1UsageIDMap.h
+    src/include/XinputV2UsageIDMap.h
     src/include/ControllerFeature.h
     src/include/EmulationMode.h
     src/include/Button.h

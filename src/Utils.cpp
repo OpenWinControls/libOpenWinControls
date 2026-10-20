@@ -22,7 +22,8 @@
 
 #include "Utils.h"
 #include "include/HIDUsageIDMap.h"
-#include "include/XinputUsageIDMap.h"
+#include "include/XinputV1UsageIDMap.h"
+#include "include/XinputV2UsageIDMap.h"
 
 namespace OWC {
     std::wstring bufferToString(const uint8_t *buf, const int sz) {
@@ -128,8 +129,8 @@ namespace OWC {
     }
 
     [[nodiscard]]
-    static bool findKeyCode(const std::string &key, uint16_t &outCode, const bool hid) {
-        for (const auto &[code, str]: (hid ? HIDUsageIDMap:XinputUsageIDMap)) {
+    static bool findKeyCode(const std::string &key, uint16_t &outCode, const std::map<int, std::string> &keyMap) {
+        for (const auto &[code, str]: keyMap) {
             if (key != str)
                 continue;
 
@@ -141,11 +142,16 @@ namespace OWC {
     }
 
     bool findHIDKeycode(const std::string &key, uint16_t &outCode) {
-        return findKeyCode(key, outCode, true);
+        return findKeyCode(key, outCode, HIDUsageIDMap);
     }
 
-    bool findXinputKeycode(const std::string &key, uint16_t &outCode) {
-        return findKeyCode(key, outCode, false);
+    bool findXinputKeycode(const std::string &key, uint16_t &outCode, const int controllerType) {
+        if (controllerType == 1)
+            return findKeyCode(key, outCode, XinputV1UsageIDMap);
+        else if (controllerType == 2)
+            return findKeyCode(key, outCode, XinputV2UsageIDMap);
+
+        return false;
     }
 
     int getBytesSum(const uint8_t *buf, const int len) {

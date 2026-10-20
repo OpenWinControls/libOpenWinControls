@@ -16,7 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #pragma once
-
 #include <cstdint>
 
 #include "include/export.h"
@@ -31,7 +30,7 @@ namespace OWC {
     [[nodiscard]] std::wstring strTowstr(const char *str);
     [[nodiscard]] std::string strToUpper(const std::string &str);
     [[nodiscard]] bool findHIDKeycode(const std::string &key, uint16_t &outCode);
-    [[nodiscard]] bool findXinputKeycode(const std::string &key, uint16_t &outCode);
+    [[nodiscard]] bool findXinputKeycode(const std::string &key, uint16_t &outCode, int controllerType);
     [[nodiscard]] int getBytesSum(const uint8_t *buf, int len);
 
     [[nodiscard]] OWC_EXPORT std::string rumbleModeToString(RumbleMode mode);

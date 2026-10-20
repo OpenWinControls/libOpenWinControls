@@ -16,19 +16,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #pragma once
-
 #include <map>
 #include <string>
 
 /*!
- * @file XinputUsageIDMap.h
+ * @file XinputV2UsageIDMap.h
  */
 namespace OWC {
     /*!
      * @brief map of supported controller keys and their GPD custom keycode
-     * @details maps GPD custom HID usage ID -> string key name
+     * @details maps GPD custom HID usage ID -> string key name, V2 devices
      */
-    static const std::map<int, std::string> XinputUsageIDMap = {
+    static const std::map<int, std::string> XinputV2UsageIDMap = {
         {0, "UNSET"},
         {0x8000, "DPAD_UP"},
         {0x8001, "DPAD_DOWN"},

@@ -22,7 +22,7 @@
 #include "ControllerV1.h"
 #include "../Utils.h"
 #include "../include/HIDUsageIDMap.h"
-#include "../include/XinputUsageIDMap.h"
+#include "../include/XinputV1UsageIDMap.h"
 
 namespace OWC {
     ControllerV1::ControllerV1(const int controllerFeatures): Controller(controllerFeatures, 32, 64) {
@@ -321,8 +321,8 @@ namespace OWC {
 
         if (HIDUsageIDMap.contains(key))
             return HIDUsageIDMap.at(key);
-        else if (XinputUsageIDMap.contains(key))
-            return XinputUsageIDMap.at(key);
+        else if (XinputV1UsageIDMap.contains(key))
+            return XinputV1UsageIDMap.at(key);
 
         if (logFn)
             writeLog(std::format(L"failed to find key: {:x}", key));

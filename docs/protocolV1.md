@@ -48,31 +48,31 @@ Custom key codes for keyboard mode:
 Custom key codes for gamepad mode:
 
 ```text
-0x8000 - dpad up
-0x8001 - dpad down
-0x8002 - dpad left
-0x8003 - dpad right
-0x8004 - start
-0x8005 - select
-0x8006 - menu
-0x8007 - button A
-0x8008 - button B
-0x8009 - button X
-0x800a - button Y
-0x800b - L1
-0x800c - R1
-0x800d - L2
-0x800e - R2
-0x800f - L3
-0x8010 - R3
-0x8011 - left stick up
-0x8012 - left stick down
-0x8013 - left stick left
-0x8014 - left stick right
-0x8015 - right stick up
-0x8016 - right stick down
-0x8017 - right stick left
-0x8018 - right stick right
+0xff01 - dpad up
+0xff02 - dpad down
+0xff03 - dpad left
+0xff04 - dpad right
+0xff05 - button A
+0xff06 - button B
+0xff07 - button X
+0xff08 - button Y
+0xff09 - left stick up
+0xff0a - left stick down
+0xff0b - left stick left
+0xff0c - left stick right
+0xff0d - L3
+0xff0e - R3
+0xff0f - start
+0xff10 - select
+0xff11 - menu
+0xff12 - L1
+0xff13 - R1
+0xff14 - L2
+0xff15 - R2
+0xff16 - right stick up
+0xff17 - right stick down
+0xff18 - right stick left
+0xff19 - right stick right
 ```
 
 ## Configuration
