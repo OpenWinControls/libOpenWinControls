@@ -27,6 +27,8 @@ var searchData=
   ['x_5fy_24',['X_Y',['../d0/d01/Button_8h.html#a87f917092ee387b88f648ba3859c075ea72fa45c61dc40121aa4b4dcc30e90820',1,'OWC']]],
   ['xinput_25',['Xinput',['../d4/d06/EmulationMode_8h.html#a82d4212b28b9dcb7e5eceaf8266f14a6a43ce6d883dde430be334f39de964815a',1,'OWC']]],
   ['xinputmappingv1_26',['XinputMappingV1',['../dc/d01/ControllerFeature_8h.html#aa586347c184be8c1bf6cd59e571fea4eafe1a24ef22361bd393487d6093217b71',1,'OWC']]],
-  ['xinputusageidmap_27',['XinputUsageIDMap',['../d6/d00/XinputUsageIDMap_8h.html#a8a016b13698103e8cd69d461ae47b1ea',1,'OWC']]],
-  ['xinputusageidmap_2eh_28',['XinputUsageIDMap.h',['../d6/d00/XinputUsageIDMap_8h.html',1,'']]]
+  ['xinputv1usageidmap_27',['XinputV1UsageIDMap',['../d9/d00/XinputV1UsageIDMap_8h.html#a7ba78d47332d9a5a75a8943ab65253ae',1,'OWC']]],
+  ['xinputv1usageidmap_2eh_28',['XinputV1UsageIDMap.h',['../d9/d00/XinputV1UsageIDMap_8h.html',1,'']]],
+  ['xinputv2usageidmap_29',['XinputV2UsageIDMap',['../d3/d04/XinputV2UsageIDMap_8h.html#a29be7791b2546e4e22b0ee3c58e93852',1,'OWC']]],
+  ['xinputv2usageidmap_2eh_30',['XinputV2UsageIDMap.h',['../d3/d04/XinputV2UsageIDMap_8h.html',1,'']]]
 ];

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['xinputusageidmap_2eh_0',['XinputUsageIDMap.h',['../d6/d00/XinputUsageIDMap_8h.html',1,'']]]
+  ['xinputv1usageidmap_2eh_0',['XinputV1UsageIDMap.h',['../d9/d00/XinputV1UsageIDMap_8h.html',1,'']]],
+  ['xinputv2usageidmap_2eh_1',['XinputV2UsageIDMap.h',['../d3/d04/XinputV2UsageIDMap_8h.html',1,'']]]
 ];
