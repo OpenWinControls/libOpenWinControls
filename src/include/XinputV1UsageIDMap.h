@@ -52,7 +52,10 @@ namespace OWC {
         {0xff15, "R2"},
         {0xff16, "RSTICK_UP"},
         {0xff17, "RSTICK_DOWN"},
-        {0xff18, "RSTICK_LEFT"},
-        {0xff19, "RSTICK_RIGHT"},
+
+        // these 2 are inverted, at least on max2, either a v1 firmware typo or max2 bug
+        // don't have a v1 device to test, so suppose we'll see if someone complains on other v1 devs
+        {0xff18, "RSTICK_RIGHT"},
+        {0xff19, "RSTICK_LEFT"},
     };
 }
