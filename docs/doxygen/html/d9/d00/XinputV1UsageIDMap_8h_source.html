@@ -161,11 +161,14 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('d9/d00/XinputV
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        {0xff15, <span class="stringliteral">&quot;R2&quot;</span>},</div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        {0xff16, <span class="stringliteral">&quot;RSTICK_UP&quot;</span>},</div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        {0xff17, <span class="stringliteral">&quot;RSTICK_DOWN&quot;</span>},</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        {0xff18, <span class="stringliteral">&quot;RSTICK_LEFT&quot;</span>},</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        {0xff19, <span class="stringliteral">&quot;RSTICK_RIGHT&quot;</span>},</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    };</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        <span class="comment">// these 2 are inverted, at least on max2, either a v1 firmware typo or max2 bug</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        <span class="comment">// don&#39;t have a v1 device to test, so suppose we&#39;ll see if someone complains on other v1 devs</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        {0xff18, <span class="stringliteral">&quot;RSTICK_RIGHT&quot;</span>},</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        {0xff19, <span class="stringliteral">&quot;RSTICK_LEFT&quot;</span>},</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    };</div>
 </div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>}</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>}</div>
 <div class="ttc" id="aXinputV1UsageIDMap_8h_html_a7ba78d47332d9a5a75a8943ab65253ae"><div class="ttname"><a href="../../d9/d00/XinputV1UsageIDMap_8h.html#a7ba78d47332d9a5a75a8943ab65253ae">OWC::XinputV1UsageIDMap</a></div><div class="ttdeci">static const std::map&lt; int, std::string &gt; XinputV1UsageIDMap</div><div class="ttdoc">map of supported controller keys and their GPD custom keycode</div><div class="ttdef"><b>Definition</b> XinputV1UsageIDMap.h:30</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
