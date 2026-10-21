@@ -1,6 +1,6 @@
 # Controller protocol v2
 
-Used in **win 5**, **win mini 25** _(firmware 1.20+)_, **win max 3**.
+Used in **win 5**, **win mini 25** _(firmware 1.20+)_, **win max 3**, **win mini ultra**.
 
 ## Device info
 
@@ -93,23 +93,23 @@ Structure: 12 bytes [header](#controller-buffer-header) + 1012 bytes data.
 
 ### mini 25
 
-Back button **1** on device is: **l4 button**.
+Back button **1** on device is: **L4 button**.
 
-Back button **2** on device is: **r4 button**.
+Back button **2** on device is: **R4 button**.
 
 Back button **3** is not implemented.
 
 Back button **4** is not implemented.
 
-### win 5
+### win 5, max 3, mini ultra
 
-Back button **1** on device is: **left back button**.
+Back button **1** on device is: **L4 button**.
 
-Back button **2** on device is: **right back button**.
+Back button **2** on device is: **R4 button**.
 
 Back button **3** is not implemented.
 
-Back button **4** on device is: **controller mode switch button (single click)**.
+Back button **4** on device is: **controller mode switch button, also known as GPD button (single click)**.
 
 # Status interrupt
 

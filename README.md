@@ -18,6 +18,7 @@ Exposes all known and working features of the GPD controller, way more than what
 - win 5
 - win mini 25
 - win max 3
+- win mini ultra
 
 ## Documentation
 
