@@ -9,5 +9,6 @@ var dir_b0856f6b0d80ccb263b2f415c91f9e17 =
     [ "HIDUsageIDMap.h", "de/d07/HIDUsageIDMap_8h.html", "de/d07/HIDUsageIDMap_8h" ],
     [ "LedMode.h", "d8/d07/LedMode_8h.html", "d8/d07/LedMode_8h" ],
     [ "RumbleMode.h", "d3/d07/RumbleMode_8h.html", "d3/d07/RumbleMode_8h" ],
-    [ "XinputUsageIDMap.h", "d6/d00/XinputUsageIDMap_8h.html", "d6/d00/XinputUsageIDMap_8h" ]
+    [ "XinputV1UsageIDMap.h", "d9/d00/XinputV1UsageIDMap_8h.html", "d9/d00/XinputV1UsageIDMap_8h" ],
+    [ "XinputV2UsageIDMap.h", "d3/d04/XinputV2UsageIDMap_8h.html", "d3/d04/XinputV2UsageIDMap_8h" ]
 ];

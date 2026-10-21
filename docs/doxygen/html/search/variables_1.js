@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['xinputusageidmap_0',['XinputUsageIDMap',['../d6/d00/XinputUsageIDMap_8h.html#a8a016b13698103e8cd69d461ae47b1ea',1,'OWC']]]
+  ['xinputv1usageidmap_0',['XinputV1UsageIDMap',['../d9/d00/XinputV1UsageIDMap_8h.html#a7ba78d47332d9a5a75a8943ab65253ae',1,'OWC']]],
+  ['xinputv2usageidmap_1',['XinputV2UsageIDMap',['../d3/d04/XinputV2UsageIDMap_8h.html#a29be7791b2546e4e22b0ee3c58e93852',1,'OWC']]]
 ];
